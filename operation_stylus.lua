@@ -111,7 +111,7 @@ local function scrollFeed(text, fg)
     at(1, scrollY)
     display.write(text:sub(1, w))
     scrollY = scrollY + 1
-    sleep(0.18)
+    sleep(0.35)
 end
 
 -- ============================================
