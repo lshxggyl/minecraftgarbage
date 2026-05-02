@@ -7,9 +7,10 @@
 
 local mon = peripheral.find("monitor")
 local display = mon or term
+local speaker = peripheral.find("speaker")
 
 if mon then
-    mon.setTextScale(0.5)
+    mon.setTextScale(1.5)
 end
 
 local w, h = display.getSize()
@@ -125,7 +126,7 @@ local function scene_title()
     fillLine(9, "=", colors.orange)
     sleep(0.3)
     centerText("[ SCROLL DOWN TO DEBRIEF ]", 11, colors.gray)
-    sleep(4)
+    sleep(10)
 end
 
 local function scene_act1()
@@ -146,7 +147,7 @@ local function scene_act1()
     scrollFeed("", colors.white)
     scrollFeed(" EVERYTHING.", colors.red)
     scrollFeed(" EVERY LAST FUCKING THING WENT WRONG.", colors.red)
-    sleep(3)
+    sleep(8)
 end
 
 local function scene_timeline()
@@ -183,7 +184,7 @@ local function scene_timeline()
     scrollFeed("", colors.white)
     scrollFeed(" [MON ETA] WAR TROPHY ARRIVES", colors.yellow)
     scrollFeed("   Jared wins. Flawless fucking victory.", colors.lime)
-    sleep(4)
+    sleep(10)
 end
 
 local function scene_cardcrisis()
@@ -212,7 +213,7 @@ local function scene_cardcrisis()
     scrollFeed(" To buy a $24.99 phone.", colors.yellow)
     scrollFeed("", colors.white)
     scrollFeed(" We are so incredibly back.", colors.lime)
-    sleep(3)
+    sleep(8)
 end
 
 local function scene_notebook()
@@ -236,7 +237,7 @@ local function scene_notebook()
     scrollFeed("", colors.white)
     scrollFeed(" We don't discuss this.", colors.gray)
     scrollFeed(" We move on. We heal.", colors.gray)
-    sleep(3)
+    sleep(8)
 end
 
 local function scene_potion()
@@ -263,7 +264,7 @@ local function scene_potion()
     scrollFeed("", colors.white)
     scrollFeed(" The potion chose him.", colors.lime)
     scrollFeed(" The potion ALWAYS chooses him.", colors.lime)
-    sleep(3)
+    sleep(8)
 end
 
 local function scene_victory()
@@ -275,7 +276,7 @@ local function scene_victory()
     resetScrollArea()
 
     scrollFeed("", colors.white)
-    scrollFeed("  DISCOUNT SECURED  : $275.00", colors.lime)
+    scrollFeed("  DISCOUNT SECURED  : $2,075.00", colors.lime)
     scrollFeed("  PHONE COST        : $24.99", colors.lime)
     scrollFeed("  TOTAL PAID        : $77.57", colors.lime)
     scrollFeed("  VPN STATUS        : DEAD (as required)", colors.lime)
@@ -296,27 +297,87 @@ local function scene_victory()
     scrollFeed("  // END OF OPERATION STYLUS //", colors.orange)
     scrollFeed("  // APRIL 30, 2026           //", colors.orange)
     scrollFeed("  // CLASSIFIED AS HELL       //", colors.red)
-    sleep(6)
+    sleep(12)
 end
 
 local function scene_restart()
     cls()
     centerText("[ RESTARTING OPERATION STYLUS ]", math.floor(h / 2), colors.gray)
     centerText("[ press any key to skip a scene ]", math.floor(h / 2) + 2, colors.gray)
-    sleep(3)
+    sleep(6)
+end
+
+-- ============================================
+-- SAD MUSIC
+-- A slow mournful melody in A minor
+-- Pitches: semitones above F#3 (0=F#3, 12=F#4)
+-- ============================================
+
+local function playMusic()
+    if not speaker then return end
+
+    -- A minor descending arpeggios, slow and mournful
+    local melody = {
+        -- Am arpeggio down
+        {15, 0.6},  -- A4
+        {12, 0.6},  -- F#4
+        {10, 0.6},  -- E4
+        {6,  0.6},  -- C4
+        -- F major up
+        {6,  0.6},  -- C4
+        {11, 0.6},  -- F4
+        {15, 0.6},  -- A4
+        {18, 0.9},  -- C5 (hold)
+        -- C major descend
+        {18, 0.6},  -- C5
+        {13, 0.6},  -- G4
+        {10, 0.6},  -- E4
+        {6,  0.6},  -- C4
+        -- G major resolve
+        {5,  0.6},  -- B3
+        {8,  0.6},  -- D4
+        {13, 0.6},  -- G4
+        {5,  1.2},  -- B3 (long hold, feels sad)
+        -- Am again, lower
+        {3,  0.6},  -- A3
+        {6,  0.6},  -- C4
+        {10, 0.6},  -- E4
+        {12, 0.6},  -- F#4
+        -- descend back home
+        {10, 0.6},  -- E4
+        {6,  0.6},  -- C4
+        {3,  0.6},  -- A3
+        {3,  1.5},  -- A3 long sad ending
+    }
+
+    while true do
+        for _, note in ipairs(melody) do
+            local pitch, dur = note[1], note[2]
+            speaker.playNote("guitar", 1.0, pitch)
+            sleep(dur)
+            -- add a quiet low harmony on every other note
+            speaker.playNote("bass", 0.4, math.max(0, pitch - 12))
+            sleep(0.05)
+        end
+        sleep(0.8) -- brief pause before loop
+    end
 end
 
 -- ============================================
 -- MAIN LOOP
 -- ============================================
 
-while true do
-    scene_title()
-    scene_act1()
-    scene_timeline()
-    scene_cardcrisis()
-    scene_notebook()
-    scene_potion()
-    scene_victory()
-    scene_restart()
+local function runDisplay()
+    while true do
+        scene_title()
+        scene_act1()
+        scene_timeline()
+        scene_cardcrisis()
+        scene_notebook()
+        scene_potion()
+        scene_victory()
+        scene_restart()
+    end
 end
+
+parallel.waitForAny(runDisplay, playMusic)
