@@ -252,7 +252,7 @@ local function visualLoop()
         os.sleep(3)
 
         -- SCENE 21: Bastion Blunder 
-        blast(colors.black, colors.gold)
+        blast(colors.black, colors.orange)
         typeWriter(2, 2, "Let's talk about the Bastion Remnant.", 0.03)
         os.sleep(1)
         typeWriter(2, 4, "Bro wears full gold armor so he's safe.", 0.03)
