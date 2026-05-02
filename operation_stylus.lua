@@ -7,7 +7,15 @@
 
 local mon = peripheral.find("monitor")
 local display = mon or term
-local speaker = peripheral.find("speaker")
+
+-- grab ALL speakers not just one
+local speakers = {peripheral.find("speaker")}
+
+local function playNote(inst, vol, pitch)
+    for _, s in ipairs(speakers) do
+        s.playNote(inst, vol, pitch)
+    end
+end
 
 -- startup check
 term.clear()
@@ -17,11 +25,13 @@ if mon then
 else
     print("Monitor: NOT FOUND (using terminal)")
 end
-if speaker then
-    print("Speaker found: OK")
-    speaker.playNote("bell", 1.0, 12)
+if #speakers > 0 then
+    print("Speakers found: " .. #speakers)
+    for _, s in ipairs(speakers) do
+        s.playNote("bell", 1.0, 12)
+    end
 else
-    print("Speaker: NOT FOUND - check it is attached!")
+    print("Speakers: NOT FOUND - check they are attached!")
 end
 sleep(3)
 
@@ -111,7 +121,7 @@ local function scrollFeed(text, fg)
     at(1, scrollY)
     display.write(text:sub(1, w))
     scrollY = scrollY + 1
-    sleep(0.35)
+    sleep(0.55)
 end
 
 -- ============================================
@@ -154,7 +164,7 @@ local function scene_act1()
     scrollFeed(" single fucking device he owns, decided", colors.white)
     scrollFeed(" he wanted a phone. Specifically:", colors.white)
     scrollFeed("", colors.white)
-    scrollFeed("   >> MOTO G STYLUS 2025  <<", colors.yellow)
+    scrollFeed("   >> MOTO G STYLUS 2026  <<", colors.yellow)
     scrollFeed("   >> BOOST MOBILE ONLINE <<", colors.yellow)
     scrollFeed("   >> COST: $24.99         <<", colors.lime)
     scrollFeed("", colors.white)
@@ -195,7 +205,7 @@ local function scene_timeline()
     scrollFeed(" [THU 6:30 PM] !!! THE HAMMER DROPS !!!", colors.lime)
     scrollFeed("   VPN: DEAD. Browser: VIRGIN CHROMIUM.", colors.lime)
     scrollFeed("   Fresh card. Burner email. Raw ISP.", colors.lime)
-    scrollFeed("   $275 DISCOUNT SECURED. $77.57 TOTAL.", colors.lime)
+    scrollFeed("   $2,075 DISCOUNT SECURED. $77.57 TOTAL.", colors.lime)
     scrollFeed("   FRAUD BOT: BAMBOOZLED. DESTROYED.", colors.lime)
     scrollFeed("", colors.white)
     scrollFeed(" [MON ETA] WAR TROPHY ARRIVES", colors.yellow)
@@ -330,53 +340,75 @@ end
 -- ============================================
 
 local function playMusic()
-    if not speaker then return end
+    if #speakers == 0 then return end
 
-    -- Sad bell melody in A minor, slow and mournful
     local melody = {
         {15, 1.4},  -- A4
         {13, 1.4},  -- G4
         {11, 1.6},  -- F4
         {10, 2.2},  -- E4
-        {0,  0.8},  -- silence
+        {0,  0.8},
         {8,  1.4},  -- D4
         {6,  1.4},  -- C4
         {5,  1.6},  -- B3
-        {3,  3.0},  -- A3 (long sad hold)
-        {0,  1.2},  -- silence
+        {3,  3.0},  -- A3
+        {0,  1.2},
         {3,  1.2},  -- A3
         {6,  1.2},  -- C4
         {8,  1.2},  -- D4
         {10, 1.8},  -- E4
-        {0,  0.6},  -- silence
+        {0,  0.6},
         {11, 1.2},  -- F4
         {10, 1.2},  -- E4
         {8,  1.2},  -- D4
         {6,  1.6},  -- C4
-        {3,  3.5},  -- A3 (devastated)
-        {0,  1.5},  -- silence
+        {3,  3.5},  -- A3
+        {0,  1.5},
         {10, 1.2},  -- E4
         {8,  1.2},  -- D4
         {6,  1.2},  -- C4
         {3,  1.4},  -- A3
-        {1,  4.0},  -- G3 (lowest, most hopeless)
-        {0,  2.5},  -- silence before loop
+        {1,  4.0},  -- G3
+        {0,  2.5},
     }
 
-    while true do
-        for _, note in ipairs(melody) do
-            local pitch, dur = note[1], note[2]
-            if pitch > 0 then
-                speaker.playNote("bell", 0.9, pitch)
-                sleep(0.08)
-                speaker.playNote("guitar", 0.25, math.max(0, pitch - 3))
-                sleep(0.08)
-                speaker.playNote("bass", 0.5, math.max(0, pitch - 12))
+    -- steady bass pattern that loops independently
+    -- A minor bass: A, E, A, C, A, E, G, E
+    local bassline = {3, 10, 3, 6, 3, 10, 1, 10}
+
+    local function bellMelody()
+        while true do
+            for _, note in ipairs(melody) do
+                local pitch, dur = note[1], note[2]
+                if pitch > 0 then
+                    playNote("bell", 0.9, pitch)
+                    sleep(0.08)
+                    playNote("guitar", 0.3, math.max(0, pitch - 3))
+                end
+                sleep(dur)
             end
-            sleep(dur)
+            sleep(3.0)
         end
-        sleep(3.0)
     end
+
+    local function runBass()
+        local i = 1
+        while true do
+            local pitch = bassline[i]
+            -- deep bass hit
+            playNote("bass", 0.85, math.max(0, pitch - 12))
+            sleep(0.05)
+            -- mid bass for body
+            playNote("bass", 0.4, math.max(0, pitch - 6))
+            sleep(0.55)
+            -- subtle off-beat ghost note
+            playNote("bass", 0.3, math.max(0, pitch - 12))
+            sleep(0.45)
+            i = (i % #bassline) + 1
+        end
+    end
+
+    parallel.waitForAny(bellMelody, runBass)
 end
 
 -- ============================================
