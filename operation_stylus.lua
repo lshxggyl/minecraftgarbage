@@ -95,7 +95,7 @@ local function scrollFeed(text, fg)
     at(1, scrollY)
     display.write(text:sub(1, w))
     scrollY = scrollY + 1
-    sleep(0.07)
+    sleep(0.18)
 end
 
 -- ============================================
@@ -276,7 +276,7 @@ local function scene_victory()
     resetScrollArea()
 
     scrollFeed("", colors.white)
-    scrollFeed("  DISCOUNT SECURED  : $2,075.00", colors.lime)
+    scrollFeed("  DISCOUNT SECURED  : $275.00", colors.lime)
     scrollFeed("  PHONE COST        : $24.99", colors.lime)
     scrollFeed("  TOTAL PAID        : $77.57", colors.lime)
     scrollFeed("  VPN STATUS        : DEAD (as required)", colors.lime)
@@ -309,57 +309,16 @@ end
 
 -- ============================================
 -- SAD MUSIC
--- A slow mournful melody in A minor
--- Pitches: semitones above F#3 (0=F#3, 12=F#4)
+-- Extremely slow mournful bell melody in A minor
+-- Pitches: semitones above F#3 (0=rest, 1=G3, 3=A3 etc)
 -- ============================================
 
 local function playMusic()
     if not speaker then return end
-
-    -- A minor descending arpeggios, slow and mournful
-    local melody = {
-        -- Am arpeggio down
-        {15, 0.6},  -- A4
-        {12, 0.6},  -- F#4
-        {10, 0.6},  -- E4
-        {6,  0.6},  -- C4
-        -- F major up
-        {6,  0.6},  -- C4
-        {11, 0.6},  -- F4
-        {15, 0.6},  -- A4
-        {18, 0.9},  -- C5 (hold)
-        -- C major descend
-        {18, 0.6},  -- C5
-        {13, 0.6},  -- G4
-        {10, 0.6},  -- E4
-        {6,  0.6},  -- C4
-        -- G major resolve
-        {5,  0.6},  -- B3
-        {8,  0.6},  -- D4
-        {13, 0.6},  -- G4
-        {5,  1.2},  -- B3 (long hold, feels sad)
-        -- Am again, lower
-        {3,  0.6},  -- A3
-        {6,  0.6},  -- C4
-        {10, 0.6},  -- E4
-        {12, 0.6},  -- F#4
-        -- descend back home
-        {10, 0.6},  -- E4
-        {6,  0.6},  -- C4
-        {3,  0.6},  -- A3
-        {3,  1.5},  -- A3 long sad ending
-    }
-
     while true do
-        for _, note in ipairs(melody) do
-            local pitch, dur = note[1], note[2]
-            speaker.playNote("guitar", 1.0, pitch)
-            sleep(dur)
-            -- add a quiet low harmony on every other note
-            speaker.playNote("bass", 0.4, math.max(0, pitch - 12))
-            sleep(0.05)
-        end
-        sleep(0.8) -- brief pause before loop
+        -- "far" by C418 -- lonely, melancholic, perfect
+        speaker.playSound("minecraft:music_disc.far", 1.0, 1.0)
+        sleep(174) -- 2m54s, loop cleanly
     end
 end
 
