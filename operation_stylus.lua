@@ -276,7 +276,7 @@ local function scene_victory()
     resetScrollArea()
 
     scrollFeed("", colors.white)
-    scrollFeed("  DISCOUNT SECURED  : $275.00", colors.lime)
+    scrollFeed("  DISCOUNT SECURED  : $2,075.00", colors.lime)
     scrollFeed("  PHONE COST        : $24.99", colors.lime)
     scrollFeed("  TOTAL PAID        : $77.57", colors.lime)
     scrollFeed("  VPN STATUS        : DEAD (as required)", colors.lime)
@@ -315,10 +315,51 @@ end
 
 local function playMusic()
     if not speaker then return end
+
+    -- Sad bell melody in A minor, slow and mournful
+    local melody = {
+        {15, 1.4},  -- A4
+        {13, 1.4},  -- G4
+        {11, 1.6},  -- F4
+        {10, 2.2},  -- E4
+        {0,  0.8},  -- silence
+        {8,  1.4},  -- D4
+        {6,  1.4},  -- C4
+        {5,  1.6},  -- B3
+        {3,  3.0},  -- A3 (long sad hold)
+        {0,  1.2},  -- silence
+        {3,  1.2},  -- A3
+        {6,  1.2},  -- C4
+        {8,  1.2},  -- D4
+        {10, 1.8},  -- E4
+        {0,  0.6},  -- silence
+        {11, 1.2},  -- F4
+        {10, 1.2},  -- E4
+        {8,  1.2},  -- D4
+        {6,  1.6},  -- C4
+        {3,  3.5},  -- A3 (devastated)
+        {0,  1.5},  -- silence
+        {10, 1.2},  -- E4
+        {8,  1.2},  -- D4
+        {6,  1.2},  -- C4
+        {3,  1.4},  -- A3
+        {1,  4.0},  -- G3 (lowest, most hopeless)
+        {0,  2.5},  -- silence before loop
+    }
+
     while true do
-        -- "far" by C418 -- lonely, melancholic, perfect
-        speaker.playSound("minecraft:music_disc.far", 1.0, 1.0)
-        sleep(174) -- 2m54s, loop cleanly
+        for _, note in ipairs(melody) do
+            local pitch, dur = note[1], note[2]
+            if pitch > 0 then
+                speaker.playNote("bell", 0.9, pitch)
+                sleep(0.08)
+                speaker.playNote("guitar", 0.25, math.max(0, pitch - 3))
+                sleep(0.08)
+                speaker.playNote("bass", 0.5, math.max(0, pitch - 12))
+            end
+            sleep(dur)
+        end
+        sleep(3.0)
     end
 end
 
