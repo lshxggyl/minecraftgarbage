@@ -137,6 +137,146 @@ local function headerBar(title, fg)
     sleep(0.5)
 end
 
+local function scene_intro()
+    local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?<>[]{}^~"
+
+    local function randChar()
+        return chars:sub(math.random(1, #chars), math.random(1, #chars))
+    end
+
+    local function glitchText(text, x, y, fg, iterations)
+        for i = 1, iterations do
+            at(x, y)
+            col(fg)
+            local out = ""
+            for j = 1, #text do
+                if math.random() < (i / iterations) then
+                    out = out .. text:sub(j, j)
+                else
+                    out = out .. randChar()
+                end
+            end
+            display.write(out:sub(1, w - x + 1))
+            sleep(0.07)
+        end
+        at(x, y)
+        col(fg)
+        display.write(text:sub(1, w - x + 1))
+    end
+
+    local function progressBar(y, pct, fg)
+        local filled = math.floor((w - 10) * pct)
+        local empty = (w - 10) - filled
+        at(1, y)
+        col(fg)
+        display.write("[")
+        col(colors.lime)
+        display.write(string.rep("#", filled))
+        col(colors.gray)
+        display.write(string.rep(".", empty))
+        col(fg)
+        display.write("] " .. math.floor(pct * 100) .. "%  ")
+    end
+
+    -- phase 1: black screen with cursor blink
+    cls()
+    sleep(0.5)
+
+    -- phase 2: matrix rain
+    col(colors.green)
+    for i = 1, 30 do
+        local x = math.random(1, w)
+        local y = math.random(1, h)
+        at(x, y)
+        display.write(randChar())
+        sleep(0.03)
+    end
+    sleep(0.3)
+
+    -- phase 3: connecting message
+    cls()
+    local connectMsg = "ESTABLISHING SECURE CONNECTION..."
+    for i = 1, #connectMsg do
+        at(math.floor((w - #connectMsg) / 2) + 1, math.floor(h/2))
+        col(colors.green)
+        display.write(connectMsg:sub(1, i))
+        sleep(0.04)
+    end
+    sleep(0.8)
+
+    -- phase 4: ACCESS DENIED flash
+    cls()
+    for i = 1, 4 do
+        centerText(">>> ACCESS DENIED <<<", math.floor(h/2), colors.red)
+        sleep(0.15)
+        cls()
+        sleep(0.1)
+    end
+
+    -- phase 5: override sequence
+    cls()
+    local midY = math.floor(h / 2) - 4
+    sleep(0.2)
+
+    centerText("OVERRIDE PROTOCOL INITIATED", midY, colors.yellow)
+    sleep(0.3)
+    centerText("BYPASSING SECURITY LAYER 1...", midY + 1, colors.gray)
+    sleep(0.4)
+    centerText("BYPASSING SECURITY LAYER 2...", midY + 2, colors.gray)
+    sleep(0.4)
+    centerText("BYPASSING SECURITY LAYER 3...", midY + 3, colors.gray)
+    sleep(0.6)
+
+    -- phase 6: progress bars
+    cls()
+    centerText("DECRYPTING CLASSIFIED DOCUMENT", 2, colors.yellow)
+    sleep(0.3)
+
+    local steps = {0.1, 0.2, 0.35, 0.5, 0.65, 0.75, 0.88, 0.95, 1.0}
+    for _, pct in ipairs(steps) do
+        progressBar(4, pct, colors.yellow)
+        sleep(0.18)
+    end
+
+    sleep(0.3)
+    centerText("DECRYPTION COMPLETE", 6, colors.lime)
+    sleep(0.4)
+
+    -- phase 7: file header glitch reveal
+    cls()
+    sleep(0.2)
+    glitchText("CLASSIFICATION: TOP SECRET", 2, 2, colors.red, 18)
+    sleep(0.2)
+    glitchText("CASE FILE: 0458-244385-9062", 2, 3, colors.yellow, 18)
+    sleep(0.2)
+    glitchText("DATE: APRIL 30 2026", 2, 4, colors.gray, 14)
+    sleep(0.2)
+    glitchText("LOCATION: WATERTOWN, CONNECTICUT", 2, 5, colors.gray, 14)
+    sleep(0.3)
+    glitchText("SUBJECT: ONE (1) JARED", 2, 6, colors.white, 14)
+    sleep(0.5)
+
+    -- phase 8: ACCESS GRANTED
+    for i = 1, 3 do
+        centerText(">>> ACCESS GRANTED <<<", h - 2, colors.lime)
+        sleep(0.2)
+        at(1, h - 2)
+        col(colors.black)
+        display.write(string.rep(" ", w))
+        sleep(0.15)
+    end
+    centerText(">>> ACCESS GRANTED <<<", h - 2, colors.lime)
+    sleep(0.8)
+
+    -- phase 9: big dramatic title glitch reveal
+    cls()
+    sleep(0.3)
+    glitchText("  OPERATION", math.floor((w - 20) / 2), math.floor(h/2) - 1, colors.orange, 25)
+    sleep(0.1)
+    glitchText("    STYLUS", math.floor((w - 20) / 2), math.floor(h/2) + 1, colors.yellow, 25)
+    sleep(2.5)
+end
+
 local function scene_title()
     cls()
     fillLine(1, "*", colors.red)
@@ -152,7 +292,7 @@ local function scene_title()
     fillLine(9, "=", colors.orange)
     sleep(0.3)
     centerText("[ SCROLL DOWN TO DEBRIEF ]", 11, colors.gray)
-    sleep(10)
+    sleep(30)
 end
 
 local function scene_act1()
@@ -173,7 +313,7 @@ local function scene_act1()
     scrollFeed("", colors.white)
     scrollFeed(" EVERYTHING.", colors.red)
     scrollFeed(" EVERY LAST FUCKING THING WENT WRONG.", colors.red)
-    sleep(8)
+    sleep(25)
 end
 
 local function scene_timeline()
@@ -208,9 +348,9 @@ local function scene_timeline()
     scrollFeed("   $2,075 DISCOUNT SECURED. $77.57 TOTAL.", colors.lime)
     scrollFeed("   FRAUD BOT: BAMBOOZLED. DESTROYED.", colors.lime)
     scrollFeed("", colors.white)
-    scrollFeed(" [MON ETA] WAR TROPHY ARRIVES", colors.yellow)
+    scrollFeed(" [TUE ETA] WAR TROPHY ARRIVES", colors.yellow)
     scrollFeed("   Jared wins. Flawless fucking victory.", colors.lime)
-    sleep(10)
+    sleep(30)
 end
 
 local function scene_cardcrisis()
@@ -239,7 +379,7 @@ local function scene_cardcrisis()
     scrollFeed(" To buy a $24.99 phone.", colors.yellow)
     scrollFeed("", colors.white)
     scrollFeed(" We are so incredibly back.", colors.lime)
-    sleep(8)
+    sleep(25)
 end
 
 local function scene_notebook()
@@ -263,7 +403,7 @@ local function scene_notebook()
     scrollFeed("", colors.white)
     scrollFeed(" We don't discuss this.", colors.gray)
     scrollFeed(" We move on. We heal.", colors.gray)
-    sleep(8)
+    sleep(25)
 end
 
 local function scene_potion()
@@ -290,7 +430,7 @@ local function scene_potion()
     scrollFeed("", colors.white)
     scrollFeed(" The potion chose him.", colors.lime)
     scrollFeed(" The potion ALWAYS chooses him.", colors.lime)
-    sleep(8)
+    sleep(25)
 end
 
 local function scene_victory()
@@ -323,14 +463,14 @@ local function scene_victory()
     scrollFeed("  // END OF OPERATION STYLUS //", colors.orange)
     scrollFeed("  // APRIL 30, 2026           //", colors.orange)
     scrollFeed("  // CLASSIFIED AS HELL       //", colors.red)
-    sleep(12)
+    sleep(35)
 end
 
 local function scene_restart()
     cls()
     centerText("[ RESTARTING OPERATION STYLUS ]", math.floor(h / 2), colors.gray)
     centerText("[ press any key to skip a scene ]", math.floor(h / 2) + 2, colors.gray)
-    sleep(6)
+    sleep(15)
 end
 
 -- ============================================
@@ -417,6 +557,7 @@ end
 
 local function runDisplay()
     while true do
+        scene_intro()
         scene_title()
         scene_act1()
         scene_timeline()
