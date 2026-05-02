@@ -160,11 +160,13 @@ end
 local function drawLabels(dealerTotal, playerTotal, hideDealer)
   at(2, 3); write("Dealer", C.dim, C.bg)
   if not hideDealer then
-    write(" (" .. dealerTotal .. ")", dealerTotal > 21 and C.bust or C.text, C.bg)
+    local dColor = (type(dealerTotal) == "number" and dealerTotal > 21) and C.bust or C.text
+    write(" (" .. dealerTotal .. ")", dColor, C.bg)
   end
 
   at(2, 14); write("You", C.dim, C.bg)
-  write(" (" .. playerTotal .. ")", playerTotal > 21 and C.bust or C.text, C.bg)
+  local pColor = (type(playerTotal) == "number" and playerTotal > 21) and C.bust or C.text
+  write(" (" .. playerTotal .. ")", pColor, C.bg)
 end
 
 local function drawButtons(buttons, y)
