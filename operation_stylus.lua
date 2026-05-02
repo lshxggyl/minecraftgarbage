@@ -9,6 +9,22 @@ local mon = peripheral.find("monitor")
 local display = mon or term
 local speaker = peripheral.find("speaker")
 
+-- startup check
+term.clear()
+term.setCursorPos(1,1)
+if mon then
+    print("Monitor found: OK")
+else
+    print("Monitor: NOT FOUND (using terminal)")
+end
+if speaker then
+    print("Speaker found: OK")
+    speaker.playNote("bell", 1.0, 12)
+else
+    print("Speaker: NOT FOUND - check it is attached!")
+end
+sleep(3)
+
 if mon then
     mon.setTextScale(1.5)
 end
