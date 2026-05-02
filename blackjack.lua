@@ -1,12 +1,21 @@
 -- ============================================================
---  BLACKJACK for ComputerCraft
---  Works on any CC terminal (pocket, standard, advanced)
+--  TOUCH BLACKJACK for ComputerCraft
+--  Optimized for 2x3 Portrait Monitors
 -- ============================================================
+
+local mon = peripheral.find("monitor")
+if not mon then
+    error("No monitor found! Slap an advanced monitor next to this computer.")
+end
+
+-- Set scale for portrait and redirect output
+mon.setTextScale(0.5)
+term.redirect(mon)
 
 local w, h = term.getSize()
 local isColor = term.isColor()
 
--- ── Colour palette (gracefully degrades on mono) ────────────
+-- ── Colour palette ────────────
 local C = {
   bg        = isColor and colors.green    or colors.black,
   felt      = isColor and colors.green    or colors.black,
@@ -25,15 +34,13 @@ local C = {
   push      = isColor and colors.yellow   or colors.white,
 }
 
--- ── Card data ────────────────────────────────────────────────
-local SUITS  = { "\3", "\4", "\5", "\6" }   -- ♥ ♦ ♣ ♠ (CC chars)
+local SUITS  = { "\3", "\4", "\5", "\6" }
 local RANKS  = { "A","2","3","4","5","6","7","8","9","10","J","Q","K" }
 local RED    = { ["\3"]=true, ["\4"]=true }
 
 local function newDeck(numDecks)
-  numDecks = numDecks or 1
   local deck = {}
-  for _=1, numDecks do
+  for _=1, (numDecks or 1) do
     for _, s in ipairs(SUITS) do
       for _, r in ipairs(RANKS) do
         deck[#deck+1] = { rank=r, suit=s }
@@ -69,15 +76,13 @@ local function handTotal(hand)
   return total
 end
 
--- ── Drawing helpers ──────────────────────────────────────────
+-- ── Drawing helpers ────────────
 local function cls()
   term.setBackgroundColor(C.bg)
   term.clear()
 end
 
-local function at(x, y)
-  term.setCursorPos(x, y)
-end
+local function at(x, y) term.setCursorPos(x, y) end
 
 local function write(text, fg, bg)
   if fg then term.setTextColor(fg) end
@@ -91,261 +96,236 @@ local function centre(text, y, fg, bg)
   write(text, fg, bg)
 end
 
--- Draw a single card at (x,y).  hidden=true draws card back.
 local function drawCard(x, y, card, hidden)
-  local bw, bh = 5, 3   -- card box size
-
+  local bw, bh = 5, 3
   if hidden then
-    -- Card back
     for row = 0, bh-1 do
       at(x, y+row)
-      write(string.rep(row==0 and "\127" or (row==bh-1 and "\127" or "|"), bw),
-            isColor and colors.blue or colors.gray,
-            isColor and colors.blue or colors.gray)
+      write(string.rep(row==0 and "\127" or (row==bh-1 and "\127" or "|"), bw), colors.blue, colors.blue)
     end
     return
   end
 
-  local isRed = RED[card.suit]
-  local fg    = isRed and C.red_suit or C.black_suit
-  local rl    = card.rank   -- rank label
-  local pad   = #rl == 1 and " " or ""   -- right-pad single-char rank
+  local fg  = RED[card.suit] and C.red_suit or C.black_suit
+  local rl  = card.rank
+  local pad = #rl == 1 and " " or ""
 
-  -- Top line
   at(x, y)
   write(string.rep(" ", bw), C.card_bg, C.card_bg)
-  at(x, y);     write(rl .. pad, fg, C.card_bg)
+  at(x, y); write(rl .. pad, fg, C.card_bg)
 
-  -- Middle line (suit)
   at(x, y+1)
   write(string.rep(" ", bw), C.card_bg, C.card_bg)
-  at(x + math.floor(bw/2), y+1)
-  write(card.suit, fg, C.card_bg)
+  at(x + math.floor(bw/2), y+1); write(card.suit, fg, C.card_bg)
 
-  -- Bottom line
   at(x, y+2)
   write(string.rep(" ", bw), C.card_bg, C.card_bg)
-  at(x + bw - #rl - 1, y+2)
-  write(pad .. rl, fg, C.card_bg)
+  at(x + bw - #rl - 1, y+2); write(pad .. rl, fg, C.card_bg)
 end
 
--- Draw a hand of cards starting at (sx, sy)
--- hideFirst = true → hide card at index 1
-local function drawHand(hand, sx, sy, hideFirst)
+local function drawHand(hand, sx, sy, hideFirst, animateIndex)
   for i, card in ipairs(hand) do
     local hidden = (i == 1 and hideFirst)
-    drawCard(sx + (i-1)*6, sy, card, hidden)
+    -- Only draw up to the animateIndex if provided
+    if not animateIndex or i <= animateIndex then
+      drawCard(sx + ((i-1)%4)*6, sy + math.floor((i-1)/4)*4, card, hidden)
+    end
   end
 end
 
--- ── HUD / status ─────────────────────────────────────────────
-local function drawHUD(chips, bet)
-  -- Header bar
-  term.setBackgroundColor(C.bg)
-  at(1, 1)
-  term.clearLine()
-  write(" \4 BLACKJACK \4 ", C.gold, C.bg)
-  local chipStr = "Chips: $" .. chips
-  at(w - #chipStr, 1)
-  write(chipStr, C.header, C.bg)
-  if bet > 0 then
-    local betStr = "Bet: $" .. bet
-    at(math.floor((w - #betStr)/2)+1, 1)
-    write(betStr, C.gold, C.bg)
+-- ── Touch/Input Handler ────────────
+local function getAction(zones, keyMap)
+  while true do
+    local ev, p1, p2, p3 = os.pullEvent()
+    if ev == "monitor_touch" then
+      for _, z in ipairs(zones) do
+        if p2 >= z.x and p2 < z.x + z.w and p3 >= z.y and p3 < z.y + z.h then
+          return z.action
+        end
+      end
+    elseif ev == "key" and keyMap and keyMap[p1] then
+      return keyMap[p1]
+    end
   end
+end
+
+-- ── HUD & Buttons ────────────
+local function drawHUD(chips, bet)
+  at(1, 1); term.setBackgroundColor(C.bg); term.clearLine()
+  write(" \4 BLACKJACK \4 ", C.gold, C.bg)
+  local chipStr = "$" .. chips
+  at(w - #chipStr, 1); write(chipStr, C.header, C.bg)
 end
 
 local function drawLabels(dealerTotal, playerTotal, hideDealer)
-  at(1, 3)
-  write("Dealer", C.dim, C.bg)
+  at(2, 3); write("Dealer", C.dim, C.bg)
   if not hideDealer then
-    local dtxt = " (" .. dealerTotal .. ")"
-    write(dtxt, dealerTotal > 21 and C.bust or C.text, C.bg)
+    write(" (" .. dealerTotal .. ")", dealerTotal > 21 and C.bust or C.text, C.bg)
   end
 
-  at(1, 8)
-  write("You   ", C.dim, C.bg)
-  local ptxt = " (" .. playerTotal .. ")"
-  write(ptxt, playerTotal > 21 and C.bust or C.text, C.bg)
+  at(2, 14); write("You", C.dim, C.bg)
+  write(" (" .. playerTotal .. ")", playerTotal > 21 and C.bust or C.text, C.bg)
 end
 
--- ── Button row ───────────────────────────────────────────────
--- buttons = { {label, key}, ... }
 local function drawButtons(buttons, y)
+  local zones = {}
   local totalW = 0
-  for _, b in ipairs(buttons) do totalW = totalW + #b[1] + 4 end
+  for _, b in ipairs(buttons) do totalW = totalW + #b.lbl + 4 end
   local sx = math.floor((w - totalW) / 2) + 1
-  local positions = {}
   at(1, y); term.clearLine()
+  at(1, y+1); term.clearLine()
+  at(1, y+2); term.clearLine()
+  
   for _, b in ipairs(buttons) do
-    local lbl = "[ " .. b[1] .. " ]"
-    positions[#positions+1] = { x=sx, len=#lbl, key=b[2], label=b[1] }
-    at(sx, y)
-    write(lbl, C.btn_fg, C.btn_bg)
-    sx = sx + #lbl + 1
+    local lbl = " " .. b.lbl .. " "
+    table.insert(zones, {x=sx, y=y, w=#lbl, h=3, action=b.act})
+    
+    at(sx, y);   write(string.rep(" ", #lbl), C.btn_fg, C.btn_bg)
+    at(sx, y+1); write(lbl, C.btn_fg, C.btn_bg)
+    at(sx, y+2); write(string.rep(" ", #lbl), C.btn_fg, C.btn_bg)
+    sx = sx + #lbl + 2
   end
-  return positions
+  return zones
 end
 
--- ── Message bar ──────────────────────────────────────────────
-local function msg(text, fg)
-  at(1, h)
-  term.setBackgroundColor(C.bg)
-  term.clearLine()
-  centre(text, h, fg or C.text, C.bg)
-end
-
--- ── Result banner ────────────────────────────────────────────
 local function banner(text, fg)
-  centre(string.rep(" ", #text + 4), 6, fg, fg)
-  centre("  " .. text .. "  ", 6, C.card_bg, fg)
+  centre(string.rep(" ", #text + 4), 11, fg, fg)
+  centre("  " .. text .. "  ", 11, C.card_bg, fg)
 end
 
--- ── Betting screen ───────────────────────────────────────────
+-- ── Screens ────────────
 local function betScreen(chips)
   cls()
   drawHUD(chips, 0)
-
-  local bets   = {10, 25, 50, 100}
+  local bets = {10, 25, 50, 100}
   local chosen = 10
-  local dirty  = true
-
+  
   while true do
-    if dirty then
-      dirty = false
-      -- clean area
-      for row = 3, h-1 do at(1,row); term.clearLine() end
+    for row = 3, h do at(1,row); term.clearLine() end
+    centre("Place Your Bet", 6, C.gold, C.bg)
+    centre("Current: $" .. chosen, 8, C.text, C.bg)
 
-      centre("Place Your Bet", 4, C.gold, C.bg)
-      centre("Current Bet: $" .. chosen, 5, C.text, C.bg)
-
-      -- Bet chips row
-      local bx = math.floor((w - (#bets * 6 - 1)) / 2) + 1
-      at(1, 7); term.clearLine()
-      for i, b in ipairs(bets) do
-        local lbl = "$" .. b
-        local fg  = (b == chosen) and C.gold or C.btn_fg
-        local bg  = (b == chosen) and C.felt  or C.btn_bg
-        at(bx, 7)
-        write(" " .. lbl .. " ", fg, bg)
-        bx = bx + #lbl + 3
-      end
-
-      centre("[ DEAL  (Enter) ]", 10, C.btn_fg, C.btn_bg)
-      centre("Use < > arrows to change bet", 12, C.dim, C.bg)
-
-      if chips < chosen then
-        centre("Not enough chips!", 14, C.bust, C.bg)
-      end
+    local zones = {}
+    local bx = math.floor((w - (#bets * 6 - 1)) / 2) + 1
+    for i, b in ipairs(bets) do
+      local lbl = "$" .. b
+      local bg = (b == chosen) and C.felt or C.btn_bg
+      table.insert(zones, {x=bx, y=11, w=#lbl+2, h=3, action=b})
+      at(bx, 11); write(string.rep(" ", #lbl+2), C.text, bg)
+      at(bx, 12); write(" " .. lbl .. " ", C.text, bg)
+      at(bx, 13); write(string.rep(" ", #lbl+2), C.text, bg)
+      bx = bx + #lbl + 3
     end
 
-    local _, key = os.pullEvent("key")
-    if key == keys.left or key == keys.a then
-      local ci = 1
-      for i,b in ipairs(bets) do if b==chosen then ci=i end end
-      chosen = bets[math.max(1, ci-1)]
-      dirty = true
-    elseif key == keys.right or key == keys.d then
-      local ci = 1
-      for i,b in ipairs(bets) do if b==chosen then ci=i end end
-      chosen = bets[math.min(#bets, ci+1)]
-      dirty = true
-    elseif key == keys.enter or key == keys.numPadEnter then
-      if chips >= chosen then
-        return chosen
-      end
-    elseif key == keys.q then
-      return nil  -- quit
-    end
+    local dealZones = drawButtons({{lbl="DEAL", act="deal"}, {lbl="QUIT", act="quit"}}, 17)
+    for _, z in ipairs(dealZones) do table.insert(zones, z) end
+
+    if chips < chosen then centre("Not enough chips!", 21, C.bust, C.bg) end
+
+    local act = getAction(zones, {[keys.enter]="deal", [keys.q]="quit"})
+    if type(act) == "number" then chosen = act
+    elseif act == "deal" and chips >= chosen then return chosen
+    elseif act == "quit" then return nil end
   end
 end
 
--- ── Main game loop ───────────────────────────────────────────
 local function gameScreen(deck, chips, bet)
-  -- Deal initial cards
   local player = { table.remove(deck), table.remove(deck) }
   local dealer = { table.remove(deck), table.remove(deck) }
 
   local function redraw(hideDealer, extraMsg, extraFg)
     cls()
     drawHUD(chips, bet)
-    drawHand(dealer, 2, 3, hideDealer)
-    drawHand(player, 2, 8, false)
+    drawHand(dealer, 2, 4, hideDealer)
+    drawHand(player, 2, 15, false)
     local dt = hideDealer and cardValue(dealer[2].rank) or handTotal(dealer)
     drawLabels(dt, handTotal(player), hideDealer)
-    if extraMsg then
-      banner(extraMsg, extraFg or C.gold)
-    end
+    if extraMsg then banner(extraMsg, extraFg or C.gold) end
   end
 
-  -- Check natural blackjack
+  -- Initial Deal Animation
+  cls()
+  drawHUD(chips, bet)
+  drawLabels("?", "?", true)
+  os.sleep(0.2)
+  for i=1, 2 do
+    player[i] = player[i] or table.remove(deck)
+    drawHand(player, 2, 15, false, i)
+    os.sleep(0.3)
+    dealer[i] = dealer[i] or table.remove(deck)
+    drawHand(dealer, 2, 4, true, i)
+    os.sleep(0.3)
+  end
+  redraw(true)
+
   local playerBJ = handTotal(player) == 21
   local dealerBJ = handTotal(dealer) == 21
 
+  local function waitEnd()
+    local z = drawButtons({{lbl="NEXT HAND", act="next"}}, h-4)
+    getAction(z, {[keys.enter]="next"})
+  end
+
   if playerBJ or dealerBJ then
+    -- Reveal animation
     redraw(false)
     if playerBJ and dealerBJ then
       banner("PUSH — Both Blackjack!", C.push)
-      -- push bet back
     elseif playerBJ then
       banner("BLACKJACK! You win 3:2!", C.win)
       chips = chips + math.floor(bet * 1.5)
     else
-      banner("Dealer Blackjack. You lose.", C.bust)
+      banner("Dealer Blackjack.", C.bust)
       chips = chips - bet
     end
-    msg("Press any key...", C.dim)
-    os.pullEvent("key")
-    return chips
+    waitEnd(); return chips
   end
 
-  -- Player turn
   local stood = false
   while not stood do
     redraw(true)
-
     local pt = handTotal(player)
     if pt > 21 then
       banner("BUST! You lose.", C.bust)
       chips = chips - bet
-      msg("Press any key...", C.dim)
-      os.pullEvent("key")
-      return chips
+      waitEnd(); return chips
     end
 
     local canDouble = (#player == 2 and chips >= bet*2)
-    local btns = { {"Hit (H)", keys.h}, {"Stand (S)", keys.s} }
-    if canDouble then btns[#btns+1] = {"Double (D)", keys.d} end
+    local btns = { {lbl="HIT", act="h"}, {lbl="STAND", act="s"} }
+    if canDouble then table.insert(btns, {lbl="DOUBLE", act="d"}) end
 
-    local positions = drawButtons(btns, h-1)
-    msg("Your total: " .. pt, C.text)
+    local zones = drawButtons(btns, h-4)
+    local act = getAction(zones, {[keys.h]="h", [keys.s]="s", [keys.d]="d"})
 
-    local _, key = os.pullEvent("key")
-    if key == keys.h then
+    if act == "h" then
       player[#player+1] = table.remove(deck)
-    elseif key == keys.s then
+      -- Hit animation
+      redraw(true)
+      os.sleep(0.2)
+    elseif act == "s" then
       stood = true
-    elseif key == keys.d and canDouble then
-      bet   = bet * 2
+    elseif act == "d" and canDouble then
+      bet = bet * 2
       player[#player+1] = table.remove(deck)
+      redraw(true)
+      os.sleep(0.4)
       stood = true
     end
   end
 
-  -- Final player bust check
   local pt = handTotal(player)
   if pt > 21 then
     redraw(false)
     banner("BUST! You lose.", C.bust)
     chips = chips - bet
-    msg("Press any key...", C.dim)
-    os.pullEvent("key")
-    return chips
+    waitEnd(); return chips
   end
 
-  -- Dealer turn (reveal + hit until 17)
+  -- Dealer Flip Animation
   redraw(false)
   os.sleep(0.6)
+
   while handTotal(dealer) < 17 do
     dealer[#dealer+1] = table.remove(deck)
     redraw(false)
@@ -355,9 +335,8 @@ local function gameScreen(deck, chips, bet)
   local dt = handTotal(dealer)
   redraw(false)
 
-  -- Determine winner
   if dt > 21 then
-    banner("Dealer Busts! You WIN!", C.win)
+    banner("Dealer Busts! WIN!", C.win)
     chips = chips + bet
   elseif pt > dt then
     banner("You WIN! (" .. pt .. " vs " .. dt .. ")", C.win)
@@ -369,51 +348,37 @@ local function gameScreen(deck, chips, bet)
     chips = chips - bet
   end
 
-  msg("Press any key...", C.dim)
-  os.pullEvent("key")
+  waitEnd()
   return chips
 end
 
--- ── Title screen ─────────────────────────────────────────────
 local function titleScreen()
   cls()
-  centre("\4\4\4 BLACKJACK \4\4\4", 2, C.gold,   C.bg)
-  centre("ComputerCraft Edition",   3, C.dim,    C.bg)
-  centre(string.rep("-", w-2),      4, C.felt,   C.bg)
-  centre("Beat the dealer to 21",   6, C.text,   C.bg)
-  centre("without going over!",     7, C.text,   C.bg)
-  centre(string.rep("-", w-2),      9, C.felt,   C.bg)
-  centre("[ Press Enter to Start ]",11, C.btn_fg, C.btn_bg)
-  centre("[ Q to Quit ]",          13, C.dim,    C.bg)
+  centre("\4 BLACKJACK \4", 5, C.gold, C.bg)
+  centre(string.rep("-", w-2), 7, C.felt, C.bg)
+  centre("Beat the dealer to 21", 9, C.text, C.bg)
+  centre(string.rep("-", w-2), 11, C.felt, C.bg)
 
-  while true do
-    local _, key = os.pullEvent("key")
-    if key == keys.enter or key == keys.numPadEnter then return true end
-    if key == keys.q then return false end
-  end
+  local zones = drawButtons({{lbl="START GAME", act="start"}, {lbl="QUIT", act="quit"}}, 15)
+  local act = getAction(zones, {[keys.enter]="start", [keys.q]="quit"})
+  return act == "start"
 end
 
--- ── Game over screen ─────────────────────────────────────────
 local function gameOver(chips)
   cls()
-  centre("\4 GAME OVER \4",         3, C.bust,  C.bg)
+  centre("\4 GAME OVER \4", 5, C.bust, C.bg)
   if chips <= 0 then
-    centre("You ran out of chips!",  5, C.text,  C.bg)
+    centre("You ran out of chips!", 8, C.text, C.bg)
   else
-    centre("You cashed out with",    5, C.text,  C.bg)
-    centre("$" .. chips .. "!",      6, C.gold,  C.bg)
+    centre("Cashed out with $" .. chips, 8, C.gold, C.bg)
   end
-  centre("[ Play Again? (Enter) ]", 9, C.btn_fg, C.btn_bg)
-  centre("[ Quit (Q) ]",           11, C.dim,   C.bg)
 
-  while true do
-    local _, key = os.pullEvent("key")
-    if key == keys.enter or key == keys.numPadEnter then return true end
-    if key == keys.q then return false end
-  end
+  local zones = drawButtons({{lbl="PLAY AGAIN", act="play"}, {lbl="QUIT", act="quit"}}, 12)
+  local act = getAction(zones, {[keys.enter]="play", [keys.q]="quit"})
+  return act == "play"
 end
 
--- ── Entry point ──────────────────────────────────────────────
+-- ── Main ────────────
 math.randomseed(os.time())
 
 while true do
@@ -424,22 +389,19 @@ while true do
   shuffle(deck)
 
   while chips > 0 do
-    -- Reshuffle when deck runs low
     if #deck < 20 then
-      deck = newDeck(4)
-      shuffle(deck)
+      deck = newDeck(4); shuffle(deck)
     end
 
     local bet = betScreen(chips)
-    if not bet then break end   -- player quit
+    if not bet then break end
 
     chips = gameScreen(deck, chips, bet)
 
     if chips <= 0 then
       if not gameOver(chips) then goto quit end
       chips = 500
-      deck  = newDeck(4)
-      shuffle(deck)
+      deck = newDeck(4); shuffle(deck)
     end
   end
 
@@ -450,7 +412,5 @@ end
 
 ::quit::
 cls()
-at(1,1)
-term.setTextColor(C.text)
-term.setBackgroundColor(colors.black)
-print("Thanks for playing Blackjack!")
+term.restore()
+print("Thanks for playing.")
