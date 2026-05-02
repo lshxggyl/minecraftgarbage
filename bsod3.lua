@@ -48,7 +48,7 @@ local function audioLoop()
     
     while true do
         for _, s in pairs(speakers) do
-            s.playNote(instruments[math.random(1, #instruments)], 3, math.random(0, 24))
+            s.playNote(instruments[math.random(1, #instruments)], 0.5, math.random(0, 24))
         end
         os.sleep(math.random(2, 10) / 100) 
     end
