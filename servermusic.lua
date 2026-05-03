@@ -791,24 +791,25 @@ local function audioLoop()
             return
         end
 
+        -- THE FIX: Hard-stop all speakers to clear leftover buffer junk.
+        -- This guarantees they all start the new track at exact 0.0s.
+        for i = 1, #speakers do
+            speakers[i].stop()
+        end
+
         while true do
             local chunk = res.read(CHUNK)
             if not chunk or #chunk == 0 then break end
 
             local pcm = {}
             for i = 1, #chunk do
-                -- Unsigned 0-255 down to Signed -128 to 127. 
-                -- Zero branching. Blazing fast.
                 pcm[i] = string.byte(chunk, i) - 128
             end
 
-            -- Block until the primary speaker buffer has room
             while not speakers[1].playAudio(pcm, VOLUME) do
                 os.pullEvent("speaker_audio_empty")
             end
             
-            -- Primary is ready, which means they are all ready.
-            -- Blast the exact same chunk to the rest of the array.
             for i = 2, #speakers do
                 speakers[i].playAudio(pcm, VOLUME)
             end
