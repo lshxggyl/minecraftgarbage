@@ -783,7 +783,7 @@ local function audioLoop()
     -- Uses cc.audio.dfpwm to decode chunks as they arrive and
     -- feeds them to speaker.playAudio(), waiting on the
     -- "speaker_audio_empty" event whenever the speaker buffer is full.
-local function streamTrack(filename)
+llocal function streamTrack(filename)
         local url = SERVER .. "/play/" .. filename
         local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
         if not res then
@@ -793,23 +793,30 @@ local function streamTrack(filename)
 
         while true do
             local chunk = res.read(CHUNK)
-            if not chunk or #chunk == 0 then break end           -- EOF
+            if not chunk or #chunk == 0 then break end
 
             local pcm = {}
             for i = 1, #chunk do
-                local b = string.byte(chunk, i)
-                -- Convert unsigned 0-255 to CC's expected signed -128 to 127
-                if b > 127 then 
-                    b = b - 256 
-                end
-                pcm[i] = b
+                -- Unsigned 0-255 down to Signed -128 to 127. 
+                -- Zero branching. Blazing fast.
+                pcm[i] = string.byte(chunk, i) - 128
             end
 
-            -- speaker.playAudio returns false when its buffer is full;
-            -- we yield here so the visual loop keeps running.
+            -- Block until the primary speaker buffer has room
             while not speakers[1].playAudio(pcm, VOLUME) do
                 os.pullEvent("speaker_audio_empty")
             end
+            
+            -- Primary is ready, which means they are all ready.
+            -- Blast the exact same chunk to the rest of the array.
+            for i = 2, #speakers do
+                speakers[i].playAudio(pcm, VOLUME)
+            end
+        end
+
+        res.close()
+        os.pullEvent("speaker_audio_empty")
+    end
         end
 
         res.close()
