@@ -817,13 +817,6 @@ local function audioLoop()
         res.close()
         os.pullEvent("speaker_audio_empty")
     end
-        end
-
-        res.close()
-
-        -- Drain whatever's still buffered before moving to next track
-        os.pullEvent("speaker_audio_empty")
-    end
 
     -- ── GC TRAP FALLBACK ────────────────────────────────────────────
     -- Used when the music server isn't running.
