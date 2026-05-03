@@ -349,6 +349,25 @@ local fake_history = {
     "the void called how to ignore the void",
     "the void left a voicemail what does it want",
     "void voicemail said see you soon is that bad",
+    "how the fuck to avoid lava seriously",
+    "why am i so goddamn bad at everything",
+    "how to stop being a complete piece of shit player",
+    "fucking minecraft tutorial for absolute morons",
+    "why do i deserve all this shit happening",
+    "am i retarded or is this game rigged personally",
+    "can lava be sued for discrimination",
+    "how to not be a worthless fucking waste of air",
+    "why does the asshole warden keep killing me",
+    "creeper diplomacy fails every fucking time why",
+    "why is a goddamn chicken better than me",
+    "my pig is smarter than me what do i do",
+    "how to cope with being absolute dogshit",
+    "why do i keep making the same fucking mistakes",
+    "can i refund my skill deficit",
+    "is there a game mode for completely fucked people",
+    "how to explain failing at a game to myself",
+    "why am i this fucking incompetent",
+    "what the fuck is actually wrong with me",
 }
 
 local fake_dms = {
@@ -434,6 +453,37 @@ local fake_dms = {
     "The admin is considering Geralds application",
     "Gerald got approved I need a moment",
     "Gerald has my account now this seems fair actually",
+    "Dude why the fuck do you suck so much",
+    "Holy shit you are actually incompetent",
+    "I just watched you die to the same lava AGAIN",
+    "What the absolute fuck was that",
+    "How are you this fucking bad at a game",
+    "Bro did you seriously just punch the chicken",
+    "The chicken is going to destroy you I swear",
+    "You know what youre actually fucking hopeless",
+    "I cannot watch this anymore this is painful",
+    "Why do you keep doing the same stupid shit",
+    "The admin is losing his mind over your deaths",
+    "We have a death counter just for you",
+    "Your shit is legendary here in the worst way",
+    "Honestly youre kind of the servers mascot",
+    "The mascot of absolute fucking failure",
+    "Did you seriously try to negotiate with a creeper",
+    "The creeper explosion was your fault not lag",
+    "Everyone has the logs stop making shit up",
+    "Your unban appeals are physically painful to read",
+    "They keep getting rejected because youre actually bad",
+    "Not because youre being targeted youre just shit",
+    "The void didnt target you you walked into it",
+    "The void was just chilling you invited yourself",
+    "Jesus Christ dude just install peaceful mode",
+    "Nothing is changing if youre still this fucking useless",
+    "Gerald the pig is making us all look bad standing next to you",
+    "The fucking chicken has more server respect than you",
+    "Even the mobs are embarrassed for you at this point",
+    "Admin said you single handedly justified a grief rollback",
+    "Your dirt cubes are getting wiped weekly now",
+    "This is the servers charity project at this point",
 }
 
 local conspiracy_theories = {
@@ -487,6 +537,43 @@ local conspiracy_theories = {
     "The chicken does not forgive. The chicken does not forget.",
     "Gerald has been quietly accumulating your items for weeks.",
     "The void has your home coordinates saved.",
+    "Mojang is actively making the game harder just for you.",
+    "Your IP address is flagged as 'skill issue' in the core code.",
+    "The random number generator is biased against fucking you.",
+    "Lava literally seeks you out. It has your scent.",
+    "Every skeleton in the server has your face as target practice.",
+    "Creepers specifically request to raid your area.",
+    "The warden can hear your exact thoughts. They are shit.",
+    "Phantoms have your sleep schedule memorized. No sleep.",
+    "The void is sentient. It knows you personally. Hates you.",
+    "Admin has a folder just titled YOUR FUCKUPS (47GB).",
+    "Your death compilation video is used in staff meetings.",
+    "As an example of what not to do. Ever.",
+    "The server's lag spikes correlate exactly with your respawns.",
+    "When you are not online the server runs at 20TPS.",
+    "When you join it instantly drops to 2TPS.",
+    "The server literally suffers when you exist on it.",
+    "Your PC fan is louder when you play. The game knows.",
+    "Mojang monitors your account specifically for new bugs.",
+    "Your deathlog is used in Java error classes now.",
+    "You have inspired three new admin plugins.",
+    "All designed to contain your fuckery specifically.",
+    "The respawn screen added a special zone for your name.",
+    "It loads first. As a priority.",
+    "Gerald the pig actually has admin access to the server.",
+    "Gerald runs the economy. Gerald is winning.",
+    "The chicken submitted a formal complaint. It was 93 pages.",
+    "The chicken case is now criminal. Your fault.",
+    "The void made a TikTok account. It is about you.",
+    "@thevoid_hatesu is trending. It is you.",
+    "The server literally has a #you-fucked-up-again channel.",
+    "It updates every time you spawn.",
+    "Admin bets money on your next death time.",
+    "The payout is better than the weekly lottery.",
+    "You are funding the admin's retirement through pure incompetence.",
+    "The chicken is saving for a house from your donations.",
+    "The chicken has a better 401k than you.",
+    "Gerald is going to college on your failure tuition.",
 }
 
 local fake_achievements = {
@@ -561,6 +648,22 @@ local fake_errors = {
     "EMPTY_THREAD_WHERE_SKILL_SHOULD_BE",
     "SYSTEM_SERVICE_EXCEPTION_TO_EVERYTHING",
     "VOID_PROXIMITY_FATAL_ATTRACTION_ERROR",
+    "FUCKED_UP_CORE_DUMP_SYSTEM_FAILURE",
+    "CRITICAL_SHIT_DECISION_ERROR",
+    "GODDAMN_MEMORY_LEAK_IN_BRAIN",
+    "FUCK_UP_EXCEPTION_NOT_CAUGHT",
+    "SHIT_PILE_BUFFER_OVERFLOW",
+    "COCKUP_PARAMETER_ERROR",
+    "FUCKWIT_PROCESS_TERMINATED",
+    "ASS_CLOWN_MEMORY_CORRUPTION",
+    "BULLSHIT_EXCEPTION_THROWN",
+    "DICK_WAFFLE_THREAD_FAILURE",
+    "TWAT_KERNEL_PANIC_IMMINENT",
+    "SHIT_REFERENCE_POINTER_NULL",
+    "FUCKHEAD_STACK_SMASHING_DETECTED",
+    "RETARD_FLAG_NOT_SET",
+    "ASSMONGER_RESOURCE_EXHAUSTED",
+    "COCKSWAGGLE_DEADLOCK_DETECTED",
 }
 
 local fake_processes = {
@@ -588,6 +691,26 @@ local fake_processes = {
     "chicken_diplomat.exe (FAILED)",
     "dirt_hoarding_scheduler.sys",
     "unban_attorney.exe (IMAGINARY)",
+    "fuck_up_manager.exe (CRITICAL)",
+    "bullshit_compiler.dll (ALWAYS ON)",
+    "shit_decision_engine.sys (OVERDRIVE)",
+    "asshole_coordinator.bat (100% USAGE)",
+    "fuckwit_process_multiplier.exe (MAXIMUM)",
+    "dogshit_optimizer.dll (PERMANENTLY BROKEN)",
+    "absolute_idiot_kernel.sys (FATAL CRASH LOOP)",
+    "cock_up_monitor.exe (WATCHING YOU FAIL)",
+    "failure_multiplier.dll (x999999)",
+    "incompetence_accelerator.bat (FULL SPEED)",
+    "braincell_eater.exe (STARVING)",
+    "skill_destroyer.sys (OBLITERATION MODE)",
+    "respect_eraser.dll (OPERATION SUCCESSFUL)",
+    "dignity_vacuum.exe (EMPTY)",
+    "hope_killer.bat (EXTINCT)",
+    "future_destroyer.sys (ACTIVATED)",
+    "sweat_producer.dll (HYPERDRIVE)",
+    "panic_inducer.exe (MAXIMUM VOLUME)",
+    "ragequit_timer.bat (COUNTDOWN)",
+    "despair_amplifier.sys (BOOSTED)",
 }
 
 local colors_list = {
@@ -2422,9 +2545,235 @@ local function phase_dating()
 end
 
 -- ============================================================
--- PHASE: FAKE WARRANTY VOID NOTICE
+-- PHASE: FUCK UP COMPILATION
 -- ============================================================
-local function phase_warranty()
+local function phase_fuckups()
+    blast(colors.black, colors.red)
+    center(2, "YOUR GREATEST FUCK UPS: A COMPILATION")
+    fillRow(3, "-", colors.red, colors.black)
+    local fuckups = {
+        "Punched tree with -3 IQ energy",
+        "Fell down the hole you dug. Twice.",
+        "Gravel. You trusted gravel. GRAVEL.",
+        "Fought skeleton with wooden fucking sword",
+        "Said lava was orange? Was surprised orange=hot",
+        "Built base entirely from dirt. ALL OF IT.",
+        "Spent 4 hours mining: yielded dirt",
+        "Fell in same lava 47 times. SAME LAVA.",
+        "Negotiated with creeper. Creeper won.",
+        "Tried to tame chicken. Chicken tamed you instead.",
+        "Punched iron golem IN FRONT OF ADMIN",
+        "Lost full diamond set to skeleton with no armor",
+        "Dug straight down. Got shocked it didn't work.",
+        "Confused spawn point with home base",
+        "Set your respawn in the nether. Why.",
+        "Tried to cross nether lava lake. With wood.",
+        "Said Herobrine isn't real. You made him sad.",
+        "Slept 0 times. Got murdered by phantoms.",
+        "Woke ancient city in deepest cave. On purpose.",
+        "Punched warden. Warden was not impressed.",
+        "Your 47 page chicken incident report",
+        "Lost account to Gerald. LOST IT.",
+        "Got beaten in combat by a bat",
+        "Tried to farm without dirt somehow",
+        "Collected 40000 dirt for... reason?",
+        "Named your pig Gerald. Now addicted.",
+        "Gerald applied for YOUR spot. He got it.",
+        "Filed 27 unban appeals in one week",
+        "Claimed lag while logs showed zero lag",
+        "Admin made a screenshot folder just for you",
+        "Your death montage is 6 hours long",
+        "Server has betting pool on next death cause",
+        "They use your plays in admin training",
+        "For what NOT to do. Ever.",
+        "Your IP has been logged as 'Problem Player'",
+        "You are case study in server guide",
+        "Title: The Worst We've Seen",
+    }
+    local row = 4
+    for _, fuckup in ipairs(fuckups) do
+        if row >= h then break end
+        m.setTextColor(rnd(colors_list))
+        tw(2, row, (">> FUCKUP: " .. fuckup), 0.012)
+        row = row + 1
+        os.sleep(0.15)
+    end
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: SWEAR JAR AUDIT
+-- ============================================================
+local function phase_swearjar()
+    blast(colors.black, colors.cyan)
+    center(2, "SWEAR JAR AUDIT - YOUR EXPENSE REPORT")
+    fillRow(3, "-", colors.cyan, colors.black)
+    local jar = {
+        {"Saying fuck",            math.random(2000, 9999), "fuck"},
+        {"Saying shit",            math.random(1500, 8999), "shit"},
+        {"Saying goddamn",         math.random(800, 6999), "goddamn"},
+        {"Saying ass",             math.random(500, 4999), "ass"},
+        {"Saying bitch",           math.random(300, 3999), "bitch"},
+        {"Saying cunt",            math.random(200, 2999), "cunt"},
+        {"Saying cock",            math.random(400, 3999), "cock"},
+        {"Swearing at creeper",    math.random(100, 999), "times"},
+        {"Swearing at lava",       math.random(500, 4999), "times"},
+        {"Swearing at skeleton",   math.random(200, 1999), "times"},
+        {"Swearing at warden",     math.random(10, 500), "times"},
+        {"Swearing at chicken",    math.random(50, 999), "times"},
+        {"Swearing at Gerald",     math.random(1, 10), "times (unlikely)"},
+        {"Swearing at self",       math.random(2000, 9999), "times"},
+        {"Rage quitting profanities", math.random(500, 4999), "per session"},
+    }
+    local total = 0
+    local row = 4
+    for _, item in ipairs(jar) do
+        if row >= h - 2 then break end
+        m.setTextColor(rnd(colors_list))
+        local line = string.format("%-25s %6d %s", item[1]:sub(1, 25), item[2], item[3])
+        tw(2, row, line, 0.010)
+        total = total + item[2]
+        row = row + 1
+        os.sleep(0.12)
+    end
+    m.setTextColor(colors.yellow)
+    fillRow(row + 1, "-", colors.yellow, colors.black)
+    center(row + 2, ("TOTAL OWED: $" .. (total * 0.25)))
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: PAIN AND SUFFERING INSURANCE CLAIM
+-- ============================================================
+local function phase_insurance()
+    blast(colors.black, colors.white)
+    center(2, "INSURANCE CLAIM: PAIN & SUFFERING")
+    fillRow(3, "=", colors.gray, colors.black)
+    local claim = {
+        "Claim #" .. math.random(10000, 99999),
+        "Claimant: " .. genInsult(),
+        "Incident Type: Existing On Server",
+        "Frequency: Fucking constant",
+        "",
+        "DETAILED DESCRIPTION OF SUFFERING:",
+        " - Lava-related trauma (recurring)",
+        " - Skeleton-induced PTSD",
+        " - Chicken-based anxiety disorder",
+        " - Void-proximity fear disorder",
+        " - Warden-adjacent nightmares",
+        " - Gerald-induced inadequacy complex",
+        " - General existential dread",
+        " - Pervasive sense of hopelessness",
+        "",
+        "FINANCIAL DAMAGES:",
+        " - Diamonds lost: Incalculable",
+        " - Emotional damage: Immeasurable",
+        " - Self-esteem: $0 value",
+        " - Sanity: Can't put a price on it",
+        " - Account reputation: Negative $9999",
+        "",
+        "REQUESTED COMPENSATION:",
+        " - Full server refund: $0 (never paid)",
+        " - Gerald's diamond stash",
+        " - Chicken relocation fund",
+        " - Therapy sessions: Infinite",
+        " - New identity: Approved",
+        "",
+        "CLAIM STATUS: **REJECTED**",
+        "REASON: Skill issue not covered under policy",
+    }
+    local row = 4
+    for _, line in ipairs(claim) do
+        if row >= h then break end
+        if line == "" then
+            row = row + 1
+        else
+            m.setTextColor(line:sub(1,1) == " " and colors.lightGray or colors.white)
+            tw(2, row, line, 0.014)
+            row = row + 1
+        end
+        os.sleep(0.07)
+    end
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: ANGRY LETTER FROM SERVER OWNER
+-- ============================================================
+local function phase_angrymail()
+    blast(colors.black, colors.red)
+    center(2, "CERTIFIED FUCKING LETTER FROM ADMIN")
+    fillRow(3, "-", colors.red, colors.black)
+    local letter = {
+        "Listen you absolute fuckwit.",
+        "",
+        "I am DONE. FUCKING DONE WITH YOUR SHIT.",
+        "",
+        "Every single goddamn day it is the same bullshit.",
+        "You die. You blame lag. THE LOGS SAY DIFFERENT.",
+        "",
+        "You have died " .. math.random(400, 999) .. " times this month.",
+        "To THE SAME FUCKING LAVA.",
+        "IN THE SAME FUCKING SPOT.",
+        "THAT YOU DUG YOURSELF.",
+        "",
+        "Your bases get griefed because they are",
+        "FUCKING DIRT BLOCKS. FOUR DIRT WALLS.",
+        "",
+        "You are actively making the server WORSE.",
+        "Your dirt is causing lag.",
+        "YOUR FUCKING DIRT.",
+        "",
+        "I am ONE MORE DEATH AWAY from banning you personally.",
+        "I mean it. Not a joke anymore.",
+        "If you die one more time to lava",
+        "I am IP banning your entire household.",
+        "",
+        "STAY AWAY FROM FUCKING LAVA.",
+        "It is LITERALLY ORANGE.",
+        "It HISSES at you.",
+        "It GLOWS.",
+        "WHAT DO YOU NEED???",
+        "",
+        "And that fucking chicken.",
+        "DO NOT FIGHT THE CHICKEN.",
+        "YOU WILL LOSE. YOU ALWAYS LOSE.",
+        "The chicken is 8/8. You are 0/infinite.",
+        "",
+        "Gerald is now a server moderator.",
+        "Gerald has admin rights.",
+        "Gerald answers to nobody.",
+        "ESPECIALLY NOT TO YOU.",
+        "",
+        "Your unban appeals are rejected automatically now.",
+        "I wrote a bot. It takes 0.5 seconds.",
+        "The bot laughs. I laugh. Gerald laughs.",
+        "Even the chicken clucks dismissively.",
+        "",
+        "This is your final warning.",
+        "Make it fucking count.",
+        "",
+        "Regards (no regards),",
+        "Admin Steve",
+        "(Furious beyond measure)",
+    }
+    local row = 4
+    for _, line in ipairs(letter) do
+        if row >= h then break end
+        if line == "" then
+            row = row + 1
+        else
+            m.setTextColor(line:sub(1,1) == " " and colors.lightGray or colors.red)
+            tw(2, row, line, 0.013)
+            row = row + 1
+        end
+        os.sleep(0.06)
+    end
+    os.sleep(5)
+end
+
+-- ============================================================
+-- PHASE: WARRANTY
     blast(colors.black, colors.white)
     center(2, "WARRANTY VOID NOTICE")
     center(3, "Ref #" .. math.random(10000,99999))
@@ -2486,7 +2835,8 @@ local phases = {
     phase_horoscope, phase_will,      phase_tos,        phase_job,
     phase_stars,     phase_email,     phase_google,     phase_fortune,
     phase_police,    phase_therapy,   phase_auction,    phase_dating,
-    phase_warranty,
+    phase_warranty,  phase_fuckups,   phase_swearjar,   phase_insurance,
+    phase_angrymail,
 }
 
 local function visualLoop()
