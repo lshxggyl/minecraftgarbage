@@ -759,19 +759,19 @@ local function audioLoop()
 
     -- ── CONFIG ──────────────────────────────────────────────────────
     -- Replace with your PC's local IP.  The server prints this for you.
-    local SERVER  = "http://192.168.18.18:4800"
+    local SERVER  = "https://residency-muster-bulge.ngrok-free.dev"
     local VOLUME  = 3.0   -- speaker volume 0.0 – 3.0
     local CHUNK   = 16 * 1024   -- 16 KB per HTTP read (~2.7 s of audio)
 
     -- ── HELPERS ─────────────────────────────────────────────────────
     local function checkServer()
-        local ok = http.get(SERVER .. "/status")
+        local ok = http.get(SERVER .. "/status", {["ngrok-skip-browser-warning"]="true"})
         if ok then ok.close(); return true end
         return false
     end
 
     local function getTracks()
-        local r = http.get(SERVER .. "/tracks")
+        local r = http.get(SERVER .. "/tracks", {["ngrok-skip-browser-warning"]="true"})
         if not r then return {} end
         local raw = r.readAll(); r.close()
         local t = {}
@@ -785,7 +785,7 @@ local function audioLoop()
     -- "speaker_audio_empty" event whenever the speaker buffer is full.
     local function streamTrack(filename)
         local url = SERVER .. "/play/" .. filename
-        local res, err = http.get(url, {}, true)   -- true = binary mode
+        local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
         if not res then
             print("[music] fetch failed: " .. tostring(err))
             return
