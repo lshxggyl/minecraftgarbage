@@ -735,21 +735,33 @@ local function genTriple()  return "CERTIFIED " .. rnd(adj) .. ", " .. rnd(adj) 
 
 -- ============================================================
 -- ============================================================
+-- ============================================================
 -- AUDIO ENGINE: GAMECUBE STARTUP TRAP REMIX
 -- ============================================================
--- CC pitch reference (0=F#3, each +1 = 1 semitone):
---   G3=1   C4=6   G4=13  B4=17  D5=20  F#5=24(max)
 --
--- Structure:
---   INTRO  — GC melody plays cold over a single bass thud
---   DROP   — trap beat kicks in (140 BPM, 16th-note grid)
---   HOOK   — GC arpeggio riff re-enters every 8 bars (beat 3-4)
---   ROLL   — rapid hi-hat triplet burst every 4th bar
+-- CC PITCH REFERENCE  (0 = F#3, each step = 1 semitone):
+--   D4 = 8    F#4 = 12   A4 = 15   C5 = 18
+--   D5 = 20   F#5 = 24   (24 is the maximum pitch)
+--
+-- THE FULL GC STARTUP HAS FOUR PHASES:
+--   1) SLAM       – Low resonant chord hit (logo appears)
+--   2) PINGS      – 6 ascending sparkle pings as the cube forms;
+--                   they come in three pairs: D4×2 → F#4×2 → A4×2,
+--                   each pair slightly louder than the last
+--   3) ARPEGGIO   – Main rising phrase: D4 → F#4 → A4 → D5
+--                   Notes accelerate slightly as pitch rises
+--   4) THE DING   – F#5 (pitch 24, max), triple-layered,
+--                   sustained ring-out before the trap drops
+--
+-- AFTER THE INTRO:
+--   Trap beat runs at 140 BPM on a 16-step / 16th-note grid.
+--   The GC arpeggio re-enters as a hook every 8 bars at beat 3.
+--   Triplet hi-hat rolls fire every 4 bars for tension.
 -- ============================================================
 local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
-    -- Play simultaneously on every connected speaker
+    -- Fire on every connected speaker simultaneously
     local function n(inst, vol, pitch)
         for _, s in pairs(speakers) do
             pcall(function()
@@ -758,125 +770,185 @@ local function audioLoop()
         end
     end
 
-    -- ── TIMING: 140 BPM ──────────────────────────────────────────────
-    local t = 0.107   -- one 16th note  (60 / (140 × 4) ≈ 0.107 s)
-    -- Note: CC sleeps round up to the nearest server tick (~0.05 s),
-    -- so this is approximate but sounds right at game speed.
+    -- 140 BPM → 16th note = 60/(140×4) ≈ 0.107 s
+    -- CC rounds sleeps to the nearest tick (~0.05 s), which is fine.
+    local t = 0.107
 
-    -- ── GAMECUBE MELODY ──────────────────────────────────────────────
-    -- Approximation of the GC startup arpeggio: G4 → B4 → D5 → F#5
-    -- Triple-layered for that metallic Nintendo sparkle.
+    -- ════════════════════════════════════════════════════════════
+    -- PHASE 1: SLAM  –  the moment the GameCube logo appears.
+    -- A low, resonant chord hit: kick + bass + sub + didgeridoo
+    -- for as much weight as CC can produce.
+    -- ════════════════════════════════════════════════════════════
+    local function gc_slam()
+        n("basedrum",   3.0,  8)   -- kick transient
+        n("bass",       3.0,  8)   -- D4 bass rumble
+        n("bit",        1.5,  8)   -- 8-bit sub layer
+        n("didgeridoo", 2.0,  8)   -- extra low-end mass
+        os.sleep(t * 7)             -- let it breathe / resonate
+    end
 
-    local function gc_intro()
-        -- [1] Bass thud — the "logo slam" hit
-        n("basedrum", 3.0,  1)   -- kick
-        n("bass",     3.0,  1)   -- deep low 808 rumble
-        n("bit",      1.2,  1)   -- 8-bit sub layer
-        os.sleep(t * 8)           -- 8 steps of resonance / suspense
+    -- ════════════════════════════════════════════════════════════
+    -- PHASE 2: SPARKLE PINGS
+    -- 6 short chime hits in 3 ascending pairs:
+    --   pair 1  →  D4  D4   (pitch 8,  8)
+    --   pair 2  →  F#4 F#4  (pitch 12, 12)
+    --   pair 3  →  A4  A4   (pitch 15, 15)
+    -- Within each pair the notes are close together;
+    -- between pairs there is a slightly longer gap.
+    -- Volume increases across the three pairs (cube solidifying).
+    -- ════════════════════════════════════════════════════════════
+    local function gc_pings()
+        local pairs_data = {
+            {p=8,  v=1.4},   -- pair 1: D4
+            {p=12, v=1.65},  -- pair 2: F#4
+            {p=15, v=1.9},   -- pair 3: A4
+        }
+        for _, pd in ipairs(pairs_data) do
+            -- first ping of pair
+            n("chime",          pd.v,       pd.p)
+            n("iron_xylophone", pd.v * 0.4, pd.p)
+            os.sleep(t * 1.5)   -- short within-pair gap
+            -- second ping of pair
+            n("chime",          pd.v + 0.1,  pd.p)
+            n("iron_xylophone", pd.v * 0.45, pd.p)
+            os.sleep(t * 2.5)   -- longer between-pair gap
+        end
+        os.sleep(t * 1)   -- breath before the arpeggio
+    end
 
-        -- [2] Rising arpeggio — G4, B4, D5
-        n("chime",          2.0, 13)   -- G4
-        n("iron_xylophone", 0.7, 13)
+    -- ════════════════════════════════════════════════════════════
+    -- PHASE 3: MAIN ARPEGGIO  –  D4 → F#4 → A4 → D5
+    -- The notes accelerate slightly as they rise (characteristic
+    -- of the actual GC startup feel).  Each note triple-layered
+    -- on chime + iron_xylophone + bell for Nintendo sparkle.
+    -- ════════════════════════════════════════════════════════════
+    local function gc_arpeggio()
+        -- D4  –  longest gap (slowest, at the bottom)
+        n("chime",          2.0,  8)
+        n("iron_xylophone", 0.8,  8)
+        os.sleep(t * 3)
+
+        -- F#4
+        n("chime",          2.1, 12)
+        n("iron_xylophone", 0.9, 12)
+        os.sleep(t * 2.5)
+
+        -- A4  –  bell joins from here upward
+        n("chime",          2.3, 15)
+        n("iron_xylophone", 1.0, 15)
+        n("bell",           1.3, 15)
         os.sleep(t * 2)
 
-        n("chime",          2.0, 17)   -- B4
-        n("iron_xylophone", 0.7, 17)
-        os.sleep(t * 2)
+        -- D5  –  shorter gap, building momentum
+        n("chime",          2.5, 20)
+        n("iron_xylophone", 1.1, 20)
+        n("bell",           1.6, 20)
+        os.sleep(t * 1.5)
+    end
 
-        n("chime",          2.2, 20)   -- D5
-        n("bell",           1.5, 20)
-        n("iron_xylophone", 0.9, 20)
-        os.sleep(t * 2)
-
-        -- [3] THE DING — F#5, maximum pitch, full triple stack
-        --     This is the iconic GC "BWAAAA" final note
+    -- ════════════════════════════════════════════════════════════
+    -- PHASE 4: THE BIG DING  –  F#5, pitch 24, maximum CC pitch.
+    -- Four instruments layered: chime + bell + iron_xylophone + pling
+    -- This is the iconic final note.  Rings out for ~2 bars before
+    -- the trap beat drops.
+    -- ════════════════════════════════════════════════════════════
+    local function gc_ding()
         n("chime",          3.0, 24)
         n("bell",           2.5, 24)
-        n("iron_xylophone", 1.5, 24)
-        os.sleep(t * 18)   -- long ring-out before the drop
-        -- Total: 8 + 2+2+2 + 18 = 32 steps = exactly 2 bars ✓
+        n("iron_xylophone", 2.0, 24)
+        n("pling",          1.3, 24)
+        os.sleep(t * 20)   -- sustained ring-out
     end
 
-    -- Short hook re-used mid-beat (covers exactly 8 steps = beat 3 + 4)
+    -- Full cold intro (all four phases in sequence)
+    local function gc_full_intro()
+        gc_slam()
+        gc_pings()
+        gc_arpeggio()
+        gc_ding()
+    end
+
+    -- ════════════════════════════════════════════════════════════
+    -- GC HOOK  –  condensed version injected mid-beat every 8 bars.
+    -- Plays only the top of the arpeggio (A4 → D5 → F#5) so it
+    -- feels like a callback to the intro without interrupting flow.
+    -- Covers exactly 8 steps (= beat 3 + beat 4 of the bar).
+    -- ════════════════════════════════════════════════════════════
     local function gc_hook()
-        n("chime",          1.8, 17)   -- B4
-        n("iron_xylophone", 0.5, 17)
+        -- A4  (t*2)
+        n("chime",          1.8, 15); n("iron_xylophone", 0.6, 15)
         os.sleep(t * 2)
-
-        n("chime",          2.0, 20)   -- D5
-        n("bell",           1.2, 20)
+        -- D5  (t*2)
+        n("chime",          2.0, 20); n("bell", 1.3, 20)
+        n("iron_xylophone", 0.8, 20)
         os.sleep(t * 2)
-
-        n("chime",          2.4, 24)   -- F#5 — the ding
-        n("bell",           2.0, 24)
-        n("iron_xylophone", 1.2, 24)
+        -- F#5 ding  (t*4)
+        n("chime",          2.5, 24); n("bell", 2.0, 24)
+        n("iron_xylophone", 1.3, 24)
         os.sleep(t * 4)
-        -- Total: 2+2+4 = 8 steps ✓ (exactly replaces steps 9–16)
+        -- 2 + 2 + 4 = 8 steps ✓ (replaces steps 9–16 exactly)
     end
 
-    -- ── TRAP BEAT PATTERN (16 steps per bar) ─────────────────────────
+    -- ════════════════════════════════════════════════════════════
+    -- TRAP BEAT  –  140 BPM, 16th-note grid, 16 steps per bar.
     --
-    --   Step:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-    --   Kick:  K  .  .  .  .  .  K  .  K  .  .  K  .  .  .  .
-    --   Snare: .  .  .  .  S  .  .  .  .  .  .  .  S  .  .  .
-    --   Hat:   H  H  H  H  H  H  H  H  H  H  H  H  H  H  H  H
-    --   808:   8  .  .  .  .  .  8  .  8  .  .  8  .  .  .  .
+    --  Step:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+    --  Kick:  K  .  .  .  .  .  K  .  K  .  .  K  .  .  .  .
+    --  Snare: .  .  .  .  S  .  .  .  .  .  .  .  S  .  .  .
+    --  Hat:   H  H  H  H  H  H  H  H  H  H  H  H  H  H  H  H
+    --  808:   B  .  .  .  .  .  B  .  B  .  .  B  .  .  .  .
     --
-    -- Kick on 1, syncopated 7, beat-3 (9), and the trap flam on 12.
-    -- Snare on 2 (step 5) and 4 (step 13) — standard backbeat.
-    -- Hi-hat every 16th note; accented on downbeats.
-
+    --  Kick on beat 1, syncopated beat 2.5 (step 7), beat 3 (9),
+    --  and a trap "flam" on the and-of-3 (step 12).
+    --  Snare on beats 2 (step 5) and 4 (step 13).
+    --  Hi-hat every 16th; louder on beat downbeats (steps 1,5,9,13).
+    -- ════════════════════════════════════════════════════════════
     local kick  = {1,0,0,0, 0,0,1,0, 1,0,0,1, 0,0,0,0}
     local snare = {0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0}
 
-    -- ── MAIN SEQUENCE ────────────────────────────────────────────────
-
-    gc_intro()   -- cold intro — melody plays, then the drop hits
+    -- ════════════════════════════════════════════════════════════
+    -- MAIN  –  intro then infinite trap loop
+    -- ════════════════════════════════════════════════════════════
+    gc_full_intro()   -- GC startup plays cold, THEN the trap drops
 
     local bar = 0
     while true do
         bar = bar + 1
-        local is_hook = (bar % 8 == 5)   -- GC riff on bars 5,13,21…
-        local is_roll = (bar % 4 == 0)   -- triplet hat roll every 4th bar
+        local is_hook = (bar % 8 == 5)   -- hook on bars 5, 13, 21 …
+        local is_roll = (bar % 4 == 0)   -- hat roll every 4th bar
 
         for step = 1, 16 do
 
-            -- ── HI-HAT ──────────────────────────────────────────────
-            -- Accent (louder) on beat downbeats (steps 1,5,9,13)
-            local hat_vol = (step % 4 == 1) and 0.9 or 0.55
-            n("hat", hat_vol, 12)
+            -- Hi-hat: every 16th note; accent on beat downbeats
+            n("hat", step % 4 == 1 and 0.9 or 0.55, 12)
 
-            -- ── KICK + 808 BASS ──────────────────────────────────────
+            -- Kick + 808 bass
             if kick[step] == 1 then
-                n("basedrum", 3.0, 1)   -- kick drum
-                n("bass",     2.8, 1)   -- 808 bass pluck
-                n("bit",      0.5, 1)   -- 8-bit sub reinforcement
+                n("basedrum", 3.0, 8)
+                n("bass",     2.8, 8)
+                n("bit",      0.5, 8)
             end
 
-            -- ── SNARE ───────────────────────────────────────────────
-            if snare[step] == 1 then
-                n("snare", 2.2, 12)
-            end
+            -- Snare
+            if snare[step] == 1 then n("snare", 2.2, 12) end
 
-            -- ── GC HOOK (steps 9-16 on hook bars) ───────────────────
-            -- gc_hook() handles its own sleep and covers exactly 8 steps,
-            -- so we break out of the step loop to avoid double-sleeping.
+            -- GC HOOK: fires at step 9 on hook bars.
+            -- gc_hook() sleeps for exactly 8 steps internally,
+            -- so we break to skip steps 10-16 (already covered).
             if is_hook and step == 9 then
                 gc_hook()
-                break   -- hook covered steps 9-16; move to next bar
+                break
 
-            -- ── TRAP HAT ROLL (step 14 every 4th bar) ───────────────
-            -- Squeeze 3 rapid hats into one step duration for a triplet
-            -- burst that builds tension before the bar turnaround.
+            -- TRAP HAT ROLL: 3 rapid hats jammed into step 14
+            -- every 4th bar. Creates a triplet rush into bar-end.
             elseif is_roll and step == 14 then
                 n("hat", 1.0, 16)
                 os.sleep(0.05)
                 n("hat", 1.0, 16)
                 os.sleep(0.05)
                 n("hat", 1.0, 16)
-                -- don't sleep the full t here — the two 0.05s sleeps
-                -- are close enough and the slight rush forward sounds
-                -- intentional (trap rolls always push forward)
+                -- intentionally skip the full t sleep —
+                -- the slight rush forward is the trap roll feel
 
             else
                 os.sleep(t)
@@ -884,7 +956,6 @@ local function audioLoop()
         end
     end
 end
-
 -- ============================================================
 -- PHASE: BSOD
 -- ============================================================
