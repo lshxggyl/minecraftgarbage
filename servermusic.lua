@@ -783,7 +783,7 @@ local function audioLoop()
     -- Uses cc.audio.dfpwm to decode chunks as they arrive and
     -- feeds them to speaker.playAudio(), waiting on the
     -- "speaker_audio_empty" event whenever the speaker buffer is full.
-llocal function streamTrack(filename)
+local function streamTrack(filename)
         local url = SERVER .. "/play/" .. filename
         local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
         if not res then
