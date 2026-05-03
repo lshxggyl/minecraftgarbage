@@ -1,9 +1,9 @@
 -- ============================================================
 -- XYNIA'S WEAPONIZED BRAINROT ENGINE  v7.0
--- "DIAL AT 11, MONITOR IN WITNESS PROTECTION" EDITION
+-- "DIAL AT 12, MONITOR IN FEDERAL PROTECTION" EDITION
 -- RATED 18+ FOR LANGUAGE, PROFANITY, PSYCHOLOGICAL DAMAGE,
 -- CRIMES AGAINST TASTE, AND CRIMES AGAINST GAMING ITSELF
--- 62 PHASES OF PURE CONCENTRATED SUFFERING
+-- 75 PHASES + 7 TICKER SEGMENTS OF PURE CONCENTRATED SUFFERING
 -- ============================================================
 
 local m = peripheral.find("monitor")
@@ -1292,58 +1292,199 @@ end
 -- ============================================================
 -- PHASE: NEWS TICKER
 -- ============================================================
-local function phase_ticker()
+-- ============================================================
+-- TICKER HELPER + 7 THEMED BREAKING NEWS SEGMENTS
+-- Each plays 5-6 headlines then exits, so they feel like
+-- short news flashes rather than one marathon scroll.
+-- ============================================================
+local function runTicker(label, headlines)
     blast(colors.black, colors.yellow)
-    center(1, "*** BREAKING NEWS ***")
-    local headlines = {
-        "LOCAL PLAYER DIES AGAIN - CLAIMS LAG",
-        "INVENTORY IN LAVA - FOURTH TIME THIS WEEK",
-        "DIRT HUT COLLAPSES - OWNER SURPRISED AGAIN",
-        "VILLAGERS FILE CLASS-ACTION AGAINST PLAYER",
-        "CREEPER NAMES NEW HONORARY VICTIM: YOU",
-        "UNBAN APPEAL #" .. math.random(7,55) .. " DENIED. AGAIN.",
-        "SKELETON WINS MARKSMAN AWARD - VICTIM: NO COMMENT",
-        "NETHER PORTAL PETITIONS FOR REASSIGNMENT",
-        "IRON GOLEM RETIRES CITING MORAL INJURY",
-        "ENDER DRAGON FILES HOSTILE WORKPLACE COMPLAINT",
-        "WARDEN HEARS PLAYER FROM 4 CHUNKS AWAY",
-        "GRAVEL PLACEMENT RULED RECKLESS BY INQUIRY",
-        "SERVER TPS CRASHES WHEN PLAYER OPENS INVENTORY",
-        "PHANTOM SURVIVOR: WAS GONNA SLEEP (SLEPT ZERO TIMES)",
-        "NETHERITE LOST IN LAVA - IN OVERWORLD - HOW",
-        "BEE PUNCHER STILL AT LARGE - REWARD: 1 DIRT",
-        "ENDERMEN HOLD EMERGENCY MEETING - AGENDA: YOU",
-        "PLAYER HAS 40000 DIRT - NO PLAN - DEVELOPING",
-        "CHICKEN DEFEATS PLAYER 1V1 - REMATCH DENIED",
-        "ADMIN LOGS: PLAYER BLAMED LAG " .. math.random(200,999) .. " TIMES",
-        "PLAYER ATTEMPTS WARDEN DIPLOMACY - WARDEN DECLINES",
-        "DIRT CUBE GRIEFED - OWNER NOT OKAY - REBUILDING",
-        "PLAYER ARGUES WITH VOID - VOID WINS DECISIVELY",
-        "STRONGHOLD SEARCH ENTERS DAY " .. math.random(3,14),
-        "LAVA CLAIMS DIAMOND HAUL - OWNER BLAMES GAME",
-        "SERVER ECONOMY: TOO MUCH DIRT - ONE PERSON",
-        "PLAYER FILES POLICE REPORT AGAINST SKELETON",
-        "REPORT DISMISSED - SKELETON ACTING WITHIN MINECRAFT LAW",
-        "GERALD THE PIG APPROVED FOR WHITELIST - BETTER STATS",
-        "GERALD NOW OUTRANKS PLAYER ON SERVER LEADERBOARD",
-        "PLAYER SPOTS CHICKEN - RETREATS - SOURCES CONFIRM",
-        "CHICKEN STANDOFF CONTINUES - DIPLOMACY ONGOING",
-        "CHICKEN DEMANDS WHEAT - PLAYER HAS ONLY DIRT",
-        "CHICKEN REJECTS DIRT PAYMENT - STANDOFF ESCALATES",
-        "SCIENCE UNABLE TO EXPLAIN HOW PLAYER FELL IN SAME LAVA 4X",
-        "PLAYER BUILDS SECOND DIRT CUBE - THERAPIST CONCERNED",
-        "PLAYER INSISTS SECOND CUBE IS DIFFERENT - IT IS NOT",
-        "VOID SENDS PLAYER WRITTEN NOTICE: SEE YOU SOON",
-        "PLAYER RESPONDS TO VOID: OKAY BUT NOT TODAY",
-        "VOID: IT IS TODAY - SERVER CONFIRMS",
-    }
-    local shuf = {}
-    for _, v in ipairs(headlines) do shuf[#shuf+1] = v end
-    for i = #shuf, 2, -1 do local j = math.random(1,i) shuf[i],shuf[j]=shuf[j],shuf[i] end
-    for _, hl in ipairs(shuf) do
-        local row = math.random(2, h)
-        scrollLine(row, "  >>>  " .. hl .. "  <<<  ", rnd(colors_list))
+    m.setTextColor(colors.red)
+    center(1, "*** " .. label .. " ***")
+    -- pick 5-6 random headlines from the pool
+    local pool = {}
+    for _, v in ipairs(headlines) do pool[#pool+1] = v end
+    for i = #pool, 2, -1 do
+        local j = math.random(1, i)
+        pool[i], pool[j] = pool[j], pool[i]
     end
+    local count = math.min(#pool, math.random(5, 7))
+    for i = 1, count do
+        local row = math.random(2, h)
+        scrollLine(row, "  >>>  " .. pool[i] .. "  <<<  ", rnd(colors_list))
+    end
+end
+
+-- SEGMENT 1: DEATH DESK
+local function phase_ticker_deaths()
+    runTicker("DEATH DESK - LIVE", {
+        "LOCAL PLAYER DIES AGAIN - CLAIMS LAG (LOGS: NO LAG)",
+        "PLAYER SETS PERSONAL BEST: " .. math.random(8,30) .. " DEATHS IN ONE HOUR",
+        "DEATH #" .. math.random(300,999) .. " RECORDED - ADMIN SIGHS AUDIBLY",
+        "PLAYER DIES TO CACTUS - SOMEHOW - EXPERTS BAFFLED",
+        "SAME SKELETON KILLS PLAYER FOR " .. math.random(4,20) .. "TH CONSECUTIVE TIME",
+        "PLAYER DIES BEFORE ADMIN FINISHES TYPING 'CAREFUL'",
+        "PHANTOM ATTACK SURVIVOR 'I WAS GONNA SLEEP' (0 SLEEPS THIS WEEK)",
+        "PLAYER KILLED BY OWN TORCH PLACEMENT - SCIENCE SILENT",
+        "DEATH BY BAT CONFIRMED - ENTIRE SERVER WITNESSES IT",
+        "PLAYER SUFFOCATES IN DIRT CUBE - THEIR OWN DIRT CUBE",
+        "FALL DAMAGE CLAIMS PLAYER WHO WAS 'JUST LOOKING' AT CLIFF",
+        "DROWNED IN PUDDLE - TWO BLOCKS DEEP - NO COMMENT FROM PLAYER",
+        "PLAYER DIES TO OWN TNT - CLAIMS CREEPER INVOLVED - NO CREEPER FOUND",
+        "PLAYER KILLED BY CHICKEN - CORONER CONFIRMS - CHICKEN DECLINES INTERVIEW",
+        "RESPAWN SCREEN BECOMES PLAYER'S PRIMARY RESIDENCE THIS WEEK",
+        "PLAYER RUNS TOWARD EXPLOSION SOUND - DIES - SHOCKED",
+        "SCIENTIST CONFIRMS: PLAYER IS ACTIVELY GETTING WORSE OVER TIME",
+        "NETHERITE ARMOUR LOST IN LAVA - IN THE OVERWORLD - HOW",
+        "PLAYER DIES WHILE CRAFTING ANOTHER HOE - TRAGIC IRONY",
+    })
+end
+
+-- SEGMENT 2: THE GERALD / CHICKEN SITUATION
+local function phase_ticker_gerald()
+    runTicker("GERALD & CHICKEN BUREAU", {
+        "GERALD THE PIG OUTRANKS PLAYER ON ALL METRICS - OFFICIAL",
+        "GERALD APPLIES FOR PLAYER'S WHITELIST SPOT - ADMIN CONSIDERING",
+        "GERALD APPROVED - BETTER K/D RATIO CITED AS PRIMARY FACTOR",
+        "CHICKEN DEFEATS PLAYER IN 1V1 - REMATCH REQUEST DENIED BY CHICKEN",
+        "CHICKEN AND GERALD FORMALISE ALLIANCE - PLAYER NOT INVITED",
+        "ALLIANCE DIRECTS FULL RESOURCES TOWARD ONE TARGET: THE PLAYER",
+        "GERALD HAS MORE SERVER DIAMONDS THAN THE PLAYER - NOT CLOSE",
+        "CHICKEN FILES FORMAL GRIEVANCE WITH ADMIN - 93 PAGE DOCUMENT",
+        "ADMIN READS CHICKEN DOCUMENT - AGREES WITH MOST OF IT",
+        "PLAYER SPOTS CHICKEN - RETREATS - CHICKEN DOES NOT PURSUE (DOESN'T NEED TO)",
+        "CHICKEN STANDOFF ENTERS WEEK " .. math.random(2,8) .. " - NO END IN SIGHT",
+        "CHICKEN DEMANDS WHEAT - PLAYER OFFERS DIRT - CHICKEN OFFENDED",
+        "GERALD GIVEN PLAYER'S ACCOUNT ACCESS - GERALD DECLINES (HAS STANDARDS)",
+        "PLAYER NAMES HOG 'GERALD 2' - ORIGINAL GERALD ISSUES STATEMENT",
+        "GERALD'S STATEMENT: 'I HAVE CONCERNS' - PUBLISHED IN FULL",
+        "CHICKEN SEEN MEASURING PLAYER'S DIRT CUBE - INTENTIONS UNCLEAR",
+        "GERALD HOSTS SERVER MEETING - PLAYER NOT INVITED - PRODUCTIVE",
+        "ANNUAL GERALD APPRECIATION DAY ANNOUNCED - PLAYER NOT MENTIONED",
+        "CHICKEN WINS SERVER MVPE AWARD (MOST VALUABLE POULTRY ENTITY)",
+        "PLAYER VOTED 'LEAST LIKELY TO IMPROVE' FOR 3RD CONSECUTIVE MONTH",
+    })
+end
+
+-- SEGMENT 3: ADMIN DESK / LOGS / APPEALS
+local function phase_ticker_admin()
+    runTicker("ADMIN DESK - BREAKING", {
+        "UNBAN APPEAL #" .. math.random(8,55) .. " DENIED - ADMIN QUOTES 'PLEASE STOP SENDING THESE'",
+        "SERVER LOGS CONFIRM: ZERO LAG DURING ANY OF THE " .. math.random(300,900) .. " DEATHS",
+        "ADMIN OPENS SCREENSHOT FOLDER - FOLDER TITLED 'THIS FUCKING GUY'",
+        "FOLDER SIZE: " .. math.random(4,47) .. "GB - GROWING DAILY",
+        "PLAYER'S IP ADDRESS FLAGGED AS 'CHRONICALLY MISGUIDED' IN SERVER CONFIG",
+        "ADMIN INSTALLS DEDICATED PLUGIN JUST TO TRACK THIS ONE PLAYER",
+        "PLUGIN CRASHES UNDER LOAD - DEATH COUNT TOO HIGH FOR 32-BIT INTEGER",
+        "ADMIN PATCHES PLUGIN - UPGRADES TO 64-BIT INTEGER - JUST IN CASE",
+        "GRIEF DETECTION LOG: " .. math.random(80,300) .. "% OF ENTRIES ARE THIS PLAYER",
+        "PLAYER FILES COMPLAINT ABOUT THE GRIEF LOG - COMPLAINT ADDED TO GRIEF LOG",
+        "UNBAN APPEAL CITES 'LAG' AS CAUSE - ADMIN PASTES LOG SHOWING NO LAG",
+        "PLAYER CLAIMS LOG IS DOCTORED - ADMIN SENDS ORIGINAL - PLAYER OFFLINE",
+        "ADMIN CREATES DEDICATED #you-died-again CHANNEL - GETS 200 MESSAGES DAY ONE",
+        "SERVER RULES UPDATED: RULE 14 ADDED - NAMED AFTER SPECIFIC INCIDENT",
+        "INCIDENT NOT DESCRIBED IN RULE 14 - TOO EMBARRASSING TO DOCUMENT",
+        "ADMIN SUPPORT TICKET VOLUME UP " .. math.random(200,800) .. "% - ONE PLAYER RESPONSIBLE",
+        "PLAYER'S APPEAL FORM NOW AUTO-FILLS 'SKILL ISSUE' IN REASON FIELD",
+        "ADMIN BETS ON PLAYER DEATH CAUSE - WINNINGS FUND SERVER UPGRADES",
+    })
+end
+
+-- SEGMENT 4: LAVA / VOID / NETHER INCIDENTS
+local function phase_ticker_lava()
+    runTicker("LAVA & VOID CORRESPONDENT", {
+        "LAVA CLAIMS DIAMOND HAUL - " .. math.random(5,64) .. " DIAMONDS LOST - OWNER BLAMES GAME",
+        "SAME LAVA FINDS PLAYER FOR " .. math.random(4,12) .. "TH TIME - SCIENTISTS CANNOT EXPLAIN",
+        "LAVA RELEASES STATEMENT: 'WE DIDN'T GO TO THEM'",
+        "VOID SENDS PLAYER FORMAL WRITTEN NOTICE: 'SEE YOU SOON'",
+        "PLAYER RESPONDS TO VOID: 'NOT TODAY' - VOID: 'IT IS TODAY'",
+        "VOID CONFIRMED CORRECT - PLAYER CONFIRMED IN VOID",
+        "NETHER PORTAL GRANTED REASSIGNMENT AWAY FROM PLAYER'S COORDS",
+        "PORTAL CITES 'HOSTILE WORK ENVIRONMENT' IN TRANSFER REQUEST",
+        "PLAYER ARGUES WITH LAVA - LAVA DOES NOT RESPOND - WINS ANYWAY",
+        "LAVA NICKNAMES PLAYER - NICKNAME NOT SUITABLE FOR BROADCAST",
+        "PLAYER WALKS INTO LAVA WHILE READING SIGN THAT SAYS DO NOT",
+        "SIGN SPECIFICALLY SAID DO NOT WALK INTO LAVA - PLAYER WALKED INTO LAVA",
+        "PLAYER FALLS INTO VOID ATTEMPTING TO THROW SOMETHING INTO VOID",
+        "IRONY NOTED - PLAYER DID NOT NOTE THE IRONY",
+        "NETHER EXPEDITION FAILS IN " .. math.random(8,90) .. " SECONDS - NEW RECORD",
+        "LAVA FORMALLY REQUESTS PLAYER STOP VISITING - PLAYER CANNOT STOP",
+        "VOID OPENS LOYALTY PROGRAMME FOR FREQUENT FALLERS - PLAYER: GOLD MEMBER",
+        "MAGMA BLOCK INJURY REPORT: PLAYER CONFUSED IT FOR REGULAR STONE AGAIN",
+        "FIRE DAMAGE CLAIM: PLAYER 'DID NOT KNOW FIRE SPREADS' - " .. math.random(3,15) .. "TH TIME",
+    })
+end
+
+-- SEGMENT 5: DIRT / BASE / SERVER ECONOMY
+local function phase_ticker_dirt()
+    runTicker("DIRT & ECONOMY WATCH", {
+        "PLAYER HAS " .. math.random(10000,99999) .. " DIRT BLOCKS - NO PLAN - SITUATION DEVELOPING",
+        "SERVER ECONOMY DESTABILISED - TOO MUCH DIRT IN CIRCULATION - ONE SOURCE",
+        "DIRT CUBE GRIEFED AGAIN - OWNER REBUILDING - SAME DESIGN - LEARNING: NONE",
+        "PLAYER INSISTS NEW DIRT CUBE IS 'COMPLETELY DIFFERENT' - IT IS NOT",
+        "DIRT CUBE STRUCTURAL ASSESSMENT: FAILING - PLAYER UNCONCERNED",
+        "ARCHITECT REVIEWS DIRT CUBE - WEEPS - REFUSES TO COMMENT FURTHER",
+        "PLAYER ADDS SECOND FLOOR TO DIRT CUBE - FLOOR IS ALSO DIRT",
+        "PLANNING PERMISSION DENIED FOR DIRT CUBE - BUILT ANYWAY",
+        "COUNCIL ORDERS DEMOLITION - CREEPER ALREADY HANDLED IT",
+        "PLAYER COMMISSIONS DIRT CUBE EXPANSION - BUDGET: DIRT",
+        "INTERIOR DESIGNER VISITS DIRT CUBE - DOES NOT RETURN",
+        "DIRT CUBE LISTED ON TRIPADVISOR - AVERAGE RATING: 1.1 STARS",
+        "TOP REVIEW: 'THE FLOOR WAS A HOLE. I FELL IN THE FLOOR.'",
+        "PLAYER DESCRIBES BASE AS 'RUSTIC' - ADMIN DESCRIBES IT AS 'A VIOLATION'",
+        "VILLAGE ISSUES RESTRAINING ORDER - PLAYER MUST STAY 50 BLOCKS AWAY",
+        "STRONGHOLD SEARCH ENTERS DAY " .. math.random(3,21) .. " WITH ZERO LEADS",
+        "PLAYER STILL WALKING IN WRONG DIRECTION - CONFIDENT ABOUT IT",
+        "IRON GOLEM RETIRES EARLY - CITES 'MORAL INJURY' - PLAYER NAMED IN STATEMENT",
+    })
+end
+
+-- SEGMENT 6: SPORTS DESK (play-by-play style)
+local function phase_ticker_sports()
+    runTicker("SMP SPORTS DESK", {
+        "PLAYER LOSES 1V1 TO MOB TIER: CHICKEN - ODDS WERE " .. math.random(1,5) .. ":1 AGAINST",
+        "SEASON STATS: " .. math.random(300,999) .. " DEATHS / 0 WINS - ANALYSTS CALL IT 'HISTORIC'",
+        "KILL/DEATH RATIO DROPS TO 0.00" .. math.random(1,9) .. " - NEW PERSONAL WORST",
+        "PLAYER FINISHES LAST IN EVERY SERVER CATEGORY - PODIUM SWEEP",
+        "COMMENTATOR FALLS SILENT WATCHING PLAYER'S LAST RUN - 47 SECONDS",
+        "REPLAY SHOWS PLAYER SAW THE LAVA - WALKED IN ANYWAY - ANALYSTS BAFFLED",
+        "HALF-TIME STATS: " .. math.random(5,25) .. " DEATHS - " .. math.random(0,1) .. " KILLS - 1 HOE (ACCIDENTAL)",
+        "POST-MATCH INTERVIEW: PLAYER BLAMES LAG - INTERVIEWER SHOWS LOGS",
+        "PLAYER DISQUALIFIED FROM OWN SPEEDRUN FOR DYING TOO MUCH",
+        "DEATH MONTAGE SUBMITTED TO SERVER HALL OF SHAME - ACCEPTED IMMEDIATELY",
+        "RIVAL FACTIONS STOP FIGHTING EACH OTHER TO WATCH PLAYER DIE",
+        "TRUCE HOLDS FOR " .. math.random(10,60) .. " MINUTES - EVERYONE WATCHING SAME PLAYER",
+        "PLAYER RANKED LAST ON EVERY LEADERBOARD INCLUDING ONES THEY AREN'T ON",
+        "DRAFT PICK VALUE: NEGATIVE - TEAMS PAYING TO NOT HAVE PLAYER",
+        "MVP AWARD GOES TO GERALD THE PIG - UNANIMOUS - PLAYER RECEIVED 0 VOTES",
+        "CHICKEN RECEIVES HONOURABLE MENTION - PLAYER NOT MENTIONED",
+        "SEASON FINALE: PLAYER VS THE LAVA - LAVA WINS - AS ALWAYS - FINAL SCORE " .. math.random(300,999) .. "-0",
+    })
+end
+
+-- SEGMENT 7: WEIRD SCIENCE / LATE BREAKING
+local function phase_ticker_weird()
+    runTicker("LATE BREAKING // WEIRD SCIENCE", {
+        "SCIENTISTS CONFIRM: PLAYER IS ACTIVELY GETTING WORSE WITH EXPERIENCE",
+        "PEER-REVIEWED STUDY: PLAYER'S DECISION-MAKING 'STATISTICALLY IMPLAUSIBLE'",
+        "RESEARCHERS CANNOT REPRODUCE PLAYER'S LEVEL OF BADNESS IN LAB CONDITIONS",
+        "UNIVERSITY NAMES AWARD AFTER PLAYER - GIVEN ANNUALLY FOR WORST GAMEPLAY",
+        "STUDY FINDS PLAYER'S CRAFTING HISTORY 'MEDICALLY INTERESTING'",
+        "GEOLOGISTS DATE PLAYER'S GRUDGE AGAINST LAVA TO APPROX. " .. math.random(6,48) .. " MONTHS",
+        "THERMODYNAMICS PROFESSOR REVIEWS PLAYER'S LAVA INTERACTIONS - RETIRES",
+        "PHILOSOPHER PUBLISHES PAPER ON PLAYER'S REPEATED IDENTICAL DECISIONS",
+        "PAPER TITLED: 'HOPE, EVIDENCE, AND THE COMPLETE ABSENCE OF LEARNING'",
+        "PSYCHOLOGIST DOCUMENTS PLAYER'S RELATIONSHIP WITH DENIAL - 400 PAGES",
+        "400 PAGES NOT ENOUGH - SEQUEL ANNOUNCED - PLAYER STILL PLAYING",
+        "BREAKING: PLAYER STILL IN THE CAVE FROM LAST WEEK",
+        "UPDATE: PLAYER FOUND A WAY OUT - WALKED INTO LAVA ON WAY OUT",
+        "CONSPIRACY THEORISTS SUGGEST LAVA IS SENTIENT AND TARGETING PLAYER",
+        "LAVA DECLINES TO CONFIRM OR DENY - DOES NOT NEED TO",
+        "MOJANG ENGINEERS BAFFLED BY PLAYER'S ABILITY TO FIND NEW WAYS TO DIE",
+        "NEW WAY FOUND TODAY: TECHNICALLY UNDOCUMENTED - PATCH INCOMING",
+        "VOID PURCHASES BILLBOARD NEAR PLAYER'S BASE: 'SEE YOU SOON'",
+        "PLAYER COMPLAINS BILLBOARD IS OMINOUS - VOID: 'THAT WAS THE POINT'",
+    })
 end
 
 -- ============================================================
@@ -3916,14 +4057,638 @@ local function phase_finalboss()
 end
 
 
+
+-- ============================================================
+-- PHASE: GROUP CHAT (friends reacting in real time)
+-- ============================================================
+local function phase_groupchat()
+    blast(colors.black, colors.black)
+    m.setTextColor(colors.green)
+    center(1,"Group Chat: xynia smp lads")
+    fillRow(2,"-",colors.gray,colors.black)
+    local names = {"dave","callum","josh","meg","tom","soph","rory","el"}
+    local msgs = {
+        {"bro","did u just die to a bat"},
+        {"","a single bat"},
+        {"","one (1) bat"},
+        {"lol","LMAOOOO"},
+        {"bro","how"},
+        {"","HOW"},
+        {"","i watched it happen"},
+        {"","i watched the bat find you"},
+        {"","the bat looked CONFUSED"},
+        {"bro","please tell me someone clipped that"},
+        {"lol","already uploaded"},
+        {"","it has 47 views in 4 minutes"},
+        {"","mostly from admin"},
+        {"admin","(admin has entered the chat)"},
+        {"admin","i have seen many things on this server"},
+        {"admin","i was not prepared for the bat"},
+        {"admin","no one could have been prepared for the bat"},
+        {"bro","are you okay though"},
+        {"","genuinely"},
+        {"","because the bat"},
+        {"lol","THE BAT DIDNT EVEN AGGRO NATURALLY"},
+        {"","you PUNCHED it first"},
+        {"","why did you punch the bat"},
+        {"bro","what were you hoping would happen"},
+        {"","what was the plan"},
+        {"admin","there was no plan"},
+        {"admin","ive seen the logs"},
+        {"admin","there has never been a plan"},
+        {"lol","gerald has a plan though"},
+        {"","gerald always has a plan"},
+        {"","gerald is doing so well"},
+        {"bro","we love gerald"},
+        {"","protect gerald"},
+        {"lol","gerald would never punch a bat"},
+        {"admin","gerald has never punched a bat"},
+        {"admin","for the record"},
+        {"bro","classic gerald"},
+        {"","anyway"},
+        {"","you gonna log back on"},
+        {"lol","theyre already back on"},
+        {"","they died again"},
+        {"","different bat"},
+        {"admin","(admin has left the chat)"},
+    }
+    local row = 3
+    for _,msg in ipairs(msgs) do
+        if row >= h then break end
+        local who = msg[1]
+        local txt  = msg[2]
+        if who == "" then
+            m.setTextColor(colors.lightGray)
+            put(6, row, txt)
+        elseif who == "admin" then
+            m.setTextColor(colors.red)
+            put(2, row, "[admin] " .. txt)
+        else
+            m.setTextColor(rnd(colors_list))
+            local name = rnd(names)
+            put(2, row, name .. ": " .. txt)
+        end
+        row = row + 1
+        os.sleep(0.22)
+    end
+    os.sleep(4)
+end
+
+-- ============================================================
+-- PHASE: GAME SHOW (Who Wants To Be A Millionaire-style)
+-- Player gets every minecraft basic wrong
+-- ============================================================
+local function phase_gameshow()
+    blast(colors.black, colors.blue)
+    m.setTextColor(colors.yellow)
+    center(2,"WHO WANTS TO NOT DIE IN MINECRAFT")
+    m.setTextColor(colors.lightGray)
+    center(3,"A Gameshow For One Very Specific Person")
+    fillRow(4,"-",colors.blue,colors.black)
+
+    local questions = {
+        {
+            q  = "What should you do when you see lava?",
+            a  = {"A: Touch it","B: Swim in it","C: Walk away","D: Dive in"},
+            ca = "C",
+            pa = rnd({"A","B","D"}),
+            ex = "You chose to touch the lava. The answer was C.",
+        },
+        {
+            q  = "What does a creeper's hiss mean?",
+            a  = {"A: It's friendly","B: Run away","C: Pet it","D: Wave"},
+            ca = "B",
+            pa = rnd({"A","C","D"}),
+            ex = "You waved at it. The answer was B: run away.",
+        },
+        {
+            q  = "What is a shield used for?",
+            a  = {"A: Eating","B: Blocking attacks","C: Farming","D: No idea"},
+            ca = "B",
+            pa = "D",
+            ex = "You answered 'no idea'. Correct self-assessment.",
+        },
+        {
+            q  = "How do you avoid phantom attacks?",
+            a  = {"A: Sleep in a bed","B: Punch the sky","C: More dirt","D: Ignore them"},
+            ca = "A",
+            pa = rnd({"B","C","D"}),
+            ex = "You chose 'more dirt'. The answer was A: sleep.",
+        },
+        {
+            q  = "What colour is lava?",
+            a  = {"A: Blue","B: Green","C: Orange","D: Transparent"},
+            ca = "C",
+            pa = rnd({"A","B","D"}),
+            ex = "You answered " .. rnd({"blue","green","transparent"}) .. ". It is orange. You know this.",
+        },
+    }
+
+    local score = 0
+    for i,q in ipairs(questions) do
+        blast(colors.black, colors.blue)
+        m.setTextColor(colors.yellow)
+        center(2,"QUESTION " .. i .. " OF " .. #questions)
+        m.setTextColor(colors.white)
+        -- wrap question across two lines if needed
+        local qlen = #q.q
+        if qlen <= w-4 then
+            center(4, q.q)
+        else
+            center(4, q.q:sub(1,w-4))
+            center(5, q.q:sub(w-3))
+        end
+        local row = 6
+        for _,ans in ipairs(q.a) do
+            m.setTextColor(colors.lightGray)
+            center(row, ans)
+            row = row + 1
+        end
+        os.sleep(2)
+        m.setTextColor(colors.red)
+        center(row+1, "Your answer: " .. q.pa)
+        os.sleep(0.8)
+        m.setTextColor(colors.lime)
+        center(row+2, "Correct:     " .. q.ca)
+        os.sleep(0.8)
+        m.setTextColor(colors.orange)
+        center(row+3, q.ex)
+        os.sleep(2.5)
+    end
+
+    blast(colors.black, colors.blue)
+    m.setTextColor(colors.red)
+    center(math.floor(h/2)-2, "FINAL SCORE: " .. score .. " / " .. #questions)
+    center(math.floor(h/2),   "PRIZE MONEY: 0 EMERALDS")
+    center(math.floor(h/2)+2, "Gerald scored " .. #questions .. "/" .. #questions)
+    center(math.floor(h/2)+4, "First try. Without studying.")
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: INTERVENTION (friends staging an intervention)
+-- ============================================================
+local function phase_intervention()
+    blast(colors.black, colors.white)
+    m.setTextColor(colors.red)
+    center(2,"WE NEED TO TALK")
+    m.setTextColor(colors.lightGray)
+    center(3,"A Formal Intervention")
+    fillRow(4,"=",colors.gray,colors.black)
+    local lines = {
+        "We've gathered here today because",
+        "we care about you.",
+        "And because the lava situation",
+        "has become genuinely untenable.",
+        "",
+        "Dave wanted to say:",
+        "'I watched you walk into it.",
+        " I said stop. You sped up.",
+        " I don't understand.'",
+        "",
+        "Callum's letter reads:",
+        "'You've died " .. math.random(300,999) .. " times.",
+        " I've counted. I wish I hadn't.",
+        " Please. For us. Stop.'",
+        "",
+        "The admin prepared a slideshow.",
+        "The slideshow is " .. math.random(40,200) .. " slides long.",
+        "Each slide is a death.",
+        "Many slides look identical.",
+        "They are not identical.",
+        "You found new ways.",
+        "",
+        "Gerald the pig attended.",
+        "Gerald did not speak.",
+        "Gerald's presence said everything.",
+        "",
+        "The chicken was invited.",
+        "The chicken did not come.",
+        "The chicken sent a note.",
+        "The note said: 'Sort it out.'",
+        "",
+        "We love you.",
+        "Please stop walking into lava.",
+        "That is the whole ask.",
+        "Just that one thing.",
+    }
+    local row = 5
+    for _,line in ipairs(lines) do
+        if row >= h then break end
+        if line == "" then row = row + 1
+        else
+            m.setTextColor(line:sub(1,1)=="'" and colors.white or colors.lightGray)
+            tw(2, row, line, 0.016)
+            row = row + 1
+        end
+        os.sleep(0.1)
+    end
+    os.sleep(5)
+end
+
+-- ============================================================
+-- PHASE: AUTOPSY REPORT
+-- ============================================================
+local function phase_autopsy()
+    blast(colors.black, colors.white)
+    center(2,"POST-MORTEM REPORT #" .. math.random(100,999))
+    center(3,"Pathologist: Dr. Admin")
+    fillRow(4,"=",colors.gray,colors.black)
+    local causes = {
+        {c="Lava immersion",
+         n="Voluntary. Repeated. Unexplained.",
+         t="Orange glow, hissing sound, several signs,",
+         t2="a fence, two verbal warnings, Gerald oinking."},
+        {c="Skeleton projectile",
+         n="Arrow to the face. Skeleton was " .. math.random(20,80) .. " blocks away.",
+         t="Patient was standing still. In the open.",
+         t2="Looking in the wrong direction. As usual."},
+        {c="Creeper detonation",
+         n="Patient turned toward the hissing sound.",
+         t="Made eye contact. Did not run.",
+         t2="Said 'oh no' at appropriate time. Too late."},
+        {c="Fall damage",
+         n="Patient dug straight down. Again.",
+         t="Wiki explicitly advises against this.",
+         t2="Patient has never read the wiki."},
+        {c="Void",
+         n="Patient fell off the end island.",
+         t="Was attempting to 'look at the void'.",
+         t2="Patient is now also in the void."},
+    }
+    local death = rnd(causes)
+    local items = {
+        "CAUSE OF DEATH:",
+        "  " .. death.c,
+        "",
+        "CIRCUMSTANCES:",
+        "  " .. death.n,
+        "",
+        "WARNING SIGNS PRESENT:",
+        "  " .. death.t,
+        "  " .. death.t2,
+        "",
+        "TOXICOLOGY:",
+        "  Blood hopium level: dangerously high",
+        "  Lag: not detected (never detected)",
+        "  Skill: not detected",
+        "",
+        "ITEMS LOST:",
+        "  " .. math.random(0,3) .. "x Diamond",
+        "  " .. math.random(0,64) .. "x Dirt (obviously)",
+        "  1x Leather Boot (left, always left)",
+        "  1x Dignity (not recovered)",
+        "",
+        "CORONER'S NOTE:",
+        "  This is the " .. math.random(3,15) .. "th report this week.",
+        "  Gerald remains unharmed.",
+        "  Gerald was present.",
+        "  Gerald tried to warn them.",
+        "  Gerald always tries.",
+        "  It never works.",
+    }
+    local row = 5
+    for _,item in ipairs(items) do
+        if row >= h then break end
+        if item == "" then row = row + 1
+        else
+            m.setTextColor(item:sub(-1) == ":" and colors.yellow or colors.lightGray)
+            tw(2, row, item, 0.014)
+            row = row + 1
+        end
+        os.sleep(0.07)
+    end
+    os.sleep(5)
+end
+
+-- ============================================================
+-- PHASE: FORMAL COMPLAINTS DEPARTMENT
+-- ============================================================
+local function phase_complaints()
+    blast(colors.black, colors.white)
+    center(2,"COMPLAINTS RECEIVED: TODAY")
+    fillRow(3,"=",colors.gray,colors.black)
+    local complaints = {
+        {f="The Lava",    r="Player keeps visiting uninvited.",
+                          s="Ongoing",n=math.random(20,200)},
+        {f="The Skeleton",r="Player stands still, makes it too easy.",
+                          s="Closed",n=math.random(5,50)},
+        {f="The Creeper", r="Player turned toward the sound again.",
+                          s="Resolved",n=math.random(10,80)},
+        {f="The Warden",  r="Player placed 47 torches. Breathing.",
+                          s="Escalated",n=1},
+        {f="The Golem",   r="Player punched me. Twice. On purpose.",
+                          s="Under review",n=2},
+        {f="The Void",    r="Player argues after falling in.",
+                          s="Dismissed",n=math.random(15,60)},
+        {f="The Chicken", r="See attached 93-page document.",
+                          s="Ongoing",n=1},
+        {f="Gerald",      r="Player keeps calling me 'just a pig'.",
+                          s="Valid",n=1},
+        {f="The Village", r="Player burned it. Claims accident.",
+                          s="Closed (arson)",n=1},
+        {f="The Server",  r="Player exists on it.",
+                          s="Cannot resolve",n=math.random(100,500)},
+        {f="The Dirt",    r="Too much. Stop. Please stop collecting us.",
+                          s="Ignored",n=math.random(1000,9000)},
+        {f="Gravel",      r="Player trusts us. We don't want this.",
+                          s="Ongoing",n=math.random(30,150)},
+    }
+    local row = 4
+    m.setTextColor(colors.lightGray)
+    put(2, row, "FROM            STATUS      #COMPLAINTS")
+    row = row + 1
+    fillRow(row,"-",colors.gray,colors.black)
+    row = row + 1
+    for _,c in ipairs(complaints) do
+        if row >= h then break end
+        m.setTextColor(c.s=="Ongoing" and colors.red or
+                       c.s=="Escalated" and colors.orange or
+                       c.s=="Valid" and colors.yellow or colors.lightGray)
+        local line = string.format("%-16s%-12s%d",
+            c.f:sub(1,15), c.s:sub(1,11), c.n)
+        tw(2, row, line, 0.007)
+        row = row + 1
+        os.sleep(0.14)
+    end
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: PLAYER MVPE CEREMONY (worst player awards)
+-- ============================================================
+local function phase_mvpe()
+    blast(colors.black, colors.yellow)
+    m.setTextColor(colors.yellow)
+    center(2,"SMP AWARDS CEREMONY")
+    center(3,os.date("%Y") .. " ANNUAL RECOGNITION NIGHT")
+    fillRow(4,"-",colors.yellow,colors.black)
+    local awards = {
+        {a="Most Deaths (Server Record)",      w=genInsult(),     r="By a significant margin."},
+        {a="Best Lava Relationship",            w="The Player",    r="Both parties committed."},
+        {a="Worst Base Design",                 w="The Dirt Cube", r="Unanimous. Unopposed."},
+        {a="Most Unban Appeals (Any Month)",    w="The Player",    r=math.random(6,55).." appeals. One month."},
+        {a="Player Most Likely To Punch Golem", w="The Player",    r="Has done it multiple times."},
+        {a="Lifetime Achievement: Dying",       w=genInsult(),     r="Contributions: immense."},
+        {a="Server's Biggest Charity Project",  w="The Player",    r="We help where we can."},
+        {a="Best Performance: Blaming Lag",     w="The Player",    r="Committed. Consistent. Wrong."},
+        {a="Most Improved (Not This Player)",   w="Gerald",        r="Gerald is doing incredibly."},
+        {a="Most Intimidating Entity",          w="The Chicken",   r="Player specifically terrified."},
+        {a="Admin's Biggest Regret (Whitelist)",w=genInsult(),     r="Listed by name in ceremony notes."},
+        {a="Dirt Hoarder Of The Year",          w="The Player",    r=math.random(10000,99999).." blocks. Why."},
+    }
+    local row = 5
+    for _,aw in ipairs(awards) do
+        if row >= h then break end
+        m.setTextColor(colors.cyan)
+        tw(2, row, aw.a:sub(1, w-2), 0.01)
+        row = row + 1
+        if row >= h then break end
+        m.setTextColor(colors.yellow)
+        put(4, row, "WINNER: " .. aw.w)
+        row = row + 1
+        if row >= h then break end
+        m.setTextColor(colors.lightGray)
+        put(4, row, aw.r)
+        row = row + 1
+        os.sleep(0.8)
+    end
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: MINECRAFT.NET BLOG POST (about "one specific player")
+-- ============================================================
+local function phase_blogpost()
+    blast(colors.black, colors.white)
+    m.setTextColor(colors.lime)
+    center(2,"minecraft.net // community blog")
+    fillRow(3,"-",colors.lime,colors.black)
+    m.setTextColor(colors.white)
+    center(4,"A NOTE FROM THE MOJANG TEAM")
+    fillRow(5,"-",colors.gray,colors.black)
+    local post = {
+        "Hi everyone,",
+        "",
+        "We've been monitoring telemetry data",
+        "and have noticed something unusual.",
+        "",
+        "One specific player account has",
+        "triggered our lava-contact alert",
+        math.random(50,700) .. " times this month alone.",
+        "",
+        "Our systems are designed to detect",
+        "repeated unusual deaths for welfare",
+        "purposes. This account has maxed",
+        "out every counter we have.",
+        "",
+        "We've had to redesign three systems",
+        "specifically to accommodate this.",
+        "Two engineers have asked to be",
+        "reassigned. We understand.",
+        "",
+        "We won't name the account here.",
+        "The player knows who they are.",
+        "The lava definitely knows.",
+        "Gerald knows.",
+        "The chicken has known from the start.",
+        "",
+        "Please stay safe out there.",
+        "Especially near lava.",
+        "Please, specifically, stay away",
+        "from the lava.",
+        "",
+        "With concern,",
+        "The Mojang Team",
+        "",
+        "P.S. The bat incident was reviewed.",
+        "We have no notes. We're speechless.",
+    }
+    local row = 6
+    for _,line in ipairs(post) do
+        if row >= h then break end
+        if line == "" then row = row + 1
+        else
+            m.setTextColor(colors.lightGray)
+            tw(2, row, line, 0.014)
+            row = row + 1
+        end
+        os.sleep(0.08)
+    end
+    os.sleep(5)
+end
+
+-- ============================================================
+-- PHASE: FAKE INSURANCE CLAIM (new version, different content)
+-- ============================================================
+local function phase_insurance2()
+    blast(colors.black, colors.white)
+    center(2,"CLAIM #" .. math.random(10000,99999) .. " - UNDER REVIEW")
+    fillRow(3,"=",colors.gray,colors.black)
+    local items = {
+        {"ITEM CLAIMED",        "REASON GIVEN",       "DECISION"},
+        {"Full diamond set",    "Lag",                "DENIED (no lag)"},
+        {"Netherite pickaxe",   "Creeper (no creeper)","DENIED (logs)"},
+        {math.random(5,64).."x diamond","Fell in lava","DENIED (intentional)"},
+        {"Elytra",              "Wind",               "DENIED (there was no wind)"},
+        {"64x iron",            "'The server did it'","DENIED (it did not)"},
+        {"Trident",             "Threw it into lava", "DENIED (you did that)"},
+        {"Horse armour",        "Horse 'ran away'",   "DENIED (you forgot the horse)"},
+        {"Shulker box contents","Shulker 'looked mean'","DENIED (not how it works)"},
+        {"XP levels (all)",     "Died, lost them",    "DENIED (yes that's how XP works)"},
+        {"Base (dirt cube)",    "Griefed (by creeper)","DENIED (you let it in)"},
+        {"Dignity",             "Existing on server", "DENIED (pre-existing condition)"},
+        {"Gerald's trust",      "Various incidents",  "DENIED (Gerald's decision)"},
+    }
+    local row = 4
+    m.setTextColor(colors.lightGray)
+    put(2, row, string.format("%-22s%-22s%s","ITEM","REASON","DECISION"):sub(1,w-2))
+    row = row + 1
+    fillRow(row,"-",colors.gray,colors.black)
+    row = row + 1
+    for i = 2,#items do
+        if row >= h then break end
+        local itm = items[i]
+        m.setTextColor(itm[3]:sub(1,6)=="DENIED" and colors.red or colors.lime)
+        local line = string.format("%-22s%-22s%s",
+            itm[1]:sub(1,21), itm[2]:sub(1,21), itm[3]):sub(1,w-2)
+        tw(2, row, line, 0.006)
+        row = row + 1
+        os.sleep(0.13)
+    end
+    os.sleep(0.8)
+    m.setTextColor(colors.red)
+    center(h,"TOTAL APPROVED: 0.  TOTAL DENIED: EVERYTHING.")
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: OVERHEARD IN SPECTATOR MODE
+-- ============================================================
+local function phase_spectator()
+    blast(colors.black, colors.black)
+    m.setTextColor(colors.cyan)
+    center(2,"OVERHEARD: SPECTATOR MODE")
+    m.setTextColor(colors.lightGray)
+    center(3,"(other players watching you)")
+    fillRow(4,"-",colors.gray,colors.black)
+    local convos = {
+        "dave: ok so why are they going toward the lava",
+        "callum: i have no idea",
+        "dave: they can see the lava right",
+        "callum: they can definitely see it",
+        "dave: its right there",
+        "callum: yeah",
+        "dave: its so orange",
+        "callum: bright orange yeah",
+        "dave: oh no",
+        "callum: yep",
+        "dave: oh no oh no",
+        "callum: there it is",
+        "dave: i cant watch",
+        "callum: i cant stop watching",
+        "",
+        "admin: (joins spectator mode)",
+        "admin: what are we looking at",
+        "callum: they're heading back toward the same lava",
+        "admin: what",
+        "callum: yeah",
+        "admin: the same lava as before",
+        "callum: yeah",
+        "admin: they know thats the same lava",
+        "callum: i genuinely dont think they do",
+        "admin: (leaves spectator mode)",
+        "admin: (cannot process what they saw)",
+        "",
+        "dave: is that a chicken following them",
+        "callum: thats THE chicken",
+        "dave: oh god",
+        "callum: yeah",
+        "dave: does the chicken know",
+        "callum: the chicken always knows",
+        "dave: should we warn them about the chicken",
+        "callum: theyre in the lava again",
+        "dave: ok the chicken can wait",
+        "",
+        "everyone: F",
+        "gerald: (oinks with dignity)",
+    }
+    local row = 5
+    for _,line in ipairs(convos) do
+        if row >= h then break end
+        if line == "" then row = row + 1
+        else
+            local who = line:match("^(%w+):")
+            m.setTextColor(
+                who == "admin"   and colors.red   or
+                who == "gerald"  and colors.lime  or
+                who == "everyone"and colors.yellow or
+                who == "callum"  and colors.cyan  or
+                colors.white
+            )
+            tw(2, row, line, 0.013)
+            row = row + 1
+        end
+        os.sleep(0.18)
+    end
+    os.sleep(4.5)
+end
+
+-- ============================================================
+-- PHASE: FIVE-STAR REVIEW OF DYING (by the mobs)
+-- ============================================================
+local function phase_mobreviews()
+    blast(colors.black, colors.red)
+    m.setTextColor(colors.red)
+    center(2,"MOB REVIEW: THIS PLAYER")
+    m.setTextColor(colors.yellow)
+    center(3,"Ratings by those who've encountered them")
+    fillRow(4,"-",colors.gray,colors.black)
+    local reviews = {
+        {mob="Skeleton",       stars="5*", r="Stands completely still. Never blocks."},
+        {mob="Creeper",        stars="5*", r="Walks TOWARD the hissing. Incredible."},
+        {mob="The Warden",     stars="5*", r="Loudest footsteps I have ever heard."},
+        {mob="Zombie",         stars="5*", r="Full iron armour. Didn't use it once."},
+        {mob="Phantom",        stars="5*", r="Hasn't slept. Ever. Dream client."},
+        {mob="The Lava",       stars="5*", r="Visits constantly. Loyal. Appreciated."},
+        {mob="Pillager",       stars="5*", r="Easy loot. Efficient. Good value."},
+        {mob="Ghast",          stars="5*", r="Stood still while I fired. Polite."},
+        {mob="The Void",       stars="5*", r="Gold member loyalty programme. VIP."},
+        {mob="Bat",            stars="5*", r="They punched me first. I won. Wow."},
+        {mob="A Cactus",       stars="5*", r="They walked into me. I didn't move."},
+        {mob="The Chicken",    stars="N/A",r="Not giving a rating. You know why."},
+        {mob="Gerald the Pig", stars="1*", r="Player is my owner. Embarrassing."},
+        {mob="Enderman",       stars="3*", r="Made eye contact AGAIN. Consistent."},
+        {mob="Gravel",         stars="5*", r="Trusted me above all others. Touching."},
+    }
+    local row = 5
+    for _,rv in ipairs(reviews) do
+        if row >= h then break end
+        local positive = rv.stars == "5*"
+        m.setTextColor(colors.cyan)
+        local nm = (rv.mob .. ":"):sub(1,14)
+        put(2, row, nm)
+        m.setTextColor(positive and colors.lime or
+                       rv.stars=="N/A" and colors.orange or colors.yellow)
+        put(2+#nm, row, rv.stars .. " ")
+        m.setTextColor(colors.white)
+        put(2+#nm+4, row, rv.r)
+        row = row + 1
+        os.sleep(0.2)
+    end
+    os.sleep(4.5)
+end
+
+
 -- ============================================================
 -- PHASE RUNNER
 -- ============================================================
 local phases = {
+    -- Core phases
     phase_bsod,        phase_dox,         phase_virusscan,   phase_history,
     phase_discord,     phase_achievements, phase_roast,       phase_taskmanager,
     phase_progress,    phase_conspiracy,  phase_scoreboard,  phase_matrix,
-    phase_rip,         phase_dvd,         phase_warden,      phase_ticker,
+    phase_rip,         phase_dvd,         phase_warden,
     phase_seizure,     phase_eulogy,      phase_loading,     phase_livechat,
     phase_speedrun,    phase_support,     phase_reboot,      phase_twitchchat,
     phase_reddit,      phase_patchnotes,  phase_psych,       phase_yelp,
@@ -3937,6 +4702,14 @@ local phases = {
     phase_census,      phase_cookingshow, phase_powerpoint,  phase_courtroom,
     phase_declined,    phase_manual,      phase_confessional,phase_tips,
     phase_finalboss,
+    -- New phases
+    phase_groupchat,   phase_gameshow,    phase_intervention,phase_autopsy,
+    phase_complaints,  phase_mvpe,        phase_blogpost,    phase_insurance2,
+    phase_spectator,   phase_mobreviews,
+    -- Ticker segments (7 short themed news flashes)
+    phase_ticker_deaths, phase_ticker_gerald, phase_ticker_admin,
+    phase_ticker_lava,   phase_ticker_dirt,   phase_ticker_sports,
+    phase_ticker_weird,
 }
 
 local function visualLoop()
@@ -3962,9 +4735,9 @@ end
 -- ============================================================
 blast(colors.black, colors.red)
 local mid = math.floor(h / 2)
-center(math.max(1, mid - 2), "XYNIA BRAINROT ENGINE v7.0")
+center(math.max(1, mid - 2), "XYNIA BRAINROT ENGINE v8.0")
 center(math.max(1, mid),     "INITIALIZING DAMAGE...")
-center(math.max(1, mid + 2), "62 PHASES. NO SURVIVORS. NO CHILL.")
+center(math.max(1, mid + 2), "82 PHASES. NO SURVIVORS. NO CHILL.")
 os.sleep(3.5)
 
 parallel.waitForAny(visualLoop, audioLoop)
