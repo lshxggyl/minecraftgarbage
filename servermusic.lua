@@ -759,7 +759,7 @@ local function audioLoop()
 
     -- ── CONFIG ──────────────────────────────────────────────────────
     -- Replace with your PC's local IP.  The server prints this for you.
-    local SERVER  = "http://192.168.1.X:4800"
+    local SERVER  = "http://192.168.18.18:4800"
     local VOLUME  = 3.0   -- speaker volume 0.0 – 3.0
     local CHUNK   = 16 * 1024   -- 16 KB per HTTP read (~2.7 s of audio)
 
