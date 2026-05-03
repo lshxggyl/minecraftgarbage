@@ -2774,6 +2774,7 @@ end
 
 -- ============================================================
 -- PHASE: WARRANTY
+local function phase_warranty()
     blast(colors.black, colors.white)
     center(2, "WARRANTY VOID NOTICE")
     center(3, "Ref #" .. math.random(10000,99999))
