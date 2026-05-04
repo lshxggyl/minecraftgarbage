@@ -851,7 +851,7 @@ local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
     -- ── CONFIG ──────────────────────────────────────────────────────
-    local SERVER  = "https://473731a81b8010.lhr.life"
+    local SERVER  = "https://1a9d2d9e2f2ab5.lhr.life"
     local VOLUME  = 3.0   -- Max radius, zero distortion.
     local CHUNK   = 16 * 1024
 
@@ -1032,7 +1032,7 @@ end
 -- ============================================================
 -- PHASE: BSOD
 -- ============================================================
-local function phase_bsod()
+function phase_bsod()
     blast(colors.blue, colors.white)
     local mid = math.floor(h / 2)
     center(math.max(1, mid - 4), ":(")
@@ -1056,7 +1056,7 @@ end
 -- ============================================================
 -- PHASE: FAKE DOX
 -- ============================================================
-local function phase_dox()
+function phase_dox()
     blast(colors.black, colors.green)
     tw(2, 2, "[BUNGUS BOIS NET INTRUSION v6.66]", 0.022)
     os.sleep(1.50)
@@ -1103,7 +1103,7 @@ end
 -- ============================================================
 -- PHASE: BROWSER HISTORY
 -- ============================================================
-local function phase_history()
+function phase_history()
     blast(colors.blue, colors.white)
     center(2, "-- BROWSER HISTORY: EXPOSED --")
     fillRow(3, "-", colors.gray, colors.blue)
@@ -1127,7 +1127,7 @@ end
 -- ============================================================
 -- PHASE: DISCORD DM LEAK
 -- ============================================================
-local function phase_discord()
+function phase_discord()
     blast(colors.black, colors.magenta)
     center(2, "-- LEAKED DMs: ALL OF THEM --")
     local shuf = {}
@@ -1151,7 +1151,7 @@ end
 -- ============================================================
 -- PHASE: ROAST GENERATOR
 -- ============================================================
-local function phase_roast()
+function phase_roast()
     blast(colors.black, colors.white)
     for i = 1, 40 do
         m.clear()
@@ -1171,7 +1171,7 @@ end
 -- ============================================================
 -- PHASE: MATRIX RAIN
 -- ============================================================
-local function phase_matrix()
+function phase_matrix()
     blast(colors.black, colors.lime)
     local words = {
         "L","F","NOOB","RIP","GG","COPE","RATIO","MALDING",
@@ -1202,7 +1202,7 @@ end
 -- ============================================================
 -- PHASE: DVD BOUNCE
 -- ============================================================
-local function phase_dvd()
+function phase_dvd()
     blast(colors.black, colors.white)
     local bx = math.random(1, math.max(1, math.floor(w/2)))
     local by = math.random(1, math.max(1, h - 2))
@@ -1231,7 +1231,7 @@ end
 -- ============================================================
 -- PHASE: SKULL / YOU DIED
 -- ============================================================
-local function phase_rip()
+function phase_rip()
     blast(colors.black, colors.white)
     local mw = math.max(1, math.floor(w/2) - 4)
     local mh = math.max(1, math.floor(h/2) - 4)
@@ -1278,7 +1278,7 @@ end
 -- ============================================================
 -- PHASE: VIRUS SCAN
 -- ============================================================
-local function phase_virusscan()
+function phase_virusscan()
     blast(colors.black, colors.green)
     tw(2, 2, "BUNGUS BOIS THREAT SCANNER v9.0", 0.022)
     os.sleep(1.50)
@@ -1323,7 +1323,7 @@ end
 -- ============================================================
 -- PHASE: TASK MANAGER
 -- ============================================================
-local function phase_taskmanager()
+function phase_taskmanager()
     blast(colors.black, colors.white)
     center(1, "TASK MANAGER: YOUR BRAIN")
     fillRow(2, "-", colors.gray, colors.black)
@@ -1371,7 +1371,7 @@ end
 -- ============================================================
 -- PHASE: PROGRESS BARS OF SHAME
 -- ============================================================
-local function phase_progress()
+function phase_progress()
     blast(colors.black, colors.white)
     center(2, "DIAGNOSTICS: YOU (God Help Us)")
     os.sleep(1.50)
@@ -1411,7 +1411,7 @@ end
 -- ============================================================
 -- PHASE: SCOREBOARD OF ETERNAL SHAME
 -- ============================================================
-local function phase_scoreboard()
+function phase_scoreboard()
     blast(colors.black, colors.white)
     center(2, ("STATS: " .. genInsult()))
     fillRow(3, "=", colors.gray, colors.black)
@@ -1454,7 +1454,7 @@ end
 -- ============================================================
 -- PHASE: CONSPIRACY BOARD
 -- ============================================================
-local function phase_conspiracy()
+function phase_conspiracy()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.red)
     center(2, "*** CLASSIFIED INTEL: YOU ***")
@@ -1479,7 +1479,7 @@ end
 -- ============================================================
 -- PHASE: ACHIEVEMENTS
 -- ============================================================
-local function phase_achievements()
+function phase_achievements()
     blast(colors.black, colors.white)
     center(2, "ACHIEVEMENT UNLOCKED (somehow)")
     os.sleep(1.50)
@@ -1507,7 +1507,7 @@ end
 -- ============================================================
 -- PHASE: SEIZURE PROTOCOL
 -- ============================================================
-local function phase_seizure()
+function phase_seizure()
     local msgs = {
         "WHAT THE FUCK ARE YOU DOING",
         "HOW ARE YOU THIS BAD",
@@ -1583,7 +1583,7 @@ local function runTicker(label, headlines)
 end
 
 -- SEGMENT 1: DEATH DESK
-local function phase_ticker_deaths()
+function phase_ticker_deaths()
     runTicker("DEATH DESK - LIVE", {
         "mk4modz DIES AGAIN - CLAIMS LAG - iworkatjaguar SHOWS LOGS",
         "mk4modz SETS PERSONAL BEST: " .. math.random(8,30) .. " DEATHS IN ONE HOUR",
@@ -1608,7 +1608,7 @@ local function phase_ticker_deaths()
 end
 
 -- SEGMENT 2: THE GERALD / CHICKEN SITUATION
-local function phase_ticker_gerald()
+function phase_ticker_gerald()
     runTicker("GERALD & CHICKEN BUREAU", {
         "GERALD THE PIG OUTRANKS mk4modz ON ALL METRICS - SP00D3R CONFIRMS",
         "GERALD APPLIES FOR mk4modz'S WHITELIST SPOT - iworkatjaguar CONSIDERING",
@@ -1634,7 +1634,7 @@ local function phase_ticker_gerald()
 end
 
 -- SEGMENT 3: ADMIN DESK / LOGS / APPEALS
-local function phase_ticker_admin()
+function phase_ticker_admin()
     runTicker("ADMIN DESK - BREAKING", {
         "mk4modz UNBAN APPEAL #" .. math.random(8,55) .. " DENIED - iworkatjaguar QUOTES 'JUST STOP DYING'",
         "LOGS: ZERO LAG IN mk4modz'S " .. math.random(300,900) .. " DEATHS - iworkatjaguar HAS CHECKED",
@@ -1658,7 +1658,7 @@ local function phase_ticker_admin()
 end
 
 -- SEGMENT 4: LAVA / VOID / NETHER INCIDENTS
-local function phase_ticker_lava()
+function phase_ticker_lava()
     runTicker("LAVA & VOID CORRESPONDENT", {
         "mk4modz " .. math.random(5,64) .. " DIAMONDS LOST TO FALL DAMAGE - NOT EVEN LAVA THIS TIME",
         "SAME LAVA FINDS PLAYER FOR " .. math.random(4,12) .. "TH TIME - SCIENTISTS CANNOT EXPLAIN",
@@ -1683,7 +1683,7 @@ local function phase_ticker_lava()
 end
 
 -- SEGMENT 5: DIRT / BASE / SERVER ECONOMY
-local function phase_ticker_dirt()
+function phase_ticker_dirt()
     runTicker("DIRT & ECONOMY WATCH", {
         "mk4modz HAS " .. math.random(10000,99999) .. " DIRT - SubaRubicon HAS " .. math.random(100,500) .. " QUESTIONS - NO ANSWERS",
         "SERVER ECONOMY DESTABILISED - TOO MUCH DIRT IN CIRCULATION - ONE SOURCE",
@@ -1707,7 +1707,7 @@ local function phase_ticker_dirt()
 end
 
 -- SEGMENT 6: SPORTS DESK (play-by-play style)
-local function phase_ticker_sports()
+function phase_ticker_sports()
     runTicker("SMP SPORTS DESK", {
         "mk4modz LOSES 1V1 TO OWN CHICKEN - SP00D3R WINS 1V1 AGAINST THREE SKELETONS SIMULTANEOUSLY",
         "mk4modz SEASON STATS: " .. math.random(300,999) .. " FALL DEATHS / 0 WINS / 1 JETPACK ACCIDENT",
@@ -1730,7 +1730,7 @@ local function phase_ticker_sports()
 end
 
 -- SEGMENT 7: WEIRD SCIENCE / LATE BREAKING
-local function phase_ticker_weird()
+function phase_ticker_weird()
     runTicker("LATE BREAKING // WEIRD SCIENCE", {
         "SCIENTISTS: mk4modz GETTING WORSE - SP00D3R GETTING BETTER - BROTHERS. SAME HOUSEHOLD. HOW.",
         "PEER-REVIEWED STUDY: PLAYER'S DECISION-MAKING 'STATISTICALLY IMPLAUSIBLE'",
@@ -1757,7 +1757,7 @@ end
 -- ============================================================
 -- PHASE: EULOGY
 -- ============================================================
-local function phase_eulogy()
+function phase_eulogy()
     blast(colors.black, colors.white)
     m.setTextColor(colors.lightGray)
     center(2, "IN MEMORIAM")
@@ -1814,7 +1814,7 @@ end
 -- ============================================================
 -- PHASE: WARDEN WARNING
 -- ============================================================
-local function phase_warden()
+function phase_warden()
     blast(colors.black, colors.red)
     center(2, "WARDEN PROXIMITY ALERT")
     os.sleep(1.50)
@@ -1859,7 +1859,7 @@ end
 -- ============================================================
 -- PHASE: LOADING SCREEN OF DOOM
 -- ============================================================
-local function phase_loading()
+function phase_loading()
     blast(colors.black, colors.white)
     center(2, ("LOADING: " .. genInsult() .. "'S GAME"))
     local tasks = {
@@ -1907,7 +1907,7 @@ end
 -- ============================================================
 -- PHASE: LIVE SERVER CHAT
 -- ============================================================
-local function phase_livechat()
+function phase_livechat()
     blast(colors.black, colors.white)
     center(1, "[ SERVER CHAT - UNCENSORED ]")
     fillRow(2, "-", colors.gray, colors.black)
@@ -1980,7 +1980,7 @@ end
 -- ============================================================
 -- PHASE: SPEEDRUN TIMER
 -- ============================================================
-local function phase_speedrun()
+function phase_speedrun()
     blast(colors.black, colors.white)
     center(2, "SPEEDRUN #" .. math.random(40, 300) .. " - LIVE")
     fillRow(3, "-", colors.gray, colors.black)
@@ -2020,7 +2020,7 @@ end
 -- ============================================================
 -- PHASE: SUPPORT TICKET
 -- ============================================================
-local function phase_support()
+function phase_support()
     blast(colors.black, colors.white)
     center(2, "TICKET #" .. math.random(10000, 99999) .. " - mk4modz'S 11TH")
     fillRow(3, "=", colors.gray, colors.black)
@@ -2072,7 +2072,7 @@ end
 -- ============================================================
 -- PHASE: REBOOT
 -- ============================================================
-local function phase_reboot()
+function phase_reboot()
     blast(colors.black, colors.red)
     local mid = math.floor(h / 2)
     center(math.max(1, mid - 2), "MEMORY LEAK: COPE.EXE")
@@ -2091,7 +2091,7 @@ end
 -- ============================================================
 -- PHASE: TWITCH CHAT SIMULATOR
 -- ============================================================
-local function phase_twitchchat()
+function phase_twitchchat()
     blast(colors.black, colors.purple)
     center(1, "BUNGUS BOIS SMP LIVE - 847 VIEWERS")
     fillRow(2, "-", colors.gray, colors.black)
@@ -2143,7 +2143,7 @@ end
 -- ============================================================
 -- PHASE: REDDIT POST (AITA)
 -- ============================================================
-local function phase_reddit()
+function phase_reddit()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2, "r/AmITheAsshole")
@@ -2192,7 +2192,7 @@ end
 -- ============================================================
 -- PHASE: PATCH NOTES (YOU-SPECIFIC)
 -- ============================================================
-local function phase_patchnotes()
+function phase_patchnotes()
     blast(colors.black, colors.cyan)
     center(2, "PATCH NOTES - YOU-SPECIFIC HOTFIX")
     fillRow(3, "-", colors.gray, colors.black)
@@ -2239,7 +2239,7 @@ end
 -- ============================================================
 -- PHASE: PSYCHIATRIC EVALUATION
 -- ============================================================
-local function phase_psych()
+function phase_psych()
     blast(colors.black, colors.white)
     center(2, "PSYCH EVALUATION RESULTS")
     center(3, ("Patient: " .. genInsult()))
@@ -2292,7 +2292,7 @@ end
 -- ============================================================
 -- PHASE: YELP REVIEWS (OF THEIR BASE)
 -- ============================================================
-local function phase_yelp()
+function phase_yelp()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2, "YELP: YOUR BASE")
@@ -2336,7 +2336,7 @@ end
 -- ============================================================
 -- PHASE: HOROSCOPE (ALL TERRIBLE)
 -- ============================================================
-local function phase_horoscope()
+function phase_horoscope()
     blast(colors.black, colors.purple)
     center(2, "YOUR MINECRAFT HOROSCOPE")
     center(3, "The stars have spoken. Its bad.")
@@ -2387,7 +2387,7 @@ end
 -- ============================================================
 -- PHASE: LAST WILL AND TESTAMENT
 -- ============================================================
-local function phase_will()
+function phase_will()
     blast(colors.black, colors.white)
     m.setTextColor(colors.lightGray)
     center(2, "LAST WILL AND TESTAMENT")
@@ -2438,7 +2438,7 @@ end
 -- ============================================================
 -- PHASE: TOS VIOLATION NOTICE
 -- ============================================================
-local function phase_tos()
+function phase_tos()
     blast(colors.black, colors.red)
     center(2, "TERMS OF SERVICE VIOLATION")
     center(3, "Notice #" .. math.random(1000, 9999))
@@ -2491,7 +2491,7 @@ end
 -- ============================================================
 -- PHASE: JOB APPLICATION REJECTION
 -- ============================================================
-local function phase_job()
+function phase_job()
     blast(colors.black, colors.white)
     center(2, "APPLICATION: REJECTED")
     center(3, "Role: Minecraft Player")
@@ -2543,7 +2543,7 @@ end
 -- ============================================================
 -- PHASE: STAR RATING
 -- ============================================================
-local function phase_stars()
+function phase_stars()
     blast(colors.black, colors.yellow)
     center(2, "COMMUNITY RATING: YOU")
     os.sleep(1.50)
@@ -2589,7 +2589,7 @@ end
 -- ============================================================
 -- PHASE: EMAIL INBOX
 -- ============================================================
-local function phase_email()
+function phase_email()
     blast(colors.black, colors.white)
     center(2, "INBOX (" .. math.random(200,999) .. " UNREAD)")
     fillRow(3, "-", colors.gray, colors.black)
@@ -2635,7 +2635,7 @@ end
 -- ============================================================
 -- PHASE: GOOGLE SEARCH RESULTS
 -- ============================================================
-local function phase_google()
+function phase_google()
     blast(colors.black, colors.white)
     m.setTextColor(colors.cyan)
     center(2, "Google")
@@ -2705,7 +2705,7 @@ end
 -- ============================================================
 -- PHASE: FORTUNE COOKIES FROM HELL
 -- ============================================================
-local function phase_fortune()
+function phase_fortune()
     blast(colors.black, colors.yellow)
     center(2, "YOUR FORTUNE")
     center(3, string.rep("-", math.min(14, w)))
@@ -2766,7 +2766,7 @@ end
 -- ============================================================
 -- PHASE: FAKE POLICE REPORT
 -- ============================================================
-local function phase_police()
+function phase_police()
     blast(colors.black, colors.white)
     center(2, "INCIDENT REPORT #" .. math.random(10000,99999))
     fillRow(3, "=", colors.gray, colors.black)
@@ -2819,7 +2819,7 @@ end
 -- ============================================================
 -- PHASE: FAKE THERAPY SESSION
 -- ============================================================
-local function phase_therapy()
+function phase_therapy()
     blast(colors.black, colors.white)
     center(2, "THERAPY SESSION TRANSCRIPT")
     center(3, ("Patient: " .. genInsult()))
@@ -2869,7 +2869,7 @@ end
 -- ============================================================
 -- PHASE: FAKE AUCTION OF THEIR INVENTORY
 -- ============================================================
-local function phase_auction()
+function phase_auction()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2, "AUCTION: YOUR ENTIRE INVENTORY")
@@ -2914,7 +2914,7 @@ end
 -- ============================================================
 -- PHASE: DATING PROFILE ROAST
 -- ============================================================
-local function phase_dating()
+function phase_dating()
     blast(colors.black, colors.pink)
     m.setTextColor(colors.pink)
     center(2, "DATING PROFILE REVIEW")
@@ -2957,7 +2957,7 @@ end
 -- ============================================================
 -- PHASE: FUCK UP COMPILATION
 -- ============================================================
-local function phase_fuckups()
+function phase_fuckups()
     blast(colors.black, colors.red)
     center(2, "YOUR GREATEST FUCK UPS: A COMPILATION")
     fillRow(3, "-", colors.red, colors.black)
@@ -3014,7 +3014,7 @@ end
 -- ============================================================
 -- PHASE: SWEAR JAR AUDIT
 -- ============================================================
-local function phase_swearjar()
+function phase_swearjar()
     blast(colors.black, colors.cyan)
     center(2, "SWEAR JAR AUDIT - YOUR EXPENSE REPORT")
     fillRow(3, "-", colors.cyan, colors.black)
@@ -3055,7 +3055,7 @@ end
 -- ============================================================
 -- PHASE: PAIN AND SUFFERING INSURANCE CLAIM
 -- ============================================================
-local function phase_insurance()
+function phase_insurance()
     blast(colors.black, colors.white)
     center(2, "INSURANCE CLAIM: PAIN & SUFFERING")
     fillRow(3, "=", colors.gray, colors.black)
@@ -3110,7 +3110,7 @@ end
 -- ============================================================
 -- PHASE: ANGRY LETTER FROM SERVER OWNER
 -- ============================================================
-local function phase_angrymail()
+function phase_angrymail()
     blast(colors.black, colors.red)
     center(2, "CERTIFIED FUCKING LETTER FROM ADMIN")
     fillRow(3, "-", colors.red, colors.black)
@@ -3184,7 +3184,7 @@ end
 
 -- ============================================================
 -- PHASE: WARRANTY
-local function phase_warranty()
+function phase_warranty()
     blast(colors.black, colors.white)
     center(2, "WARRANTY VOID NOTICE")
     center(3, "Ref #" .. math.random(10000,99999))
@@ -3236,7 +3236,7 @@ end
 -- ============================================================
 -- PHASE: LINKEDIN PROFILE ROAST
 -- ============================================================
-local function phase_linkedin()
+function phase_linkedin()
     blast(colors.black, colors.lightBlue)
     m.setTextColor(colors.lightBlue)
     center(2,"LinkedIn Profile")
@@ -3288,7 +3288,7 @@ end
 -- ============================================================
 -- PHASE: TRIPADVISOR REVIEWS OF THEIR BASE
 -- ============================================================
-local function phase_tripadvisor()
+function phase_tripadvisor()
     blast(colors.black, colors.green)
     m.setTextColor(colors.green)
     center(2,"TripAdvisor: The Dirt Cube")
@@ -3328,7 +3328,7 @@ end
 -- ============================================================
 -- PHASE: GLASSDOOR REVIEW (BEING YOUR TEAMMATE)
 -- ============================================================
-local function phase_glassdoor()
+function phase_glassdoor()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"Glassdoor: Being Your Teammate")
@@ -3377,7 +3377,7 @@ end
 -- ============================================================
 -- PHASE: NEWSPAPER OBITUARY
 -- ============================================================
-local function phase_obituary()
+function phase_obituary()
     blast(colors.black, colors.white)
     m.setTextColor(colors.lightGray)
     center(2,"THE MINECRAFT GAZETTE")
@@ -3431,7 +3431,7 @@ end
 -- ============================================================
 -- PHASE: AMAZON REVIEW OF THEIR GAMEPLAY
 -- ============================================================
-local function phase_amazon()
+function phase_amazon()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"Amazon Customer Reviews")
@@ -3472,7 +3472,7 @@ end
 -- ============================================================
 -- PHASE: CRAIGSLIST AD FOR THEIR BASE
 -- ============================================================
-local function phase_craigslist()
+function phase_craigslist()
     blast(colors.black, colors.white)
     m.setTextColor(colors.cyan)
     center(2,"Craigslist - Real Estate")
@@ -3526,7 +3526,7 @@ end
 -- ============================================================
 -- PHASE: IT HELPDESK TICKET
 -- ============================================================
-local function phase_helpdesk()
+function phase_helpdesk()
     blast(colors.black, colors.white)
     center(2,"IT HELPDESK TICKET #"..math.random(10000,99999))
     fillRow(3,"=",colors.gray,colors.black)
@@ -3579,7 +3579,7 @@ end
 -- ============================================================
 -- PHASE: NATURE DOCUMENTARY
 -- ============================================================
-local function phase_documentary()
+function phase_documentary()
     blast(colors.black, colors.white)
     m.setTextColor(colors.yellow)
     center(2,"NATURE DOCUMENTARY")
@@ -3654,7 +3654,7 @@ end
 -- ============================================================
 -- PHASE: PROGRESS REPORT / REPORT CARD
 -- ============================================================
-local function phase_reportcard()
+function phase_reportcard()
     blast(colors.black, colors.white)
     center(2,"MINECRAFT PROGRESS REPORT")
     center(3,"Student: "..clip(genInsult()))
@@ -3699,7 +3699,7 @@ end
 -- ============================================================
 -- PHASE: VOICEMAILS
 -- ============================================================
-local function phase_voicemail()
+function phase_voicemail()
     blast(colors.black, colors.white)
     center(2,"VOICEMAIL ("..math.random(15,40).." NEW)")
     fillRow(3,"-",colors.gray,colors.black)
@@ -3744,7 +3744,7 @@ end
 -- ============================================================
 -- PHASE: BREAKING NEWS INTERVIEW
 -- ============================================================
-local function phase_interview()
+function phase_interview()
     blast(colors.black, colors.white)
     center(2,"LIVE BREAKING NEWS INTERVIEW")
     fillRow(3,"=",colors.gray,colors.black)
@@ -3796,7 +3796,7 @@ end
 -- ============================================================
 -- PHASE: GOVERNMENT CENSUS
 -- ============================================================
-local function phase_census()
+function phase_census()
     blast(colors.black, colors.white)
     center(2,"OFFICIAL GOVERNMENT CENSUS")
     center(3,"Subject: "..clip(genInsult()))
@@ -3850,7 +3850,7 @@ end
 -- ============================================================
 -- PHASE: COOKING SHOW
 -- ============================================================
-local function phase_cookingshow()
+function phase_cookingshow()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"COOKING WITH DISASTER")
@@ -3913,7 +3913,7 @@ end
 -- ============================================================
 -- PHASE: POWERPOINT PRESENTATION
 -- ============================================================
-local function phase_powerpoint()
+function phase_powerpoint()
     local slides = {
         {
             title="Q"..math.random(1,4).." DEATH REVIEW",
@@ -3984,7 +3984,7 @@ end
 -- ============================================================
 -- PHASE: COURTROOM DRAMA
 -- ============================================================
-local function phase_courtroom()
+function phase_courtroom()
     blast(colors.black, colors.white)
     center(2,"MINECRAFT CRIMINAL COURT")
     center(3,"Fall Damage v. mk4modz (again)")
@@ -4038,7 +4038,7 @@ end
 -- ============================================================
 -- PHASE: TRANSACTION DECLINED
 -- ============================================================
-local function phase_declined()
+function phase_declined()
     blast(colors.black, colors.red)
     center(2,"TRANSACTION DECLINED")
     fillRow(3,"=",colors.red,colors.black)
@@ -4081,7 +4081,7 @@ end
 -- ============================================================
 -- PHASE: HONEST MINECRAFT MANUAL
 -- ============================================================
-local function phase_manual()
+function phase_manual()
     blast(colors.black, colors.white)
     m.setTextColor(colors.yellow)
     center(2,"MINECRAFT: HONEST MANUAL")
@@ -4139,7 +4139,7 @@ end
 -- ============================================================
 -- PHASE: CONFESSIONAL BOOTH
 -- ============================================================
-local function phase_confessional()
+function phase_confessional()
     blast(colors.black, colors.red)
     center(2,"THE CONFESSIONAL")
     center(3,"(anonymous. obviously you.)")
@@ -4197,7 +4197,7 @@ end
 -- ============================================================
 -- PHASE: LOADING TIPS (EXTREMELY PASSIVE AGGRESSIVE)
 -- ============================================================
-local function phase_tips()
+function phase_tips()
     local tips_list = {
         {
             hdr="DID YOU KNOW",
@@ -4286,7 +4286,7 @@ end
 -- ============================================================
 -- PHASE: FINAL BOSS MONOLOGUE
 -- ============================================================
-local function phase_finalboss()
+function phase_finalboss()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"THE FINAL BOSS SPEAKS")
@@ -4351,7 +4351,7 @@ end
 -- ============================================================
 -- PHASE: GROUP CHAT (friends reacting in real time)
 -- ============================================================
-local function phase_groupchat()
+function phase_groupchat()
     blast(colors.black, colors.black)
     m.setTextColor(colors.green)
     center(1,"Group Chat: bungus bois smp lads")
@@ -4439,7 +4439,7 @@ end
 -- PHASE: GAME SHOW (Who Wants To Be A Millionaire-style)
 -- Player gets every minecraft basic wrong
 -- ============================================================
-local function phase_gameshow()
+function phase_gameshow()
     blast(colors.black, colors.blue)
     m.setTextColor(colors.yellow)
     center(2,"WHO WANTS TO NOT DIE IN MINECRAFT")
@@ -4529,7 +4529,7 @@ end
 -- ============================================================
 -- PHASE: INTERVENTION (friends staging an intervention)
 -- ============================================================
-local function phase_intervention()
+function phase_intervention()
     blast(colors.black, colors.white)
     m.setTextColor(colors.red)
     center(2,"WE NEED TO TALK")
@@ -4607,7 +4607,7 @@ end
 -- ============================================================
 -- PHASE: AUTOPSY REPORT
 -- ============================================================
-local function phase_autopsy()
+function phase_autopsy()
     blast(colors.black, colors.white)
     center(2,"POST-MORTEM REPORT #" .. math.random(100,999))
     center(3,"Pathologist: Dr. Admin")
@@ -4682,7 +4682,7 @@ end
 -- ============================================================
 -- PHASE: FORMAL COMPLAINTS DEPARTMENT
 -- ============================================================
-local function phase_complaints()
+function phase_complaints()
     blast(colors.black, colors.white)
     center(2,"COMPLAINTS RECEIVED: TODAY")
     fillRow(3,"=",colors.gray,colors.black)
@@ -4731,7 +4731,7 @@ end
 -- ============================================================
 -- PHASE: PLAYER MVPE CEREMONY (worst player awards)
 -- ============================================================
-local function phase_mvpe()
+function phase_mvpe()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"SMP AWARDS CEREMONY")
@@ -4764,7 +4764,7 @@ end
 -- ============================================================
 -- PHASE: MINECRAFT.NET BLOG POST (about "one specific player")
 -- ============================================================
-local function phase_blogpost()
+function phase_blogpost()
     blast(colors.black, colors.white)
     m.setTextColor(colors.lime)
     center(2,"minecraft.net // community blog")
@@ -4833,7 +4833,7 @@ end
 -- ============================================================
 -- PHASE: FAKE INSURANCE CLAIM (new version, different content)
 -- ============================================================
-local function phase_insurance2()
+function phase_insurance2()
     blast(colors.black, colors.white)
     center(2,"CLAIM #" .. math.random(10000,99999) .. " - UNDER REVIEW")
     fillRow(3,"=",colors.gray,colors.black)
@@ -4877,7 +4877,7 @@ end
 -- ============================================================
 -- PHASE: OVERHEARD IN SPECTATOR MODE
 -- ============================================================
-local function phase_spectator()
+function phase_spectator()
     blast(colors.black, colors.black)
     m.setTextColor(colors.cyan)
     center(2,"OVERHEARD: SPECTATOR MODE")
@@ -4954,7 +4954,7 @@ end
 -- ============================================================
 -- PHASE: FIVE-STAR REVIEW OF DYING (by the mobs)
 -- ============================================================
-local function phase_mobreviews()
+function phase_mobreviews()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"MOB REVIEW: THIS PLAYER")
@@ -4994,7 +4994,7 @@ end
 -- ============================================================
 -- PHASE: SUBARUBICON'S ATM10 HELPDESK
 -- ============================================================
-local function phase_subarubicon()
+function phase_subarubicon()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"SubaRubicon's ATM10 Journey")
@@ -5052,7 +5052,7 @@ end
 -- ============================================================
 -- PHASE: IWORKATJAGUAR'S REACTOR INCIDENT REPORT
 -- ============================================================
-local function phase_reactor()
+function phase_reactor()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"INCIDENT REPORT: THE REACTOR")
@@ -5117,7 +5117,7 @@ end
 -- PHASE: SP00D3R APPRECIATION SEGMENT
 -- (the one nice thing on the monitor)
 -- ============================================================
-local function phase_sp00d3r()
+function phase_sp00d3r()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"SP00D3R APPRECIATION MOMENT")
@@ -5172,7 +5172,7 @@ end
 -- ============================================================
 -- PHASE: MK4MODZ FALL DAMAGE ANALYSIS
 -- ============================================================
-local function phase_fallanalysis()
+function phase_fallanalysis()
     blast(colors.black, colors.white)
     center(2,"FALL DAMAGE: A SCIENTIFIC ANALYSIS")
     center(3,"Subject: mk4modz. Duration: ongoing.")
@@ -5214,7 +5214,7 @@ end
 -- ============================================================
 -- PHASE: SERVER TIER LIST
 -- ============================================================
-local function phase_tierlist()
+function phase_tierlist()
     blast(colors.black, colors.white)
     center(2,"SERVER TIER LIST (OFFICIAL)")
     center(3,"Compiled by: the server, unanimously")
@@ -5254,7 +5254,7 @@ end
 -- ============================================================
 -- PHASE: DRDARKMARIO'S RESIGNATION LETTER
 -- ============================================================
-local function phase_resignation()
+function phase_resignation()
     blast(colors.black, colors.white)
     m.setTextColor(colors.cyan)
     center(2,"RESIGNATION LETTER")
@@ -5314,7 +5314,7 @@ end
 -- ============================================================
 -- PHASE: SERVER DISCORD LOG
 -- ============================================================
-local function phase_discordlog()
+function phase_discordlog()
     blast(colors.black, colors.magenta)
     m.setTextColor(colors.magenta)
     center(2,"#bungus-bois-general")
@@ -5371,7 +5371,7 @@ end
 -- ============================================================
 -- PHASE: IRL LIVING SITUATION
 -- ============================================================
-local function phase_irl()
+function phase_irl()
     blast(colors.black, colors.white)
     center(2,"IRL SITUATION: THEIR HOUSE")
     center(3,"SubaRubicon + ItsBasicallyBri + iworkatjaguar")
@@ -5429,7 +5429,7 @@ end
 -- ============================================================
 -- PHASE: MK4MODZ vs SP00D3R BROTHER COMPARISON
 -- ============================================================
-local function phase_brothers()
+function phase_brothers()
     blast(colors.black, colors.white)
     center(2,"BROTHER COMPARISON CHART")
     center(3,"mk4modz (older) vs SP00D3R (cooler)")
@@ -5474,7 +5474,7 @@ end
 -- ============================================================
 -- PHASE: FAKE SERVER STEAM REVIEWS
 -- ============================================================
-local function phase_steamreviews()
+function phase_steamreviews()
     blast(colors.black, colors.blue)
     m.setTextColor(colors.cyan)
     center(2,"STEAM REVIEWS: BUNGUS BOIS SMP")
@@ -5517,7 +5517,7 @@ end
 -- ============================================================
 -- PHASE: GERALD'S OFFICIAL STATEMENT
 -- ============================================================
-local function phase_gerald_statement()
+function phase_gerald_statement()
     blast(colors.black, colors.white)
     m.setTextColor(colors.lime)
     center(2,"OFFICIAL STATEMENT")
@@ -5586,7 +5586,7 @@ end
 -- ============================================================
 -- PHASE: SERVER RULES (PERSON-SPECIFIC)
 -- ============================================================
-local function phase_rules()
+function phase_rules()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"BUNGUS BOIS SMP: SERVER RULES")
@@ -5646,7 +5646,7 @@ end
 -- ============================================================
 -- PHASE: SUBARUBICON'S WIKI READING ATTEMPT
 -- ============================================================
-local function phase_wikifail()
+function phase_wikifail()
     blast(colors.black, colors.white)
     center(2,"SubaRubicon Attempts The Wiki")
     center(3,"Attempt #"..math.random(2,8)..". Witness: DrDarkMario.")
@@ -5706,7 +5706,7 @@ end
 -- ============================================================
 -- PHASE: 3AM SERVER LOG
 -- ============================================================
-local function phase_3am()
+function phase_3am()
     blast(colors.black, colors.black)
     m.setTextColor(colors.red)
     center(2,"SERVER LOG: 3:00 AM")
@@ -5782,7 +5782,7 @@ end
 -- PHASE: REACTOR LEADERBOARD
 -- iworkatjaguar's reactor damage statistics
 -- ============================================================
-local function phase_reactor_stats()
+function phase_reactor_stats()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"REACTOR FALLOUT: DAMAGE REPORT")
@@ -5829,7 +5829,7 @@ end
 -- ============================================================
 -- PHASE: ITSBASICALLYBRI PERSPECTIVE
 -- ============================================================
-local function phase_bri()
+function phase_bri()
     blast(colors.black, colors.pink)
     m.setTextColor(colors.pink)
     center(2,"ItsBasicallyBri: A Statement")
@@ -5894,7 +5894,7 @@ end
 -- ============================================================
 -- PHASE: SP00D3R'S CLIP ARCHIVE
 -- ============================================================
-local function phase_clips()
+function phase_clips()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"SP00D3R'S CLIP ARCHIVE")
@@ -5936,7 +5936,7 @@ end
 -- ============================================================
 -- PHASE: SUBARUBICON COURT OF PUBLIC OPINION
 -- ============================================================
-local function phase_suba_court()
+function phase_suba_court()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"THE COURT OF PUBLIC OPINION")
@@ -6003,7 +6003,7 @@ end
 -- PHASE: MK4MODZ SURVIVAL GUIDE
 -- (written by the server for mk4modz)
 -- ============================================================
-local function phase_survival_guide()
+function phase_survival_guide()
     blast(colors.black, colors.white)
     m.setTextColor(colors.yellow)
     center(2,"SURVIVAL GUIDE: mk4modz EDITION")
@@ -6081,7 +6081,7 @@ end
 -- ============================================================
 -- PHASE: IWORKATJAGUAR'S SECOND REACTOR PROPOSAL
 -- ============================================================
-local function phase_reactor2()
+function phase_reactor2()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"PROPOSAL: REACTOR #2")
@@ -6148,7 +6148,7 @@ end
 -- ============================================================
 -- PHASE: SERVER SEARCH HISTORY (everyone's)
 -- ============================================================
-local function phase_everyone_history()
+function phase_everyone_history()
     blast(colors.black, colors.blue)
     center(2,"-- GROUP BROWSER HISTORY --")
     fillRow(3,"-",colors.gray,colors.blue)
@@ -6218,7 +6218,7 @@ end
 -- ============================================================
 -- PHASE: FAKE GROUP THERAPY SESSION
 -- ============================================================
-local function phase_group_therapy()
+function phase_group_therapy()
     blast(colors.black, colors.white)
     center(2,"GROUP THERAPY: BUNGUS BOIS SMP SESSION "..math.random(3,15))
     center(3,"Therapist: a professional (exhausted)")
@@ -6294,7 +6294,7 @@ end
 -- ============================================================
 -- PHASE: THE CHICKEN'S PERSPECTIVE
 -- ============================================================
-local function phase_chicken_pov()
+function phase_chicken_pov()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"THE CHICKEN SPEAKS")
@@ -6381,7 +6381,7 @@ end
 -- ============================================================
 -- PHASE: DRDARKMARIO'S FAQ (he gave up and wrote one)
 -- ============================================================
-local function phase_faq()
+function phase_faq()
     blast(colors.black, colors.cyan)
     m.setTextColor(colors.cyan)
     center(2,"DrDarkMario's ATM10 FAQ")
@@ -6446,7 +6446,7 @@ end
 -- ============================================================
 -- PHASE: IWORKATJAGUAR ADMIN LOG
 -- ============================================================
-local function phase_adminlog()
+function phase_adminlog()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"ADMIN LOG: iworkatjaguar")
@@ -6517,7 +6517,7 @@ end
 -- ============================================================
 -- PHASE: MULTIPLAYER AWARDS CEREMONY (expanded)
 -- ============================================================
-local function phase_server_awards()
+function phase_server_awards()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"BUNGUS BOIS SMP AWARDS CEREMONY")
@@ -6577,7 +6577,7 @@ end
 -- ============================================================
 -- PHASE: TICKER — REACTOR NEWS SEGMENT
 -- ============================================================
-local function phase_ticker_reactor()
+function phase_ticker_reactor()
     runTicker("REACTOR WATCH // LIVE", {
         "iworkatjaguar's REACTOR: SERVER STILL IRRADIATED - DAY "..math.random(3,30),
         "iworkatjaguar: 'IT'S LIKE A BANANA' - DrDarkMario: 'IT IS NOTHING LIKE A BANANA'",
@@ -6600,7 +6600,7 @@ end
 -- ============================================================
 -- PHASE: TICKER — SUBARUBICON KNOWLEDGE UPDATE
 -- ============================================================
-local function phase_ticker_suba()
+function phase_ticker_suba()
     runTicker("SUBARUBICON KNOWLEDGE DESK", {
         "SubaRubicon DAY "..math.random(80,200)..": STILL HAS NOT READ WIKI - DrDarkMario COPING",
         "SubaRubicon ASKS WHAT Apotheosis IS - DrDarkMario HAS EXPLAINED THIS "..math.random(8,30).." TIMES",
@@ -6631,7 +6631,7 @@ end
 -- name-mashing fixed, wide formats fixed, nil-access fixed.
 -- ============================================================
 
-local function phase_suba_secret_room()
+function phase_suba_secret_room()
     blast(colors.black, colors.white)
     center(2,"SERVER CHAT: THE 'SECRET' ROOM")
     fillRow(3,"-",colors.gray,colors.black)
@@ -6660,7 +6660,7 @@ local function phase_suba_secret_room()
     os.sleep(15.0)
 end
 
-local function phase_suba_armor()
+function phase_suba_armor()
     blast(colors.black, colors.white)
     center(2,"DrDarkMario's DMs")
     m.setTextColor(colors.lightGray)
@@ -6692,7 +6692,7 @@ local function phase_suba_armor()
     os.sleep(15.0)
 end
 
-local function phase_mk4_podcast()
+function phase_mk4_podcast()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"THE REDPILL PODCAST")
@@ -6725,7 +6725,7 @@ local function phase_mk4_podcast()
     os.sleep(15.0)
 end
 
-local function phase_atm10_conspiracies()
+function phase_atm10_conspiracies()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"*** mk4modz's TRUTH BOARD ***")
@@ -6754,7 +6754,7 @@ local function phase_atm10_conspiracies()
     os.sleep(15.0)
 end
 
-local function phase_suba_cars()
+function phase_suba_cars()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"SUBA'S MODPACK REQUESTS")
@@ -6788,7 +6788,7 @@ local function phase_suba_cars()
     os.sleep(15.0)
 end
 
-local function phase_freemason_mario()
+function phase_freemason_mario()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"THE GRAND LODGE OF ATM10")
@@ -6824,7 +6824,7 @@ local function phase_freemason_mario()
     os.sleep(15.0)
 end
 
-local function phase_bri_treehouse()
+function phase_bri_treehouse()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"ARCHITECTURAL DIGEST: BUNGUS BOIS SMP")
@@ -6856,7 +6856,7 @@ local function phase_bri_treehouse()
     os.sleep(15.0)
 end
 
-local function phase_pillager_conspiracy()
+function phase_pillager_conspiracy()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"THE GLOBAL EMERALD ELITE")
@@ -6891,7 +6891,7 @@ local function phase_pillager_conspiracy()
     os.sleep(15.0)
 end
 
-local function phase_xfinity_bouncer()
+function phase_xfinity_bouncer()
     blast(colors.black, colors.red)
     center(2,"XFINITY GATEWAY: ADVANCED SECURITY")
     fillRow(3,"=",colors.red,colors.black)
@@ -6920,7 +6920,7 @@ local function phase_xfinity_bouncer()
     os.sleep(15.0)
 end
 
-local function phase_suba_civic()
+function phase_suba_civic()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"CREATE MOD WORKSHOP: SUBA'S GARAGE")
@@ -6953,7 +6953,7 @@ local function phase_suba_civic()
     os.sleep(15.0)
 end
 
-local function phase_gerald_ted_talk()
+function phase_gerald_ted_talk()
     blast(colors.black, colors.lime)
     center(2,"TEDx BUNGUS BOIS: GERALD THE PIG")
     m.setTextColor(colors.lightGray)
@@ -6982,7 +6982,7 @@ local function phase_gerald_ted_talk()
     os.sleep(15.0)
 end
 
-local function phase_chicken_manifesto()
+function phase_chicken_manifesto()
     for i = 1, 5 do
         blast(colors.red, colors.black)
         os.sleep(0.05)
@@ -7010,7 +7010,7 @@ local function phase_chicken_manifesto()
     os.sleep(15.0)
 end
 
-local function phase_darkmario_gofundme()
+function phase_darkmario_gofundme()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"GoFundMe: Help DrDarkMario Recover")
@@ -7045,7 +7045,7 @@ local function phase_darkmario_gofundme()
     os.sleep(15.0)
 end
 
-local function phase_jaguar_tourism()
+function phase_jaguar_tourism()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.red)
     center(2,"VISIT THE SPAWN CRATER!")
@@ -7078,7 +7078,7 @@ local function phase_jaguar_tourism()
     os.sleep(15.0)
 end
 
-local function phase_chicken_history()
+function phase_chicken_history()
     blast(colors.black, colors.white)
     m.setTextColor(colors.orange)
     center(2,"NETWORK INTERCEPT: UNKNOWN CLIENT")
@@ -7104,7 +7104,7 @@ local function phase_chicken_history()
     os.sleep(15.0)
 end
 
-local function phase_gerald_court()
+function phase_gerald_court()
     blast(colors.black, colors.blue)
     m.setTextColor(colors.yellow)
     center(2,"THE HIGH COURT OF GERALD")
@@ -7141,7 +7141,7 @@ local function phase_gerald_court()
     os.sleep(15.0)
 end
 
-local function phase_suba_dealership()
+function phase_suba_dealership()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"WELCOME TO SUBA MOTORS")
@@ -7171,7 +7171,7 @@ local function phase_suba_dealership()
     os.sleep(15.0)
 end
 
-local function phase_darkmario_autoresponder()
+function phase_darkmario_autoresponder()
     blast(colors.black, colors.cyan)
     center(2,"DrDarkMario's DMs [AWAY MESSAGE]")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -7199,7 +7199,7 @@ local function phase_darkmario_autoresponder()
     os.sleep(15.0)
 end
 
-local function phase_suba_leech_stats()
+function phase_suba_leech_stats()
     blast(colors.black, colors.white)
     m.setTextColor(colors.orange)
     center(2,"SERVER RESOURCE AUDIT: SUBARUBICON")
@@ -7232,7 +7232,7 @@ local function phase_suba_leech_stats()
     os.sleep(15.0)
 end
 
-local function phase_wiki_hostage()
+function phase_wiki_hostage()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"INCIDENT REPORT: THE HOSTAGE SITUATION")
@@ -7261,7 +7261,7 @@ local function phase_wiki_hostage()
     os.sleep(15.0)
 end
 
-local function phase_suba_mansplain()
+function phase_suba_mansplain()
     blast(colors.black, colors.white)
     center(2,"OVERHEARD IN DISCORD")
     fillRow(3,"-",colors.gray,colors.black)
@@ -7289,7 +7289,7 @@ local function phase_suba_mansplain()
     os.sleep(15.0)
 end
 
-local function phase_weaponized_incompetence()
+function phase_weaponized_incompetence()
     blast(colors.black, colors.purple)
     m.setTextColor(colors.purple)
     center(2,"PSYCHOLOGICAL PROFILE: SUBA'S STRATEGY")
@@ -7314,7 +7314,7 @@ local function phase_weaponized_incompetence()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_flex()
+function phase_sp00d3r_flex()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"SERVER STATUS: THE BROTHER DYNAMIC")
@@ -7342,7 +7342,7 @@ local function phase_sp00d3r_flex()
     os.sleep(15.0)
 end
 
-local function phase_kubuntu_manifesto()
+function phase_kubuntu_manifesto()
     blast(colors.black, colors.white)
     m.setTextColor(colors.red)
     center(2,"HARDWARE LEVEL ALERT: i5-8250U SPEAKS")
@@ -7368,7 +7368,7 @@ local function phase_kubuntu_manifesto()
     os.sleep(15.0)
 end
 
-local function phase_suba_mechanic()
+function phase_suba_mechanic()
     blast(colors.black, colors.orange)
     center(2,"GRAND LODGE AUTOBODY (Unlicensed)")
     fillRow(3,"-",colors.orange,colors.black)
@@ -7395,7 +7395,7 @@ local function phase_suba_mechanic()
     os.sleep(15.0)
 end
 
-local function phase_bri_hoa()
+function phase_bri_hoa()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"FORMAL COMPLAINT: SERVER HOA")
@@ -7426,7 +7426,7 @@ local function phase_bri_hoa()
     os.sleep(15.0)
 end
 
-local function phase_mk4_freemason()
+function phase_mk4_freemason()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"THE GRAND LODGE: APPLICATION STATUS")
@@ -7456,7 +7456,7 @@ local function phase_mk4_freemason()
     os.sleep(15.0)
 end
 
-local function phase_xfinity_chat()
+function phase_xfinity_chat()
     blast(colors.black, colors.cyan)
     center(2,"XFINITY CUSTOMER SUPPORT: LIVE CHAT")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -7482,7 +7482,7 @@ local function phase_xfinity_chat()
     os.sleep(15.0)
 end
 
-local function phase_noise_complaint()
+function phase_noise_complaint()
     blast(colors.black, colors.red)
     m.setTextColor(colors.yellow)
     center(2,"FORMAL SERVER NOISE COMPLAINT")
@@ -7513,7 +7513,7 @@ local function phase_noise_complaint()
     os.sleep(15.0)
 end
 
-local function phase_lua_addiction()
+function phase_lua_addiction()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"PLAYER STATISTICS: MK4MODZ")
@@ -7548,7 +7548,7 @@ local function phase_lua_addiction()
     os.sleep(15.0)
 end
 
-local function phase_jaguar_host()
+function phase_jaguar_host()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"SERVER WIDE BROADCAST: THE ADMIN")
@@ -7575,7 +7575,7 @@ local function phase_jaguar_host()
     os.sleep(15.0)
 end
 
-local function phase_music_chat()
+function phase_music_chat()
     blast(colors.black, colors.white)
     center(2,"OVERHEARD IN CHAT: THE MUSIC")
     fillRow(3,"-",colors.gray,colors.black)
@@ -7604,7 +7604,7 @@ local function phase_music_chat()
     os.sleep(15.0)
 end
 
-local function phase_linux_supremacy()
+function phase_linux_supremacy()
     blast(colors.black, colors.cyan)
     center(2,"SYSTEM ARCHITECTURE: MK4MODZ")
     m.setTextColor(colors.lightGray)
@@ -7645,7 +7645,7 @@ local function phase_linux_supremacy()
     os.sleep(15.0)
 end
 
-local function phase_suba_github()
+function phase_suba_github()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.orange)
     center(2,"TECH SUPPORT: GITHUB EDITION")
@@ -7672,7 +7672,7 @@ local function phase_suba_github()
     os.sleep(15.0)
 end
 
-local function phase_gerald_first_death()
+function phase_gerald_first_death()
     blast(colors.black, colors.magenta)
     m.setTextColor(colors.magenta)
     center(2,"HISTORICAL ARCHIVE: GERALD I")
@@ -7697,7 +7697,7 @@ local function phase_gerald_first_death()
     os.sleep(15.0)
 end
 
-local function phase_gerald_second_death()
+function phase_gerald_second_death()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"HISTORICAL ARCHIVE: GERALD II")
@@ -7722,7 +7722,7 @@ local function phase_gerald_second_death()
     os.sleep(15.0)
 end
 
-local function phase_gerald_third_life()
+function phase_gerald_third_life()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"CURRENT STATUS: GERALD III")
@@ -7748,7 +7748,7 @@ local function phase_gerald_third_life()
     os.sleep(15.0)
 end
 
-local function phase_os_wars()
+function phase_os_wars()
     blast(colors.black, colors.cyan)
     center(2,"NETWORK AUDIT: OPERATING SYSTEMS")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -7777,7 +7777,7 @@ local function phase_os_wars()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_director()
+function phase_sp00d3r_director()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"SP00D3R PRODUCTIONS: ON SET")
@@ -7806,7 +7806,7 @@ local function phase_sp00d3r_director()
     os.sleep(15.0)
 end
 
-local function phase_darkmario_snaps()
+function phase_darkmario_snaps()
     blast(colors.black, colors.magenta)
     m.setTextColor(colors.magenta)
     center(2,"WARNING: MASONIC WRATH DETECTED")
@@ -7832,7 +7832,7 @@ local function phase_darkmario_snaps()
     os.sleep(15.0)
 end
 
-local function phase_chicken_hates_music()
+function phase_chicken_hates_music()
     blast(colors.black, colors.red)
     center(2,"CEASE AND DESIST ORDER")
     m.setTextColor(colors.lightGray)
@@ -7856,7 +7856,7 @@ local function phase_chicken_hates_music()
     os.sleep(15.0)
 end
 
-local function phase_kubuntu_dying_words()
+function phase_kubuntu_dying_words()
     blast(colors.blue, colors.white)
     center(2,"/var/log/syslog - KUBUNTU HOST")
     fillRow(3,"-",colors.white,colors.blue)
@@ -7878,7 +7878,7 @@ local function phase_kubuntu_dying_words()
     os.sleep(15.0)
 end
 
-local function phase_suba_monitor_wall()
+function phase_suba_monitor_wall()
     blast(colors.black, colors.orange)
     center(2,"COPYCAT DETECTED: SUBA'S BASE")
     fillRow(3,"-",colors.orange,colors.black)
@@ -7901,7 +7901,7 @@ local function phase_suba_monitor_wall()
     os.sleep(15.0)
 end
 
-local function phase_kubuntu_amazon()
+function phase_kubuntu_amazon()
     blast(colors.blue, colors.white)
     m.setTextColor(colors.red)
     center(2,"UNAUTHORIZED NETWORK REQUEST")
@@ -7928,7 +7928,7 @@ local function phase_kubuntu_amazon()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_freemason()
+function phase_sp00d3r_freemason()
     blast(colors.black, colors.magenta)
     m.setTextColor(colors.yellow)
     center(2,"THE GRAND LODGE: VIP INDUCTION")
@@ -7954,7 +7954,7 @@ local function phase_sp00d3r_freemason()
     os.sleep(15.0)
 end
 
-local function phase_acoustic_warfare()
+function phase_acoustic_warfare()
     blast(colors.black, colors.yellow)
     center(2,"DEFCON 1: ACOUSTIC RETALIATION")
     fillRow(3,"-",colors.yellow,colors.black)
@@ -7978,7 +7978,7 @@ local function phase_acoustic_warfare()
     os.sleep(15.0)
 end
 
-local function phase_chicken_ransom()
+function phase_chicken_ransom()
     for i = 1, 3 do
         blast(colors.red, colors.black)
         os.sleep(0.10)
@@ -8007,7 +8007,7 @@ local function phase_chicken_ransom()
     os.sleep(15.0)
 end
 
-local function phase_suba_handshake()
+function phase_suba_handshake()
     blast(colors.black, colors.orange)
     center(2,"SECURITY ALERT: LODGE INFILTRATION")
     fillRow(3,"-",colors.orange,colors.black)
@@ -8031,7 +8031,7 @@ local function phase_suba_handshake()
     os.sleep(15.0)
 end
 
-local function phase_jaguar_electric_bill()
+function phase_jaguar_electric_bill()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"IRL FINANCIAL CRISIS: THE HOST")
@@ -8055,7 +8055,7 @@ local function phase_jaguar_electric_bill()
     os.sleep(15.0)
 end
 
-local function phase_faneto_accords()
+function phase_faneto_accords()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"THE FANETO ACCORDS: PEACE TREATY")
@@ -8080,7 +8080,7 @@ local function phase_faneto_accords()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_sponsor()
+function phase_sp00d3r_sponsor()
     blast(colors.black, colors.blue)
     center(2,"SP00D3R PRODUCTIONS: SPONSORED CONTENT")
     fillRow(3,"=",colors.blue,colors.black)
@@ -8103,7 +8103,7 @@ local function phase_sp00d3r_sponsor()
     os.sleep(15.0)
 end
 
-local function phase_preemptive_appeal()
+function phase_preemptive_appeal()
     blast(colors.black, colors.white)
     m.setTextColor(colors.red)
     center(2,"UNBAN APPEAL #48 (PRE-EMPTIVE)")
@@ -8125,7 +8125,7 @@ local function phase_preemptive_appeal()
     os.sleep(15.0)
 end
 
-local function phase_vim_trap()
+function phase_vim_trap()
     blast(colors.black, colors.cyan)
     center(2,"NOBARA LINUX: CRITICAL USER ERROR")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -8153,7 +8153,7 @@ local function phase_vim_trap()
     os.sleep(15.0)
 end
 
-local function phase_irl_kitchen_meeting()
+function phase_irl_kitchen_meeting()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"IRL AUDIO TRANSCRIPT: THE KITCHEN")
@@ -8178,7 +8178,7 @@ local function phase_irl_kitchen_meeting()
     os.sleep(15.0)
 end
 
-local function phase_gerald_wallstreet()
+function phase_gerald_wallstreet()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"MARKET WATCH: FINANCIAL RUIN")
@@ -8203,7 +8203,7 @@ local function phase_gerald_wallstreet()
     os.sleep(15.0)
 end
 
-local function phase_suba_factory()
+function phase_suba_factory()
     blast(colors.black, colors.orange)
     center(2,"SUBA MOTORS: ASSEMBLY LINE")
     fillRow(3,"-",colors.orange,colors.black)
@@ -8226,7 +8226,7 @@ local function phase_suba_factory()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_netflix()
+function phase_sp00d3r_netflix()
     blast(colors.black, colors.blue)
     m.setTextColor(colors.lime)
     center(2,"PRESS RELEASE: SP00D3R PRODUCTIONS")
@@ -8249,7 +8249,7 @@ local function phase_sp00d3r_netflix()
     os.sleep(15.0)
 end
 
-local function phase_suba_google()
+function phase_suba_google()
     blast(colors.black, colors.white)
     m.setTextColor(colors.blue)
     center(2,"S U B A  S E A R C H  v1.0")
@@ -8271,7 +8271,7 @@ local function phase_suba_google()
     os.sleep(15.0)
 end
 
-local function phase_gerald_ipo()
+function phase_gerald_ipo()
     blast(colors.black, colors.green)
     m.setTextColor(colors.lime)
     center(2,"WALL STREET JOURNAL: BREAKING NEWS")
@@ -8296,7 +8296,7 @@ local function phase_gerald_ipo()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_oscars()
+function phase_sp00d3r_oscars()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"THE 98TH ANNUAL ACADEMY AWARDS")
@@ -8318,7 +8318,7 @@ local function phase_sp00d3r_oscars()
     os.sleep(15.0)
 end
 
-local function phase_sentient_dirt()
+function phase_sentient_dirt()
     blast(colors.black, colors.red)
     center(2,"SCP FOUNDATION: CONTAINMENT BREACH")
     fillRow(3,"=",colors.red,colors.black)
@@ -8339,7 +8339,7 @@ local function phase_sentient_dirt()
     os.sleep(15.0)
 end
 
-local function phase_nobara_update()
+function phase_nobara_update()
     blast(colors.black, colors.cyan)
     center(2,"NOBARA LINUX (MK4MODZ RIG) STATUS")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -8361,7 +8361,7 @@ local function phase_nobara_update()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_charity()
+function phase_sp00d3r_charity()
     blast(colors.black, colors.lime)
     m.setTextColor(colors.lime)
     center(2,"MAKE-A-WISH: SP00D3R FOUNDATION")
@@ -8385,7 +8385,7 @@ local function phase_sp00d3r_charity()
     os.sleep(15.0)
 end
 
-local function phase_atm10_devs()
+function phase_atm10_devs()
     blast(colors.black, colors.white)
     m.setTextColor(colors.orange)
     center(2,"INCOMING MESSAGE: CURSEFORGE HQ")
@@ -8406,7 +8406,7 @@ local function phase_atm10_devs()
     os.sleep(15.0)
 end
 
-local function phase_gerald_audit()
+function phase_gerald_audit()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,"INTERNAL REVENUE SERVICE: GERALD DIV.")
@@ -8430,7 +8430,7 @@ local function phase_gerald_audit()
     os.sleep(15.0)
 end
 
-local function phase_suba_aviation()
+function phase_suba_aviation()
     blast(colors.black, colors.orange)
     center(2,"AIR TRAFFIC CONTROL: BUNGUS BOIS")
     fillRow(3,"-",colors.orange,colors.black)
@@ -8454,7 +8454,7 @@ local function phase_suba_aviation()
     os.sleep(15.0)
 end
 
-local function phase_chicken_podcast()
+function phase_chicken_podcast()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"THE FEATHERED TRUTH: EPISODE 1")
@@ -8477,7 +8477,7 @@ local function phase_chicken_podcast()
     os.sleep(15.0)
 end
 
-local function phase_server_tps()
+function phase_server_tps()
     blast(colors.black, colors.red)
     m.setTextColor(colors.red)
     center(2,"DIAGNOSTIC: SERVER TPS")
@@ -8502,7 +8502,7 @@ local function phase_server_tps()
     os.sleep(15.0)
 end
 
-local function phase_darkmario_ai()
+function phase_darkmario_ai()
     blast(colors.black, colors.cyan)
     center(2,"APOTHEOSIS EXPLAINER BOT v1.0")
     fillRow(3,"-",colors.cyan,colors.black)
@@ -8525,7 +8525,7 @@ local function phase_darkmario_ai()
     os.sleep(15.0)
 end
 
-local function phase_civic_impounded()
+function phase_civic_impounded()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.red)
     center(2,"DEPT. OF MOTOR VEHICLES (GERALD DIV.)")
@@ -8551,7 +8551,7 @@ local function phase_civic_impounded()
     os.sleep(15.0)
 end
 
-local function phase_sp00d3r_wiki()
+function phase_sp00d3r_wiki()
     blast(colors.black, colors.white)
     m.setBackgroundColor(colors.lightGray)
     m.setTextColor(colors.black)
@@ -8576,7 +8576,7 @@ local function phase_sp00d3r_wiki()
     os.sleep(15.0)
 end
 
-local function phase_bri_earbuds()
+function phase_bri_earbuds()
     blast(colors.black, colors.orange)
     m.setTextColor(colors.white)
     center(2,"AMAZON PRIME: DELIVERY CONFIRMATION")
@@ -8600,7 +8600,7 @@ local function phase_bri_earbuds()
     os.sleep(15.0)
 end
 
-local function phase_ad_better_call_gerald()
+function phase_ad_better_call_gerald()
     blast(colors.black, colors.yellow)
     m.setTextColor(colors.yellow)
     center(2,">>> A PAID ADVERTISEMENT <<<")
@@ -8623,7 +8623,7 @@ local function phase_ad_better_call_gerald()
     os.sleep(15.0)
 end
 
-local function phase_ad_copium()
+function phase_ad_copium()
     blast(colors.black, colors.blue)
     m.setTextColor(colors.cyan)
     center(2,">>> MEDICAL SPONSORSHIP <<<")
@@ -8645,7 +8645,7 @@ local function phase_ad_copium()
     os.sleep(15.0)
 end
 
-local function phase_ad_suba_driving()
+function phase_ad_suba_driving()
     blast(colors.black, colors.orange)
     center(2,">>> LOCAL BUSINESS SPOTLIGHT <<<")
     fillRow(3,"-",colors.orange,colors.black)
@@ -8666,7 +8666,7 @@ local function phase_ad_suba_driving()
     os.sleep(15.0)
 end
 
-local function phase_ad_masterclass()
+function phase_ad_masterclass()
     blast(colors.black, colors.magenta)
     m.setTextColor(colors.magenta)
     center(2,">>> MASTERCLASS (TM) <<<")
@@ -8688,7 +8688,7 @@ local function phase_ad_masterclass()
     os.sleep(15.0)
 end
 
-local function phase_ad_chicken_security()
+function phase_ad_chicken_security()
     for i = 1, 3 do
         blast(colors.red, colors.black)
         os.sleep(0.10)
