@@ -857,17 +857,20 @@ local function audioLoop()
 
     -- ── HELPERS ─────────────────────────────────────────────────────
     local function checkServer()
-        -- Changed to check /tracks in case your Python script doesn't have a /status route (which causes a 404)
         local ok, err = http.get(SERVER.."/tracks")
         if ok then ok.close(); return true end
         
-        -- Force the error to print on the actual computer screen, bypassing the monitor redirect
-        local n = term.native()
-        n.print(" ")
-        n.print("!!! AUDIO CONNECTION FAILED !!!")
-        n.print("ERROR: " .. tostring(err))
-        n.print("URL: " .. SERVER .. "/tracks")
-        n.print(" ")
+        -- Temporarily un-redirect to the physical terminal
+        local old_term = term.redirect(term.native())
+        
+        print(" ")
+        print("!!! AUDIO CONNECTION FAILED !!!")
+        print("ERROR: " .. tostring(err))
+        print("URL: " .. SERVER .. "/tracks")
+        print(" ")
+        
+        -- Put the redirect back to the monitor wall
+        term.redirect(old_term)
         
         return false
     end
