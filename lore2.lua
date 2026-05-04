@@ -851,7 +851,7 @@ local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
     -- ── CONFIG ──────────────────────────────────────────────────────
-    local SERVER  = "https://1a9d2d9e2f2ab5.lhr.life"
+    local SERVER  = "https://473731a81b8010.lhr.life"
     local VOLUME  = 3.0   -- Max radius, zero distortion.
     local CHUNK   = 16 * 1024
 
