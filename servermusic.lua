@@ -758,10 +758,13 @@ local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
     -- ── CONFIG ──────────────────────────────────────────────────────
-    -- Replace with your PC's local IP.  The server prints this for you.
     local SERVER  = "https://residency-muster-bulge.ngrok-free.dev"
-    local VOLUME  = 3.0   -- speaker volume 0.0 – 3.0
-    local CHUNK   = 16 * 1024   -- 16 KB per HTTP read (~2.7 s of audio)
+    
+    -- THE FIX: Drop this to shrink the radius.
+    -- 1.0 = 16 blocks. 0.5 = 8 blocks. 0.25 = 4 blocks.
+    local VOLUME  = 0.8   
+    
+    local CHUNK   = 16 * 1024
 
     -- ── HELPERS ─────────────────────────────────────────────────────
     local function checkServer()
