@@ -813,7 +813,7 @@ local function audioLoop()
                 pcm[i] = b
             end
 
-            -- THE FIX: Do NOT wait for the buffer to empty. 
+            -- Do NOT wait for the buffer to empty. 
             -- Just yield 2 ticks so it drains slightly, then top it back up.
             while not speakers[1].playAudio(pcm, VOLUME) do
                 os.sleep(0.1) 
@@ -822,13 +822,6 @@ local function audioLoop()
 
         res.close()
         speakers[1].stop()
-    end
-        end
-
-        res.close()
-        
-        -- Drain the last few milliseconds before loading the next track
-        os.pullEvent("speaker_audio_empty")
     end
 
     -- ── GC TRAP FALLBACK ────────────────────────────────────────────
