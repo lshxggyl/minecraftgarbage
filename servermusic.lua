@@ -784,18 +784,17 @@ local function audioLoop()
     -- feeds them to speaker.playAudio(), waiting on the
     -- "speaker_audio_empty" event whenever the speaker buffer is full.
     local function streamTrack(filename)
+        -- No spaces in filenames means no regex encoding needed. Just build the URL.
         local url = SERVER .. "/play/" .. filename
+        
         local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
         if not res then
             print("[music] fetch failed: " .. tostring(err))
             return
         end
 
-        -- THE FIX: Hard-stop all speakers to clear leftover buffer junk.
-        -- This guarantees they all start the new track at exact 0.0s.
-        for i = 1, #speakers do
-            speakers[i].stop()
-        end
+        -- Hard-stop the speaker to wipe any leftover audio from the last track
+        speakers[1].stop()
 
         while true do
             local chunk = res.read(CHUNK)
@@ -803,19 +802,19 @@ local function audioLoop()
 
             local pcm = {}
             for i = 1, #chunk do
+                -- Unsigned 0-255 down to Signed -128 to 127
                 pcm[i] = string.byte(chunk, i) - 128
             end
 
+            -- Blast the speaker. Wait if the buffer gets full.
             while not speakers[1].playAudio(pcm, VOLUME) do
                 os.pullEvent("speaker_audio_empty")
-            end
-            
-            for i = 2, #speakers do
-                speakers[i].playAudio(pcm, VOLUME)
             end
         end
 
         res.close()
+        
+        -- Drain the last few milliseconds before loading the next track
         os.pullEvent("speaker_audio_empty")
     end
 
