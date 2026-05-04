@@ -4708,22 +4708,18 @@ local function phase_complaints()
         {f="Gravel",      r="Player trusts us. We don't want this.",
                           s="Ongoing",n=math.random(30,150)},
     }
-    local row = 4
-    m.setTextColor(colors.lightGray)
-    put(2, row, "FROM            STATUS      #COMPLAINTS")
-    row = row + 1
-    fillRow(row,"-",colors.gray,colors.black)
-    row = row + 1
+    chatReset(4, h)
+    chatPush("FROM          STATUS    #", colors.lightGray)
+    chatPush(string.rep("-", w-2), colors.gray)
     for _,c in ipairs(complaints) do
-        if row >= h then break end
-        m.setTextColor(c.s=="Ongoing" and colors.red or
-                       c.s=="Escalated" and colors.orange or
-                       c.s=="Valid" and colors.yellow or colors.lightGray)
-        local line = string.format("%-16s%-12s%d",
-            c.f:sub(1,15), c.s:sub(1,11), c.n)
-        tw(2, row, line, 0.007)
-        row = row + 1
-        os.sleep(0.14)
+        local col = c.s=="Ongoing"   and colors.red    or
+                    c.s=="Escalated" and colors.orange  or
+                    c.s=="Valid"     and colors.yellow  or colors.lightGray
+        local f1 = c.f:sub(1,13)
+        local f2 = c.s:sub(1,9)
+        local line = string.format("%-14s%-10s%d", f1, f2, c.n):sub(1,w-2)
+        chatPush(line, col)
+        os.sleep(0.28)
     end
     os.sleep(12.5)
 end
@@ -4751,21 +4747,12 @@ local function phase_mvpe()
         {a="Most Questions Per Minute",         w="SubaRubicon",   r="All directed at DrDarkMario. All unanswered."},
         {a="Dirt Hoarder Of The Year",          w="mk4modz",       r=math.random(10000,99999).." blocks. Gerald manages them now."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,aw in ipairs(awards) do
-        if row >= h then break end
-        m.setTextColor(colors.cyan)
-        tw(2, row, aw.a:sub(1, w-2), 0.01)
-        row = row + 1
-        if row >= h then break end
-        m.setTextColor(colors.yellow)
-        put(4, row, "WINNER: " .. aw.w)
-        row = row + 1
-        if row >= h then break end
-        m.setTextColor(colors.lightGray)
-        put(4, row, aw.r)
-        row = row + 1
-        os.sleep(0.8)
+        chatPush(aw.a, colors.cyan)
+        chatPush("WINNER: "..aw.w, colors.yellow)
+        chatPush("  "..aw.r, colors.lightGray)
+        os.sleep(0.9)
     end
     os.sleep(12.5)
 end
@@ -4863,7 +4850,7 @@ local function phase_insurance2()
     }
     local row = 4
     m.setTextColor(colors.lightGray)
-    put(2, row, string.format("%-22s%-22s%s","ITEM","REASON","DECISION"):sub(1,w-2))
+    put(2, row, string.format("%-20s%-8s%s","ITEM","REASON","DECISION"):sub(1,w-2))
     row = row + 1
     fillRow(row,"-",colors.gray,colors.black)
     row = row + 1
@@ -4871,8 +4858,8 @@ local function phase_insurance2()
         if row >= h then break end
         local itm = items[i]
         m.setTextColor(itm[3]:sub(1,6)=="DENIED" and colors.red or colors.lime)
-        local line = string.format("%-22s%-22s%s",
-            itm[1]:sub(1,21), itm[2]:sub(1,21), itm[3]):sub(1,w-2)
+        local line = string.format("%-19s%-8s%s",
+            itm[1]:sub(1,18), itm[2]:sub(1,7), itm[3]):sub(1,w-2)
         tw(2, row, line, 0.006)
         row = row + 1
         os.sleep(0.13)
@@ -4939,25 +4926,23 @@ local function phase_spectator()
         "SP00D3R: F. with love.",
         "gerald: (oinks with tremendous dignity)",
     }
-    local row = 5
+    chatReset(5, h)
     for _,line in ipairs(convos) do
-        if row >= h then break end
-        if line == "" then row = row + 1
+        if line == "" then
+            chatPush("", colors.black)
         else
             local who = line:match("^(%w+):")
-            m.setTextColor(
-                who == "iworkatjaguar" and colors.red    or
-                who == "SP00D3R"       and colors.lime   or
-                who == "DrDarkMario"   and colors.cyan   or
-                who == "SubaRubicon"   and colors.orange or
-                who == "ItsBasicallyBri" and colors.pink or
-                who == "gerald"        and colors.lime   or
+            local col =
+                who == "iworkatjaguar"   and colors.red    or
+                who == "SP00D3R"         and colors.lime   or
+                who == "DrDarkMario"     and colors.cyan   or
+                who == "SubaRubicon"     and colors.orange or
+                who == "ItsBasicallyBri" and colors.pink   or
+                who == "gerald"          and colors.lime   or
                 colors.white
-            )
-            tw(2, row, line, 0.013)
-            row = row + 1
+            chatPush(line, col)
         end
-        os.sleep(0.18)
+        os.sleep(0.38)
     end
     os.sleep(12.5)
 end
@@ -4989,20 +4974,13 @@ local function phase_mobreviews()
         {mob="Enderman",       stars="3*", r="Made eye contact AGAIN. Consistent."},
         {mob="Gravel",         stars="5*", r="Trusted me above all others. Touching."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,rv in ipairs(reviews) do
-        if row >= h then break end
-        local positive = rv.stars == "5*"
-        m.setTextColor(colors.cyan)
-        local nm = (rv.mob .. ":"):sub(1,14)
-        put(2, row, nm)
-        m.setTextColor(positive and colors.lime or
-                       rv.stars=="N/A" and colors.orange or colors.yellow)
-        put(2+#nm, row, rv.stars .. " ")
-        m.setTextColor(colors.white)
-        put(2+#nm+4, row, rv.r)
-        row = row + 1
-        os.sleep(0.2)
+        local col = rv.stars=="5*" and colors.lime or
+                    rv.stars=="N/A" and colors.orange or colors.yellow
+        local nm = (rv.mob..": "):sub(1,12)
+        chatPush(nm..rv.stars.." "..rv.r, col)
+        os.sleep(0.38)
     end
     os.sleep(12.5)
 end
@@ -5213,19 +5191,15 @@ local function phase_fallanalysis()
         {"Fell in front of the chicken",        math.random(3,10).."x"},
         {"  (chicken did not help)",            "all of them"},
     }
-    local row = 5
-    m.setTextColor(colors.lightGray)
-    put(2,row,"FALL TYPE                  COUNT")
-    row = row+1
-    fillRow(row,"-",colors.gray,colors.black)
-    row = row+1
+    chatReset(5, h)
+    chatPush("FALL TYPE              COUNT", colors.lightGray)
+    chatPush(string.rep("-", w-2), colors.gray)
     for _,f in ipairs(falls) do
-        if row >= h then break end
-        m.setTextColor(f[1]:sub(1,1)==" " and colors.orange or colors.white)
-        local line = string.format("%-26s%s",f[1]:sub(1,26),f[2])
-        tw(2,row,line,0.006)
-        row = row+1
-        os.sleep(0.1)
+        local col = f[1]:sub(1,1)==" " and colors.orange or colors.white
+        local col1w = math.max(1, w - 8)
+        local line = string.format("%-"..col1w.."s%s", f[1]:sub(1,col1w), f[2]):sub(1,w-2)
+        chatPush(line, col)
+        os.sleep(0.28)
     end
     os.sleep(0.8)
     m.setTextColor(colors.red)
@@ -5260,19 +5234,15 @@ local function phase_tierlist()
         {"",                 colors.lightGray,"mk4modz accepted F tier."},
         {"",                 colors.lightGray,"mk4modz: 'seems fair honestly'"},
     }
-    local row = 5
+    chatReset(5, h)
     for _,t in ipairs(tiers) do
-        if row >= h then break end
-        if t[1] == "" then row = row+1
+        if t[1] == "" then
+            chatPush("", colors.black)
         else
-            m.setTextColor(t[2])
-            local label = (t[1]..":"):sub(1,14)
-            put(2,row,label)
-            m.setTextColor(colors.white)
-            put(2+#label,row,t[3]:sub(1,w-#label-3))
-            row = row+1
+            local label = (t[1]..": "):sub(1,14)
+            chatPush(label..t[3]:sub(1,w-#label-2), t[2])
         end
-        os.sleep(0.2)
+        os.sleep(0.38)
     end
     os.sleep(13.0)
 end
@@ -5460,40 +5430,39 @@ local function phase_brothers()
     center(2,"BROTHER COMPARISON CHART")
     center(3,"mk4modz (older) vs SP00D3R (cooler)")
     fillRow(4,"=",colors.gray,colors.black)
+    -- Dynamic column widths so nothing overflows regardless of monitor size
+    local c1 = math.floor(w * 0.35)   -- stat name
+    local c2 = math.floor(w * 0.30)   -- mk4modz value
+    -- c3 fills the rest
     local comparisons = {
-        {"STAT",             "mk4modz",     "SP00D3R"},
-        {"Age",              "Older",       "Younger"},
-        {"Coolness",         "Lower",       "Higher"},
-        {"Fall deaths",      math.random(100,500).."",  "0"},
-        {"Lava deaths",      math.random(50,300).."",   "0"},
-        {"Clips of self",    "0 (filmed by SP00D3R)", math.random(40,100).."+"},
+        {"Age",              "Older",                  "Younger"},
+        {"Coolness",         "Lower",                  "Higher"},
+        {"Fall deaths",      math.random(100,500).."", "0"},
+        {"Lava deaths",      math.random(50,300).."",  "0"},
+        {"Clips of self",    "0 (all by SP00D3R)",     math.random(40,100).."+"},
         {"ATM10 mods known", math.random(1,3).."",     math.random(8,15).."+"},
         {"K/D ratio",        "0.0"..math.random(1,4),  math.random(3,9)..".0+"},
-        {"Gerald's opinion", "Concerned",   "Approves"},
-        {"Chicken opinion",  "Hostile",     "Neutral"},
-        {"iworkatjaguar",    "In the logs", "In the highlights"},
-        {"DrDarkMario view", "Minor concern","No concerns"},
-        {"SubaRubicon view", "Also confused","Asks for advice"},
-        {"Overall",          "F tier",      "S tier"},
-        {"Verdict",          "Our disaster","Our favourite"},
+        {"Gerald opinion",   "Concerned",              "Approves"},
+        {"Chicken opinion",  "Hostile",                "Neutral"},
+        {"iworkatjaguar",    "In the logs",            "In highlights"},
+        {"DrDarkMario",      "Minor concern",          "No concerns"},
+        {"SubaRubicon",      "Also confused",          "Asks advice"},
+        {"Overall",          "F tier",                 "S tier"},
+        {"Verdict",          "Our disaster",           "Our favourite"},
     }
-    local row = 5
-    m.setTextColor(colors.lightGray)
-    local hdr = string.format("%-16s%-16s%-10s","STAT","mk4modz","SP00D3R")
-    put(2,row,hdr:sub(1,w-2)); row = row+1
-    fillRow(row,"-",colors.gray,colors.black); row = row+1
-    for i,c in ipairs(comparisons) do
-        if row >= h then break end
-        if i == 1 then -- skip header row, already printed
-        else
-            m.setTextColor(c[1]=="Overall" and colors.red or
-                           c[1]=="Verdict" and colors.lime or colors.white)
-            local line = string.format("%-16s%-16s%-10s",
-                c[1]:sub(1,15), tostring(c[2]):sub(1,15), tostring(c[3]):sub(1,10))
-            tw(2,row,line:sub(1,w-2),0.008)
-            row = row+1
-        end
-        os.sleep(0.18)
+    chatReset(5, h)
+    -- Header
+    local fmt = "%-"..c1.."s %-"..c2.."s %s"
+    chatPush(string.format(fmt,"STAT","mk4modz","SP00D3R"):sub(1,w-2), colors.lightGray)
+    chatPush(string.rep("-", w-2), colors.gray)
+    for _,c in ipairs(comparisons) do
+        local col = c[1]=="Overall" and colors.red  or
+                    c[1]=="Verdict" and colors.lime  or colors.white
+        local s1  = c[1]:sub(1, c1)
+        local s2  = tostring(c[2]):sub(1, c2)
+        local s3  = tostring(c[3]):sub(1, w - c1 - c2 - 4)
+        chatPush(string.format(fmt, s1, s2, s3):sub(1,w-2), col)
+        os.sleep(0.45)
     end
     os.sleep(13.0)
 end
@@ -5530,17 +5499,13 @@ local function phase_steamreviews()
         {name="GravityEngine",  rec="YES", hrs=9999,
          txt="mk4modz provides excellent engagement. Very consistent."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,rv in ipairs(reviews) do
-        if row >= h then break end
-        m.setTextColor(rv.rec=="YES" and colors.lime or colors.red)
-        put(2,row,(rv.rec=="YES" and "✓ " or "✗ ")..rv.name.." ("..rv.hrs.."hrs):")
-        row = row+1
-        if row >= h then break end
-        m.setTextColor(colors.lightGray)
-        put(4,row,rv.txt:sub(1,w-5))
-        row = row+1
-        os.sleep(0.3)
+        local col = rv.rec=="YES" and colors.lime or colors.red
+        local hdr = (rv.rec=="YES" and "✓ " or "✗ ")..rv.name.." ("..rv.hrs.."hrs):"
+        chatPush(hdr, col)
+        chatPush("  "..rv.txt, colors.lightGray)
+        os.sleep(0.5)
     end
     os.sleep(12.5)
 end
@@ -5786,26 +5751,23 @@ local function phase_3am()
         "[03:08:26] iworkatjaguar: it fires every time mk4modz joins",
         "[03:08:27] Gerald: *oinks approvingly*",
     }
-    local row = 5
+    chatReset(5, h)
     for _,line in ipairs(log) do
-        if row >= h then break end
-        if line == "" then row = row+1
+        if line == "" then
+            chatPush("", colors.black)
         else
-            local islog = line:sub(1,1)=="["
-            m.setTextColor(
-                line:find("SP00D3R") and colors.lime or
-                line:find("iworkatjaguar") and colors.red or
-                line:find("DrDarkMario") and colors.cyan or
-                line:find("SubaRubicon") and colors.orange or
-                line:find("mk4modz") and colors.white or
-                line:find("Gerald") and colors.lime or
-                line:find("system msg") and colors.yellow or
+            local col =
+                line:find("SP00D3R")       and colors.lime    or
+                line:find("iworkatjaguar") and colors.red     or
+                line:find("DrDarkMario")   and colors.cyan    or
+                line:find("SubaRubicon")   and colors.orange  or
+                line:find("mk4modz")       and colors.white   or
+                line:find("Gerald")        and colors.lime    or
+                line:find("system msg")    and colors.yellow  or
                 colors.lightGray
-            )
-            tw(2,row,line,0.012)
-            row = row+1
+            chatPush(line, col)
         end
-        os.sleep(0.12)
+        os.sleep(0.35)
     end
     os.sleep(13.0)
 end
@@ -5952,19 +5914,17 @@ local function phase_clips()
         {t="mk4modz realises SP00D3R is cooler",v=math.random(80,500),d="Caught on film. He agrees."},
         {t="BEST OF: mk4modz season 1",   v=math.random(2000,9999),d="iworkatjaguar watches every Friday."},
     }
-    local row = 5
-    m.setTextColor(colors.lightGray)
-    put(2,row,string.format("%-26s%-6s%s","TITLE","VIEWS","NOTE"):sub(1,w-2))
-    row=row+1
-    fillRow(row,"-",colors.gray,colors.black); row=row+1
+    chatReset(5, h)
+    -- dynamic column widths
+    local tw_col = math.max(10, math.floor(w*0.45))
+    chatPush(string.format("%-"..tw_col.."s%-6s%s","TITLE","VIEWS","NOTE"):sub(1,w-2), colors.lightGray)
+    chatPush(string.rep("-", w-2), colors.gray)
     for _,c in ipairs(clips) do
-        if row >= h then break end
-        m.setTextColor(c.v > 1000 and colors.yellow or colors.white)
-        local line = string.format("%-26s%-6s%s",
-            c.t:sub(1,25), tostring(c.v), c.d):sub(1,w-2)
-        tw(2,row,line,0.007)
-        row=row+1
-        os.sleep(0.14)
+        local col = c.v > 1000 and colors.yellow or colors.white
+        local line = string.format("%-"..tw_col.."s%-6s%s",
+            c.t:sub(1,tw_col-1), tostring(c.v), c.d):sub(1,w-2)
+        chatPush(line, col)
+        os.sleep(0.32)
     end
     os.sleep(13.0)
 end
@@ -6015,24 +5975,22 @@ local function phase_suba_court()
         {"GERALD", "Oink. [SubaRubicon is trying. That counts.]"},
         {"JUDGE",  "Gerald is correct. Adjourned."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,line in ipairs(proceedings) do
-        if row >= h then break end
-        m.setTextColor(
-            line[1]=="JUDGE"  and colors.yellow or
-            line[1]=="DRDRK"  and colors.cyan   or
-            line[1]=="SUBA"   and colors.orange  or
-            line[1]=="BRI"    and colors.pink    or
-            line[1]=="GERALD" and colors.lime    or
-            colors.white
-        )
-        local who = line[1]=="DRDRK" and "DrDarkMario:" or
-                    line[1]=="SUBA"  and "SubaRubicon:" or
-                    line[1]=="BRI"   and "Bri:         " or
-                    line[1]..":" or ""
-        tw(2,row,(who.." "..line[2]):sub(1,w-2),0.015)
-        row=row+1
-        os.sleep(0.13)
+        local col = line[1]=="JUDGE"  and colors.yellow or
+                    line[1]=="DRDRK"  and colors.cyan   or
+                    line[1]=="SUBA"   and colors.orange or
+                    line[1]=="BRI"    and colors.pink   or
+                    line[1]=="GERALD" and colors.lime   or
+                    colors.white
+        local who = line[1]=="JUDGE"  and "JUDGE:       " or
+                    line[1]=="DRDRK"  and "DrDarkMario: " or
+                    line[1]=="SUBA"   and "SubaRubicon: " or
+                    line[1]=="BRI"    and "Bri:         " or
+                    line[1]=="GERALD" and "Gerald:      " or
+                    "iworkatjagr: "
+        chatPush((who.." "..line[2]):sub(1,w-2), col)
+        os.sleep(0.42)
     end
     os.sleep(13.0)
 end
@@ -6237,23 +6195,18 @@ local function phase_everyone_history()
         {"ItsBasicallyBri", "gerald the pig contact information"},
         {"ItsBasicallyBri", "how to explain mods without being DrDarkMario"},
     }
-    local row = 4
+    chatReset(4, h)
     for _,h_entry in ipairs(histories) do
-        if row >= h then break end
-        m.setTextColor(
-            h_entry[1]=="SP00D3R"        and colors.lime   or
-            h_entry[1]=="iworkatjaguar"  and colors.red    or
-            h_entry[1]=="DrDarkMario"    and colors.cyan   or
-            h_entry[1]=="SubaRubicon"    and colors.orange or
-            h_entry[1]=="ItsBasicallyBri" and colors.pink  or
+        local col =
+            h_entry[1]=="SP00D3R"         and colors.lime   or
+            h_entry[1]=="iworkatjaguar"   and colors.red    or
+            h_entry[1]=="DrDarkMario"     and colors.cyan   or
+            h_entry[1]=="SubaRubicon"     and colors.orange or
+            h_entry[1]=="ItsBasicallyBri" and colors.pink   or
             colors.white
-        )
         local prefix = (h_entry[1].."> "):sub(1,14)
-        put(2,row,prefix)
-        m.setTextColor(colors.lightGray)
-        put(2+#prefix,row,h_entry[2])
-        row=row+1
-        os.sleep(0.14)
+        chatPush(prefix..h_entry[2], col)
+        os.sleep(0.32)
     end
     os.sleep(13.0)
 end
@@ -6473,23 +6426,15 @@ local function phase_faq()
         {"",
          "A: I am so tired."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,fq in ipairs(faqs) do
-        if row >= h then break end
         if fq[1] == "" then
-            m.setTextColor(colors.lightGray)
-            tw(2,row,fq[2],0.01)
-            row=row+1
+            chatPush(fq[2], colors.lightGray)
         else
-            m.setTextColor(colors.cyan)
-            tw(2,row,fq[1],0.012)
-            row=row+1
-            if row >= h then break end
-            m.setTextColor(colors.white)
-            tw(2,row,fq[2],0.01)
-            row=row+1
+            chatPush(fq[1], colors.cyan)
+            chatPush(fq[2], colors.white)
         end
-        os.sleep(0.18)
+        os.sleep(0.4)
     end
     os.sleep(13.0)
 end
@@ -6552,16 +6497,15 @@ local function phase_adminlog()
         "mk4modz said SP00D3R is cooler than him.",
         "This is correct. Logged.",
     }
-    local row = 5
+    chatReset(5, h)
     for _,line in ipairs(log) do
-        if row >= h then break end
-        if line == "" then row = row+1
+        if line == "" then
+            chatPush("", colors.black)
         else
-            m.setTextColor(line:sub(1,5)=="ENTRY" and colors.red or colors.lightGray)
-            tw(2,row,line,0.013)
-            row = row+1
+            local col = line:sub(1,5)=="ENTRY" and colors.red or colors.lightGray
+            chatPush(line, col)
         end
-        os.sleep(0.08)
+        os.sleep(0.25)
     end
     os.sleep(13.0)
 end
@@ -6616,21 +6560,12 @@ local function phase_server_awards()
          "mk4modz",
          "An unprecedented body of work. Truly historic."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,aw in ipairs(awards) do
-        if row >= h-2 then break end
-        m.setTextColor(colors.cyan)
-        tw(2,row,aw[1]:sub(1,w-2),0.01)
-        row=row+1
-        if row >= h then break end
-        m.setTextColor(colors.yellow)
-        put(3,row,">> "..aw[2])
-        row=row+1
-        if row >= h then break end
-        m.setTextColor(colors.lightGray)
-        put(3,row,aw[3]:sub(1,w-4))
-        row=row+1
-        os.sleep(0.5)
+        chatPush(aw[1], colors.cyan)
+        chatPush(">> "..aw[2], colors.yellow)
+        chatPush("   "..aw[3], colors.lightGray)
+        os.sleep(0.7)
     end
     os.sleep(13.0)
 end
