@@ -65,7 +65,7 @@ local function tw(x, y, text, speed)
     m.setCursorPos(x, y)
     for i = 1, #text do
         m.write(text:sub(i, i))
-        os.sleep(speed or 0.05)
+        os.sleep(speed or 0.09)
     end
 end
 
@@ -137,6 +137,45 @@ local function scrollLine(y, text, fg)
         m.setCursorPos(dx, y)
         m.write(str:sub(1, w - dx + 1))
         os.sleep(0.062)
+    end
+end
+
+
+-- ── SCROLLING CHAT BUFFER ────────────────────────────────────────────
+-- For chat-log / dialogue phases.
+-- chatReset(r1,r2): set the display area and clear the buffer.
+-- chatPush(text, fg): add a line; scroll up when full; redraw all.
+local _cBuf, _cR1, _cR2 = {}, 3, h
+
+local function chatReset(r1, r2)
+    _cBuf = {}
+    _cR1  = r1 or 3
+    _cR2  = r2 or h
+    -- blank the area
+    for row = _cR1, _cR2 do
+        if row <= h then
+            m.setCursorPos(1, row)
+            m.write(string.rep(" ", w))
+        end
+    end
+end
+
+local function chatPush(text, fg)
+    text = text:sub(1, w - 2)
+    local maxLines = _cR2 - _cR1 + 1
+    _cBuf[#_cBuf + 1] = {t = text, fg = fg or colors.white}
+    if #_cBuf > maxLines then table.remove(_cBuf, 1) end
+    for i = 1, maxLines do
+        local row = _cR1 + i - 1
+        if row > h then break end
+        m.setCursorPos(1, row)
+        m.write(string.rep(" ", w))
+        local e = _cBuf[i]
+        if e then
+            m.setTextColor(e.fg)
+            m.setCursorPos(2, row)
+            m.write(e.t)
+        end
     end
 end
 
@@ -1007,7 +1046,7 @@ local function phase_bsod()
     center(math.max(1, mid + 3), "Stop code: " .. rnd(fake_errors))
     center(math.max(1, mid + 4), "Process: " .. rnd(fake_processes))
     center(math.max(1, mid + 5), "Remedy: Ask SP00D3R. He will know.")
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -1054,7 +1093,7 @@ local function phase_dox()
     end
     m.setTextColor(colors.yellow)
     if r <= h then tw(2, r, ">> DONE. CONSEQUENCES INCOMING. COPE.", 0.03) end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -1078,7 +1117,7 @@ local function phase_history()
         row = row + 1
         os.sleep(0.15)
     end
-    os.sleep(6.5)
+    os.sleep(11.5)
 end
 
 -- ============================================================
@@ -1093,22 +1132,16 @@ local function phase_discord()
         local j = math.random(1, i)
         shuf[i], shuf[j] = shuf[j], shuf[i]
     end
-    local row = 4
+    chatReset(4, h)
     for _, dm in ipairs(shuf) do
-        if row >= h - 1 then break end
-        m.setTextColor(colors.white)
-        tw(2, row, ("You: " .. dm), 0.012)
-        row = row + 1
-        if row >= h then break end
-        m.setTextColor(colors.lightGray)
+        chatPush("mk4modz: " .. dm, colors.white)
         local hr = math.random(1, 12)
         local mn = string.format("%02d", math.random(0, 59))
         local ap = math.random(0,1) == 0 and "AM" or "PM"
-        tw(2, row, ("  " .. hr .. ":" .. mn .. " " .. ap .. " - Left on read"), 0.009)
-        row = row + 1
-        os.sleep(0.35)
+        chatPush("  "..hr..":"..mn.." "..ap.." - Left on read", colors.lightGray)
+        os.sleep(0.45)
     end
-    os.sleep(6.5)
+    os.sleep(11.5)
 end
 
 -- ============================================================
@@ -1235,7 +1268,7 @@ local function phase_rip()
     if baseY + 4 <= h then
         center(baseY + 4, "Cause: " .. rnd(causes))
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -1280,7 +1313,7 @@ local function phase_virusscan()
     os.sleep(0.7)
     m.setTextColor(colors.red)
     center(h, "QUARANTINE FAILED. SKILL ISSUE TOO DEEP.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1328,7 +1361,7 @@ local function phase_taskmanager()
         row = row + 1
         os.sleep(0.08)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1368,7 +1401,7 @@ local function phase_progress()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "DIAGNOSIS: TERMINAL. NO CURE EXISTS.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1411,7 +1444,7 @@ local function phase_scoreboard()
         row = row + 1
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1436,7 +1469,7 @@ local function phase_conspiracy()
         row = row + 2
         os.sleep(0.42)
     end
-    os.sleep(6.5)
+    os.sleep(11.5)
 end
 
 -- ============================================================
@@ -1771,7 +1804,7 @@ local function phase_eulogy()
         end
         os.sleep(0.22)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1816,7 +1849,7 @@ local function phase_warden()
             os.sleep(0.4)
         end
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -1864,7 +1897,7 @@ local function phase_loading()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "ABORTED. SKILL PREREQUISITES NOT MET.")
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -1930,19 +1963,14 @@ local function phase_livechat()
         "we love SP00D3R",
         "SP00D3R is the favourite and we all know it",
     }
-    local row = 3
-    for i = 1, math.min(#msgs, h - 3) do
-        if row >= h then break end
+    chatReset(3, h)
+    for _, msg in ipairs(msgs) do
         local name = rnd(names)
-        m.setTextColor(rnd(colors_list))
-        local prefix = ("<" .. name .. "> "):sub(1, 16)
-        put(2, row, prefix)
-        m.setTextColor(colors.white)
-        put(2 + #prefix, row, msgs[i])
-        row = row + 1
-        os.sleep(0.28)
+        local col  = rnd(colors_list)
+        chatPush(("<"..name.."> "):sub(1,12)..msg, col)
+        os.sleep(0.45)
     end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -1982,7 +2010,7 @@ local function phase_speedrun()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "FINAL TIME: DNF. CAUSE: EXISTING.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2034,7 +2062,7 @@ local function phase_support()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "CLOSED. iworkatjaguar: 'LEARN TO NOT FALL.'")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2046,7 +2074,7 @@ local function phase_reboot()
     center(math.max(1, mid - 2), "MEMORY LEAK: COPE.EXE")
     center(math.max(1, mid), "REBOOTING CONFIDENCE...")
     center(math.max(1, mid + 2), "ETA: WHEN SP00D3R GETS TIRED OF WATCHING")
-    os.sleep(6.5)
+    os.sleep(11.5)
     blast(colors.black, colors.white)
     for i = 5, 0, -1 do
         m.clear()
@@ -2098,19 +2126,14 @@ local function phase_twitchchat()
         "and the saddest stream",
         "simultaneously",
     }
-    local row = 3
-    for i = 1, math.min(70, h - 3) do
-        if row >= h then break end
+    chatReset(3, h)
+    for i = 1, 70 do
         local name = rnd(chatters)
-        m.setTextColor(rnd(colors_list))
-        local prefix = (name .. ": "):sub(1, 16)
-        put(2, row, prefix)
-        m.setTextColor(colors.white)
-        put(2 + #prefix, row, rnd(chatmsgs))
-        row = row + 1
-        os.sleep(0.17)
+        local col  = rnd(colors_list)
+        chatPush((name..": "):sub(1,14)..rnd(chatmsgs), col)
+        os.sleep(0.35)
     end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -2159,7 +2182,7 @@ local function phase_reddit()
         row = row + 1
         os.sleep(0.2)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2206,7 +2229,7 @@ local function phase_patchnotes()
         row = row + 1
         os.sleep(0.14)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2259,7 +2282,7 @@ local function phase_psych()
         end
         os.sleep(0.08)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2303,7 +2326,7 @@ local function phase_yelp()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2354,7 +2377,7 @@ local function phase_horoscope()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2405,7 +2428,7 @@ local function phase_will()
         end
         os.sleep(0.2)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -2458,7 +2481,7 @@ local function phase_tos()
         end
         os.sleep(0.1)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2510,7 +2533,7 @@ local function phase_job()
         end
         os.sleep(0.08)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -2556,7 +2579,7 @@ local function phase_stars()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2602,7 +2625,7 @@ local function phase_email()
         row = row + 1
         os.sleep(0.19)
     end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -2672,7 +2695,7 @@ local function phase_google()
         row = row + 1
         os.sleep(0.3)
     end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -2786,7 +2809,7 @@ local function phase_police()
         end
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2836,7 +2859,7 @@ local function phase_therapy()
         row = row + 1
         os.sleep(0.12)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2881,7 +2904,7 @@ local function phase_auction()
     m.setTextColor(colors.yellow)
     center(h - 1, "TOTAL RAISED: " .. math.random(3,14) .. " gold")
     center(h, "GERALD RAISED MORE LAST WEEK")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2924,7 +2947,7 @@ local function phase_dating()
         row = row + 1
         os.sleep(0.1)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -2981,7 +3004,7 @@ local function phase_fuckups()
         row = row + 1
         os.sleep(0.15)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3022,7 +3045,7 @@ local function phase_swearjar()
     m.setTextColor(colors.yellow)
     fillRow(row + 1, "-", colors.yellow, colors.black)
     center(row + 2, ("TOTAL OWED: $" .. (total * 0.25)))
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3077,7 +3100,7 @@ local function phase_insurance()
         end
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3152,7 +3175,7 @@ local function phase_angrymail()
         end
         os.sleep(0.06)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -3202,7 +3225,7 @@ local function phase_warranty()
         end
         os.sleep(0.08)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 
@@ -3255,7 +3278,7 @@ local function phase_linkedin()
         row=row+1
         os.sleep(0.05)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3295,7 +3318,7 @@ local function phase_tripadvisor()
         row=row+1
         os.sleep(0.2)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3344,7 +3367,7 @@ local function phase_glassdoor()
         row=row+1
         os.sleep(0.06)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3398,7 +3421,7 @@ local function phase_obituary()
         end
         os.sleep(0.19)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3439,7 +3462,7 @@ local function phase_amazon()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3493,7 +3516,7 @@ local function phase_craigslist()
         end
         os.sleep(0.06)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3546,7 +3569,7 @@ local function phase_helpdesk()
         end
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3621,7 +3644,7 @@ local function phase_documentary()
         end
         os.sleep(0.26)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -3666,7 +3689,7 @@ local function phase_reportcard()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3711,7 +3734,7 @@ local function phase_voicemail()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3750,24 +3773,20 @@ local function phase_interview()
         {"G","Oink. [He fell again while we were filming this.]"},
         {"R","We confirm: he fell again."},
     }
-    local row=4
+    chatReset(4, h)
     for _,line in ipairs(interview) do
-        if row>=h then break end
-        m.setTextColor(
-            line[1]=="R" and colors.cyan or
-            line[1]=="G" and colors.lime or
-            line[1]=="S" and colors.yellow or
-            colors.white
-        )
-        local who=line[1]=="R" and "REPORTER: " or
-                  line[1]=="G" and "GERALD:   " or
-                  line[1]=="S" and "SP00D3R:  " or
-                  "mk4modz:  "
-        tw(2,row,who..line[2],0.015)
-        row=row+1
-        os.sleep(0.14)
+        local col = line[1]=="R" and colors.cyan   or
+                    line[1]=="G" and colors.lime    or
+                    line[1]=="S" and colors.yellow  or
+                    colors.white
+        local who = line[1]=="R" and "REPORTER: " or
+                    line[1]=="G" and "GERALD:   " or
+                    line[1]=="S" and "SP00D3R:  " or
+                    "mk4modz:  "
+        chatPush(who..line[2], col)
+        os.sleep(0.45)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3821,7 +3840,7 @@ local function phase_census()
         end
         os.sleep(0.06)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3884,7 +3903,7 @@ local function phase_cookingshow()
         end
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -3954,7 +3973,7 @@ local function phase_powerpoint()
             row=row+1
             os.sleep(0.1)
         end
-        os.sleep(6.5)
+        os.sleep(11.5)
     end
 end
 
@@ -4009,7 +4028,7 @@ local function phase_courtroom()
         row=row+1
         os.sleep(0.13)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4052,7 +4071,7 @@ local function phase_declined()
         row=row+1
         os.sleep(0.1)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4110,7 +4129,7 @@ local function phase_manual()
         end
         os.sleep(0.1)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4168,7 +4187,7 @@ local function phase_confessional()
         end
         os.sleep(0.11)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4256,7 +4275,7 @@ local function phase_tips()
             center(startRow,line)
             startRow=startRow+1
         end
-        os.sleep(6.5)
+        os.sleep(11.5)
     end
 end
 
@@ -4320,7 +4339,7 @@ local function phase_finalboss()
         end
         os.sleep(0.14)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 
@@ -4379,38 +4398,37 @@ local function phase_groupchat()
         {"","different bat"},
         {"admin","(admin has left the chat)"},
     }
-    local row = 3
+    chatReset(3, h)
     for _,msg in ipairs(msgs) do
-        if row >= h then break end
         local who = msg[1]
-        local txt  = msg[2]
+        local txt = msg[2]
+        local line, col
         if who == "" then
-            m.setTextColor(colors.lightGray)
-            put(6, row, txt)
+            line = "    " .. txt
+            col  = colors.lightGray
         elseif who == "iworkatjaguar" then
-            m.setTextColor(colors.red)
-            put(2, row, "[jaguar] " .. txt)
+            line = "[jaguar] " .. txt
+            col  = colors.red
         elseif who == "SP00D3R" then
-            m.setTextColor(colors.lime)
-            put(2, row, "[SP00D3R] " .. txt)
+            line = "[SP00D3R] " .. txt
+            col  = colors.lime
         elseif who == "DrDarkMario" then
-            m.setTextColor(colors.cyan)
-            put(2, row, "[DrDark] " .. txt)
+            line = "[DrDark] " .. txt
+            col  = colors.cyan
         elseif who == "SubaRubicon" then
-            m.setTextColor(colors.orange)
-            put(2, row, "[SubaR] " .. txt)
+            line = "[SubaR] " .. txt
+            col  = colors.orange
         elseif who == "ItsBasicallyBri" then
-            m.setTextColor(colors.pink)
-            put(2, row, "[Bri] " .. txt)
+            line = "[Bri] " .. txt
+            col  = colors.pink
         else
-            m.setTextColor(rnd(colors_list))
-            local name = rnd(names)
-            put(2, row, name .. ": " .. txt)
+            line = rnd(names) .. ": " .. txt
+            col  = rnd(colors_list)
         end
-        row = row + 1
-        os.sleep(0.22)
+        chatPush(line, col)
+        os.sleep(0.4)
     end
-    os.sleep(7.0)
+    os.sleep(12.0)
 end
 
 -- ============================================================
@@ -4501,7 +4519,7 @@ local function phase_gameshow()
     center(math.floor(h/2),   "PRIZE MONEY: 0 EMERALDS")
     center(math.floor(h/2)+2, "Gerald scored " .. #questions .. "/" .. #questions)
     center(math.floor(h/2)+4, "First try. Without studying.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4579,7 +4597,7 @@ local function phase_intervention()
         end
         os.sleep(0.1)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -4654,7 +4672,7 @@ local function phase_autopsy()
         end
         os.sleep(0.07)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -4707,7 +4725,7 @@ local function phase_complaints()
         row = row + 1
         os.sleep(0.14)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4749,7 +4767,7 @@ local function phase_mvpe()
         row = row + 1
         os.sleep(0.8)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4818,7 +4836,7 @@ local function phase_blogpost()
         end
         os.sleep(0.08)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -4862,7 +4880,7 @@ local function phase_insurance2()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h,"TOTAL APPROVED: 0.  TOTAL DENIED: EVERYTHING.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4941,7 +4959,7 @@ local function phase_spectator()
         end
         os.sleep(0.18)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -4986,7 +5004,7 @@ local function phase_mobreviews()
         row = row + 1
         os.sleep(0.2)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 
@@ -5046,7 +5064,7 @@ local function phase_subarubicon()
         end
         os.sleep(0.07)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -5110,7 +5128,7 @@ local function phase_reactor()
         end
         os.sleep(0.07)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5166,7 +5184,7 @@ local function phase_sp00d3r()
         end
         os.sleep(0.18)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5212,7 +5230,7 @@ local function phase_fallanalysis()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h,"CONCLUSION: mk4modz and gravity are at war.")
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -5256,7 +5274,7 @@ local function phase_tierlist()
         end
         os.sleep(0.2)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5316,7 +5334,7 @@ local function phase_resignation()
         end
         os.sleep(0.07)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5367,18 +5385,13 @@ local function phase_discordlog()
         {"SP00D3R",       colors.lime,   "Gerald is always fine"},
         {"SP00D3R",       colors.lime,   "Gerald is the only one of us who is always fine"},
     }
-    local row = 5
+    chatReset(5, h)
     for _,msg in ipairs(msgs) do
-        if row >= h then break end
-        m.setTextColor(msg[2])
-        local prefix = (msg[1]..": "):sub(1,16)
-        put(2,row,prefix)
-        m.setTextColor(colors.white)
-        put(2+#prefix,row,msg[3])
-        row = row+1
-        os.sleep(0.2)
+        local prefix = (msg[1]..": "):sub(1,14)
+        chatPush(prefix..msg[3], msg[2])
+        os.sleep(0.38)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -5436,7 +5449,7 @@ local function phase_irl()
         end
         os.sleep(0.07)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5482,7 +5495,7 @@ local function phase_brothers()
         end
         os.sleep(0.18)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5529,7 +5542,7 @@ local function phase_steamreviews()
         row = row+1
         os.sleep(0.3)
     end
-    os.sleep(7.5)
+    os.sleep(12.5)
 end
 
 -- ============================================================
@@ -5598,7 +5611,7 @@ local function phase_gerald_statement()
         end
         os.sleep(0.08)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5658,7 +5671,7 @@ local function phase_rules()
         end
         os.sleep(0.07)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5718,7 +5731,7 @@ local function phase_wikifail()
         end
         os.sleep(0.09)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5794,7 +5807,7 @@ local function phase_3am()
         end
         os.sleep(0.12)
     end
-    os.sleep(8.0)
+    os.sleep(13.0)
 end
 
 
@@ -5844,7 +5857,7 @@ local function phase_reactor_stats()
         row = row+1
         os.sleep(0.09)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5909,7 +5922,7 @@ local function phase_bri()
         end
         os.sleep(0.09)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -5953,7 +5966,7 @@ local function phase_clips()
         row=row+1
         os.sleep(0.14)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6021,7 +6034,7 @@ local function phase_suba_court()
         row=row+1
         os.sleep(0.13)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6100,7 +6113,7 @@ local function phase_survival_guide()
         end
         os.sleep(0.08)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6167,7 +6180,7 @@ local function phase_reactor2()
         end
         os.sleep(0.08)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6242,7 +6255,7 @@ local function phase_everyone_history()
         row=row+1
         os.sleep(0.14)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6299,18 +6312,15 @@ local function phase_group_therapy()
         {"MK4",  "Same time next week?"},
         {"T",    "...Yes. Same time next week."},
     }
-    local row = 5
+    chatReset(5, h)
     for _,line in ipairs(session) do
-        if row >= h then break end
-        m.setTextColor(
-            line[1]=="T"    and colors.yellow  or
-            line[1]=="SP00" and colors.lime     or
-            line[1]=="JAG"  and colors.red      or
-            line[1]=="DRDK" and colors.cyan     or
-            line[1]=="SUBA" and colors.orange   or
-            line[1]=="BRI"  and colors.pink     or
-            colors.white
-        )
+        local col = line[1]=="T"    and colors.yellow or
+                    line[1]=="SP00" and colors.lime    or
+                    line[1]=="JAG"  and colors.red     or
+                    line[1]=="DRDK" and colors.cyan    or
+                    line[1]=="SUBA" and colors.orange  or
+                    line[1]=="BRI"  and colors.pink    or
+                    colors.white
         local who = line[1]=="T"    and "Therapist:   " or
                     line[1]=="SP00" and "SP00D3R:     " or
                     line[1]=="JAG"  and "iworkatjagr: " or
@@ -6318,11 +6328,10 @@ local function phase_group_therapy()
                     line[1]=="SUBA" and "SubaRubicon: " or
                     line[1]=="BRI"  and "Bri:         " or
                     "mk4modz:     "
-        tw(2,row,(who..line[2]):sub(1,w-2),0.014)
-        row=row+1
-        os.sleep(0.13)
+        chatPush((who..line[2]):sub(1, w-2), col)
+        os.sleep(0.42)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6409,7 +6418,7 @@ local function phase_chicken_pov()
         end
         os.sleep(0.1)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6482,7 +6491,7 @@ local function phase_faq()
         end
         os.sleep(0.18)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6554,7 +6563,7 @@ local function phase_adminlog()
         end
         os.sleep(0.08)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
@@ -6623,7 +6632,7 @@ local function phase_server_awards()
         row=row+1
         os.sleep(0.5)
     end
-    os.sleep(8)
+    os.sleep(13.0)
 end
 
 -- ============================================================
