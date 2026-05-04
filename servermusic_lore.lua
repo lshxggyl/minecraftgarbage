@@ -851,24 +851,23 @@ local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
     -- ── CONFIG ──────────────────────────────────────────────────────
-    local SERVER  = "https://residency-muster-bulge.ngrok-free.dev"
+    local SERVER  = "https://1a9d2d9e2f2ab5.lhr.life"
     local VOLUME  = 3.0   -- Max radius, zero distortion.
     local CHUNK   = 16 * 1024
 
     -- ── HELPERS ─────────────────────────────────────────────────────
     local function checkServer()
-        local ok, err = http.get(SERVER.."/status",{["ngrok-skip-browser-warning"]="true"})
+        local ok, err = http.get(SERVER.."/status")
         if ok then ok.close(); return true end
         print("[music] Server unreachable: "..tostring(err))
         print("[music] URL tried: "..SERVER.."/status")
-        print("[music] Fix: is ngrok running? ngrok http 4800")
+        print("[music] Fix: is the localhost.run tunnel active?")
         print("[music] Fix: is music_server.py running?")
-        print("[music] Fix: check CC HTTP rules allow ngrok-free.dev")
         return false
     end
 
     local function getTracks()
-        local r = http.get(SERVER .. "/tracks", {["ngrok-skip-browser-warning"]="true"})
+        local r = http.get(SERVER .. "/tracks")
         if not r then return {} end
         local raw = r.readAll(); r.close()
         local t = {}
