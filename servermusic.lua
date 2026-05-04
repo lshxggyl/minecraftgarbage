@@ -783,32 +783,46 @@ local function audioLoop()
     -- feeds them to speaker.playAudio(), waiting on the
     -- "speaker_audio_empty" event whenever the speaker buffer is full.
     local function streamTrack(filename)
-        -- No spaces in filenames means no regex encoding needed. Just build the URL.
-        local url = SERVER .. "/play/" .. filename
-        
+        -- URL encode to handle the crazy file names
+        local safe_filename = filename:gsub("([^%w _%%%-%.~])", function(c)
+            return string.format("%%%02X", string.byte(c))
+        end):gsub(" ", "%%20")
+
+        local url = SERVER .. "/play/" .. safe_filename
         local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
+        
         if not res then
             print("[music] fetch failed: " .. tostring(err))
             return
         end
 
-        -- Hard-stop the speaker to wipe any leftover audio from the last track
+        print("[music] Streaming: " .. filename)
+        
+        -- Hard-stop the speaker to wipe leftover garbage
         speakers[1].stop()
 
         while true do
-            local chunk = res.read(CHUNK)
+            local chunk = res.read(16384)
             if not chunk or #chunk == 0 then break end
 
             local pcm = {}
             for i = 1, #chunk do
-                -- Unsigned 0-255 down to Signed -128 to 127
-                pcm[i] = string.byte(chunk, i) - 128
+                local b = string.byte(chunk, i)
+                -- Math for signed 8-bit
+                if b > 127 then b = b - 256 end
+                pcm[i] = b
             end
 
-            -- Blast the speaker. Wait if the buffer gets full.
+            -- THE FIX: Do NOT wait for the buffer to empty. 
+            -- Just yield 2 ticks so it drains slightly, then top it back up.
             while not speakers[1].playAudio(pcm, VOLUME) do
-                os.pullEvent("speaker_audio_empty")
+                os.sleep(0.1) 
             end
+        end
+
+        res.close()
+        speakers[1].stop()
+    end
         end
 
         res.close()
