@@ -886,7 +886,7 @@ local function audioLoop()
         end):gsub(" ", "%%20")
 
         local url = SERVER .. "/play/" .. safe_filename
-        local res, err = http.get(url, {["ngrok-skip-browser-warning"]="true"}, true)
+        local res, err = http.get(url, nil, true)
         
         if not res then
             print("[music] fetch failed: " .. tostring(err))
