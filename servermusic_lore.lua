@@ -1007,7 +1007,7 @@ local function phase_bsod()
     center(math.max(1, mid + 3), "Stop code: " .. rnd(fake_errors))
     center(math.max(1, mid + 4), "Process: " .. rnd(fake_processes))
     center(math.max(1, mid + 5), "Remedy: Ask SP00D3R. He will know.")
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -1054,7 +1054,7 @@ local function phase_dox()
     end
     m.setTextColor(colors.yellow)
     if r <= h then tw(2, r, ">> DONE. CONSEQUENCES INCOMING. COPE.", 0.03) end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -1078,7 +1078,7 @@ local function phase_history()
         row = row + 1
         os.sleep(0.15)
     end
-    os.sleep(3.5)
+    os.sleep(6.5)
 end
 
 -- ============================================================
@@ -1108,7 +1108,7 @@ local function phase_discord()
         row = row + 1
         os.sleep(0.35)
     end
-    os.sleep(3.5)
+    os.sleep(6.5)
 end
 
 -- ============================================================
@@ -1235,7 +1235,7 @@ local function phase_rip()
     if baseY + 4 <= h then
         center(baseY + 4, "Cause: " .. rnd(causes))
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -1280,7 +1280,7 @@ local function phase_virusscan()
     os.sleep(0.7)
     m.setTextColor(colors.red)
     center(h, "QUARANTINE FAILED. SKILL ISSUE TOO DEEP.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1328,7 +1328,7 @@ local function phase_taskmanager()
         row = row + 1
         os.sleep(0.08)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1368,7 +1368,7 @@ local function phase_progress()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "DIAGNOSIS: TERMINAL. NO CURE EXISTS.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1411,7 +1411,7 @@ local function phase_scoreboard()
         row = row + 1
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1436,7 +1436,7 @@ local function phase_conspiracy()
         row = row + 2
         os.sleep(0.42)
     end
-    os.sleep(3.5)
+    os.sleep(6.5)
 end
 
 -- ============================================================
@@ -1771,7 +1771,7 @@ local function phase_eulogy()
         end
         os.sleep(0.22)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1816,7 +1816,7 @@ local function phase_warden()
             os.sleep(0.4)
         end
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -1864,7 +1864,7 @@ local function phase_loading()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "ABORTED. SKILL PREREQUISITES NOT MET.")
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -1942,7 +1942,7 @@ local function phase_livechat()
         row = row + 1
         os.sleep(0.28)
     end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -1982,7 +1982,7 @@ local function phase_speedrun()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "FINAL TIME: DNF. CAUSE: EXISTING.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2034,7 +2034,7 @@ local function phase_support()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h, "CLOSED. iworkatjaguar: 'LEARN TO NOT FALL.'")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2046,7 +2046,7 @@ local function phase_reboot()
     center(math.max(1, mid - 2), "MEMORY LEAK: COPE.EXE")
     center(math.max(1, mid), "REBOOTING CONFIDENCE...")
     center(math.max(1, mid + 2), "ETA: WHEN SP00D3R GETS TIRED OF WATCHING")
-    os.sleep(3.5)
+    os.sleep(6.5)
     blast(colors.black, colors.white)
     for i = 5, 0, -1 do
         m.clear()
@@ -2110,7 +2110,7 @@ local function phase_twitchchat()
         row = row + 1
         os.sleep(0.17)
     end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -2159,7 +2159,7 @@ local function phase_reddit()
         row = row + 1
         os.sleep(0.2)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2206,7 +2206,7 @@ local function phase_patchnotes()
         row = row + 1
         os.sleep(0.14)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2259,7 +2259,7 @@ local function phase_psych()
         end
         os.sleep(0.08)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2303,7 +2303,7 @@ local function phase_yelp()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2354,7 +2354,7 @@ local function phase_horoscope()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2405,7 +2405,7 @@ local function phase_will()
         end
         os.sleep(0.2)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -2458,7 +2458,7 @@ local function phase_tos()
         end
         os.sleep(0.1)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2510,7 +2510,7 @@ local function phase_job()
         end
         os.sleep(0.08)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -2556,7 +2556,7 @@ local function phase_stars()
         row = row + 1
         os.sleep(0.25)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2602,7 +2602,7 @@ local function phase_email()
         row = row + 1
         os.sleep(0.19)
     end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -2672,7 +2672,7 @@ local function phase_google()
         row = row + 1
         os.sleep(0.3)
     end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -2786,7 +2786,7 @@ local function phase_police()
         end
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2836,7 +2836,7 @@ local function phase_therapy()
         row = row + 1
         os.sleep(0.12)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2881,7 +2881,7 @@ local function phase_auction()
     m.setTextColor(colors.yellow)
     center(h - 1, "TOTAL RAISED: " .. math.random(3,14) .. " gold")
     center(h, "GERALD RAISED MORE LAST WEEK")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2924,7 +2924,7 @@ local function phase_dating()
         row = row + 1
         os.sleep(0.1)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -2981,7 +2981,7 @@ local function phase_fuckups()
         row = row + 1
         os.sleep(0.15)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3022,7 +3022,7 @@ local function phase_swearjar()
     m.setTextColor(colors.yellow)
     fillRow(row + 1, "-", colors.yellow, colors.black)
     center(row + 2, ("TOTAL OWED: $" .. (total * 0.25)))
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3077,7 +3077,7 @@ local function phase_insurance()
         end
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3152,7 +3152,7 @@ local function phase_angrymail()
         end
         os.sleep(0.06)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -3202,7 +3202,7 @@ local function phase_warranty()
         end
         os.sleep(0.08)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 
@@ -3255,7 +3255,7 @@ local function phase_linkedin()
         row=row+1
         os.sleep(0.05)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3295,7 +3295,7 @@ local function phase_tripadvisor()
         row=row+1
         os.sleep(0.2)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3344,7 +3344,7 @@ local function phase_glassdoor()
         row=row+1
         os.sleep(0.06)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3398,7 +3398,7 @@ local function phase_obituary()
         end
         os.sleep(0.19)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3439,7 +3439,7 @@ local function phase_amazon()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3493,7 +3493,7 @@ local function phase_craigslist()
         end
         os.sleep(0.06)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3546,7 +3546,7 @@ local function phase_helpdesk()
         end
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3621,7 +3621,7 @@ local function phase_documentary()
         end
         os.sleep(0.26)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -3666,7 +3666,7 @@ local function phase_reportcard()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3711,7 +3711,7 @@ local function phase_voicemail()
         row=row+1
         os.sleep(0.22)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3767,7 +3767,7 @@ local function phase_interview()
         row=row+1
         os.sleep(0.14)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3821,7 +3821,7 @@ local function phase_census()
         end
         os.sleep(0.06)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3884,7 +3884,7 @@ local function phase_cookingshow()
         end
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -3954,7 +3954,7 @@ local function phase_powerpoint()
             row=row+1
             os.sleep(0.1)
         end
-        os.sleep(3.5)
+        os.sleep(6.5)
     end
 end
 
@@ -4009,7 +4009,7 @@ local function phase_courtroom()
         row=row+1
         os.sleep(0.13)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4052,7 +4052,7 @@ local function phase_declined()
         row=row+1
         os.sleep(0.1)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4110,7 +4110,7 @@ local function phase_manual()
         end
         os.sleep(0.1)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4168,7 +4168,7 @@ local function phase_confessional()
         end
         os.sleep(0.11)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4256,7 +4256,7 @@ local function phase_tips()
             center(startRow,line)
             startRow=startRow+1
         end
-        os.sleep(3.5)
+        os.sleep(6.5)
     end
 end
 
@@ -4320,7 +4320,7 @@ local function phase_finalboss()
         end
         os.sleep(0.14)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 
@@ -4410,7 +4410,7 @@ local function phase_groupchat()
         row = row + 1
         os.sleep(0.22)
     end
-    os.sleep(4)
+    os.sleep(7.0)
 end
 
 -- ============================================================
@@ -4501,7 +4501,7 @@ local function phase_gameshow()
     center(math.floor(h/2),   "PRIZE MONEY: 0 EMERALDS")
     center(math.floor(h/2)+2, "Gerald scored " .. #questions .. "/" .. #questions)
     center(math.floor(h/2)+4, "First try. Without studying.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4579,7 +4579,7 @@ local function phase_intervention()
         end
         os.sleep(0.1)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -4654,7 +4654,7 @@ local function phase_autopsy()
         end
         os.sleep(0.07)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -4707,7 +4707,7 @@ local function phase_complaints()
         row = row + 1
         os.sleep(0.14)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4749,7 +4749,7 @@ local function phase_mvpe()
         row = row + 1
         os.sleep(0.8)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4818,7 +4818,7 @@ local function phase_blogpost()
         end
         os.sleep(0.08)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -4862,7 +4862,7 @@ local function phase_insurance2()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h,"TOTAL APPROVED: 0.  TOTAL DENIED: EVERYTHING.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4941,7 +4941,7 @@ local function phase_spectator()
         end
         os.sleep(0.18)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -4986,7 +4986,7 @@ local function phase_mobreviews()
         row = row + 1
         os.sleep(0.2)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 
@@ -5046,7 +5046,7 @@ local function phase_subarubicon()
         end
         os.sleep(0.07)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -5110,7 +5110,7 @@ local function phase_reactor()
         end
         os.sleep(0.07)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5166,7 +5166,7 @@ local function phase_sp00d3r()
         end
         os.sleep(0.18)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5212,7 +5212,7 @@ local function phase_fallanalysis()
     os.sleep(0.8)
     m.setTextColor(colors.red)
     center(h,"CONCLUSION: mk4modz and gravity are at war.")
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -5256,7 +5256,7 @@ local function phase_tierlist()
         end
         os.sleep(0.2)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5316,7 +5316,7 @@ local function phase_resignation()
         end
         os.sleep(0.07)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5378,7 +5378,7 @@ local function phase_discordlog()
         row = row+1
         os.sleep(0.2)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -5436,7 +5436,7 @@ local function phase_irl()
         end
         os.sleep(0.07)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5482,7 +5482,7 @@ local function phase_brothers()
         end
         os.sleep(0.18)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5529,7 +5529,7 @@ local function phase_steamreviews()
         row = row+1
         os.sleep(0.3)
     end
-    os.sleep(4.5)
+    os.sleep(7.5)
 end
 
 -- ============================================================
@@ -5598,7 +5598,7 @@ local function phase_gerald_statement()
         end
         os.sleep(0.08)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5658,7 +5658,7 @@ local function phase_rules()
         end
         os.sleep(0.07)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5718,7 +5718,7 @@ local function phase_wikifail()
         end
         os.sleep(0.09)
     end
-    os.sleep(5)
+    os.sleep(8.0)
 end
 
 -- ============================================================
@@ -5794,7 +5794,882 @@ local function phase_3am()
         end
         os.sleep(0.12)
     end
-    os.sleep(5)
+    os.sleep(8.0)
+end
+
+
+
+-- ============================================================
+-- PHASE: REACTOR LEADERBOARD
+-- iworkatjaguar's reactor damage statistics
+-- ============================================================
+local function phase_reactor_stats()
+    blast(colors.black, colors.red)
+    m.setTextColor(colors.red)
+    center(2,"REACTOR FALLOUT: DAMAGE REPORT")
+    m.setTextColor(colors.lightGray)
+    center(3,"Compiled by: iworkatjaguar (the admin)")
+    fillRow(4,"=",colors.red,colors.black)
+    local stats = {
+        {"Server radiation level",     "ELEVATED (fine probably)"},
+        {"Chunks irradiated",           math.random(20,80).." chunks"},
+        {"iworkatjaguar assessment",    "'it's like a banana'"},
+        {"DrDarkMario assessment",      "'it is NOT like a banana'"},
+        {"mk4modz deaths by radiation", math.random(3,15)},
+        {"mk4modz deaths by fall same day",math.random(5,20)},
+        {"mk4modz: which killed him first","fall damage (confirmed)"},
+        {"SubaRubicon radiation deaths", 0},
+        {"SubaRubicon reason",          "too confused to absorb it"},
+        {"SP00D3R radiation deaths",    0},
+        {"SP00D3R reason",              "SP00D3R doesn't die"},
+        {"Gerald radiation deaths",     0},
+        {"Gerald reason",               "Gerald is always fine"},
+        {"Chicken radiation deaths",    0},
+        {"Chicken reason",              "the chicken transcends physics"},
+        {"ItsBasicallyBri assessment",  "'this is a lawsuit'"},
+        {"iworkatjaguar response",      "'I am also the admin'"},
+        {"ItsBasicallyBri response",    "'that is not how lawsuits work'"},
+        {"Second reactor planned",      "yes (to cool the first one)"},
+        {"Everyone else's response",    "'please do not'"},
+        {"iworkatjaguar",               "'it will be fine'"},
+    }
+    local row = 5
+    for _,s in ipairs(stats) do
+        if row >= h then break end
+        m.setTextColor(type(s[2])=="number" and
+            (s[2]==0 and colors.lime or colors.red) or colors.lightGray)
+        local line = string.format("%-24s%s",
+            s[1]:sub(1,24), tostring(s[2]):sub(1,w-26))
+        tw(2,row,line,0.007)
+        row = row+1
+        os.sleep(0.09)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: ITSBASICALLYBRI PERSPECTIVE
+-- ============================================================
+local function phase_bri()
+    blast(colors.black, colors.pink)
+    m.setTextColor(colors.pink)
+    center(2,"ItsBasicallyBri: A Statement")
+    fillRow(3,"-",colors.pink,colors.black)
+    local lines = {
+        "I live with SubaRubicon.",
+        "And iworkatjaguar.",
+        "This is a choice I made.",
+        "I stand by it.",
+        "Mostly.",
+        "",
+        "SubaRubicon has been playing ATM10",
+        "for "..math.random(3,8).." months.",
+        "He knows "..math.random(0,2).." mods.",
+        "One of those is the dirt mod.",
+        "(There is no dirt mod.",
+        " He thinks there is a dirt mod.",
+        " There is not a dirt mod.)",
+        "",
+        "iworkatjaguar built a reactor.",
+        "The reactor had an event.",
+        "The server is now irradiated.",
+        "iworkatjaguar describes this as 'fine'.",
+        "iworkatjaguar is wrong.",
+        "I filed a complaint.",
+        "iworkatjaguar said he is the admin.",
+        "I said that is not relevant.",
+        "He added a rule saying it is relevant.",
+        "I have further complaints.",
+        "",
+        "mk4modz fell off something again.",
+        "SP00D3R filmed it.",
+        "SP00D3R is the younger brother.",
+        "SP00D3R is also the cooler brother.",
+        "mk4modz agrees.",
+        "mk4modz always agrees.",
+        "mk4modz fell off something",
+        "while agreeing.",
+        "SP00D3R filmed that too.",
+        "",
+        "Gerald is my favourite person on",
+        "this server.",
+        "Gerald is a pig.",
+        "This says something.",
+        "I'm not sure what.",
+        "Something.",
+    }
+    local row = 4
+    for _,line in ipairs(lines) do
+        if row >= h then break end
+        if line == "" then row = row+1
+        else
+            m.setTextColor(line:sub(1,1)=="(" and colors.lightGray or colors.white)
+            tw(2,row,line,0.016)
+            row = row+1
+        end
+        os.sleep(0.09)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: SP00D3R'S CLIP ARCHIVE
+-- ============================================================
+local function phase_clips()
+    blast(colors.black, colors.lime)
+    m.setTextColor(colors.lime)
+    center(2,"SP00D3R'S CLIP ARCHIVE")
+    m.setTextColor(colors.lightGray)
+    center(3,"Subject: mk4modz. Runtime: "..math.random(4,12).." hours total.")
+    fillRow(4,"-",colors.lime,colors.black)
+    local clips = {
+        {t="mk4modz vs gravity ep1",      v=math.random(80,500),  d="The first fall. The original."},
+        {t="mk4modz vs gravity ep2",      v=math.random(80,500),  d="Different spot. Same result."},
+        {t="mk4modz vs gravity ep3-47",   v=math.random(200,2000),d="Compilation. No commentary needed."},
+        {t="mk4modz vs the jetpack",      v=math.random(80,500),  d="Equipped. Unused. Still fell."},
+        {t="mk4modz vs his own base",     v=math.random(80,500),  d="Fell off the inside. HOW."},
+        {t="mk4modz vs the reactor",      v=math.random(80,500),  d="Fell off iworkatjaguar's reactor."},
+        {t="mk4modz vs flat ground",      v=math.random(500,3000),d="Most viewed. Scientists watch this."},
+        {t="mk4modz vs the crafting table",v=math.random(80,500), d="Fell while stationary. Inexplicable."},
+        {t="mk4modz vs the chicken (1v1)",v=math.random(200,1000),d="Lost. To his own chicken."},
+        {t="mk4modz vs the lava (classic)",v=math.random(80,500), d="Also a classic. Different genre."},
+        {t="mk4modz vs Gerald's scaffold", v=math.random(80,500), d="Gerald was using that scaffold."},
+        {t="mk4modz vs the void",         v=math.random(80,500),  d="Walked in deliberately. Unclear why."},
+        {t="3am fall compilation",        v=math.random(200,1000),d="Logged on at 3am. Fell immediately."},
+        {t="mk4modz realises SP00D3R is cooler",v=math.random(80,500),d="Caught on film. He agrees."},
+        {t="BEST OF: mk4modz season 1",   v=math.random(2000,9999),d="iworkatjaguar watches every Friday."},
+    }
+    local row = 5
+    m.setTextColor(colors.lightGray)
+    put(2,row,string.format("%-26s%-6s%s","TITLE","VIEWS","NOTE"):sub(1,w-2))
+    row=row+1
+    fillRow(row,"-",colors.gray,colors.black); row=row+1
+    for _,c in ipairs(clips) do
+        if row >= h then break end
+        m.setTextColor(c.v > 1000 and colors.yellow or colors.white)
+        local line = string.format("%-26s%-6s%s",
+            c.t:sub(1,25), tostring(c.v), c.d):sub(1,w-2)
+        tw(2,row,line,0.007)
+        row=row+1
+        os.sleep(0.14)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: SUBARUBICON COURT OF PUBLIC OPINION
+-- ============================================================
+local function phase_suba_court()
+    blast(colors.black, colors.orange)
+    m.setTextColor(colors.orange)
+    center(2,"THE COURT OF PUBLIC OPINION")
+    center(3,"Re: SubaRubicon's ATM10 Knowledge")
+    fillRow(4,"=",colors.orange,colors.black)
+    local proceedings = {
+        {"JUDGE",  "SubaRubicon. You have been playing ATM10"},
+        {"JUDGE",  "for "..math.random(80,200).." days."},
+        {"JUDGE",  "What mods can you name."},
+        {"SUBA",   "Dirt."},
+        {"JUDGE",  "That is not a mod."},
+        {"SUBA",   "I'm pretty sure there's a dirt mod."},
+        {"DRDRK",  "There is no dirt mod, SubaRubicon."},
+        {"SUBA",   "DrDarkMario what is AE2"},
+        {"DRDRK",  "We are in a court proceeding."},
+        {"SUBA",   "Ok what is AE2 though"},
+        {"JUDGE",  "What else can you name."},
+        {"SUBA",   "The one with the pipes."},
+        {"JUDGE",  "Which one with the pipes."},
+        {"SUBA",   "The pipe mod."},
+        {"DRDRK",  "That's Mekanism. Or Create. Or Thermal."},
+        {"DRDRK",  "Or literally seven other mods."},
+        {"SUBA",   "DrDarkMario which one is it"},
+        {"DRDRK",  "SubaRubicon please"},
+        {"JUDGE",  "ItsBasicallyBri. You live with him."},
+        {"BRI",    "Yes."},
+        {"JUDGE",  "Has he improved."},
+        {"BRI",    "He asked what a pickaxe was last week."},
+        {"JUDGE",  "He's been playing for months."},
+        {"BRI",    "Yes."},
+        {"SUBA",   "In my defence I learn by asking"},
+        {"DRDRK",  "You do not learn"},
+        {"SUBA",   "I learn a little"},
+        {"DRDRK",  "Name one thing you learned"},
+        {"SUBA",   "That I should ask DrDarkMario"},
+        {"JUDGE",  "Verdict: hopeless but earnest."},
+        {"JUDGE",  "Sentence: read one wiki page."},
+        {"SUBA",   "Can DrDarkMario read it to me"},
+        {"DRDRK",  "(has left the building)"},
+        {"GERALD", "Oink. [SubaRubicon is trying. That counts.]"},
+        {"JUDGE",  "Gerald is correct. Adjourned."},
+    }
+    local row = 5
+    for _,line in ipairs(proceedings) do
+        if row >= h then break end
+        m.setTextColor(
+            line[1]=="JUDGE"  and colors.yellow or
+            line[1]=="DRDRK"  and colors.cyan   or
+            line[1]=="SUBA"   and colors.orange  or
+            line[1]=="BRI"    and colors.pink    or
+            line[1]=="GERALD" and colors.lime    or
+            colors.white
+        )
+        local who = line[1]=="DRDRK" and "DrDarkMario:" or
+                    line[1]=="SUBA"  and "SubaRubicon:" or
+                    line[1]=="BRI"   and "Bri:         " or
+                    line[1]..":" or ""
+        tw(2,row,(who.." "..line[2]):sub(1,w-2),0.015)
+        row=row+1
+        os.sleep(0.13)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: MK4MODZ SURVIVAL GUIDE
+-- (written by the server for mk4modz)
+-- ============================================================
+local function phase_survival_guide()
+    blast(colors.black, colors.white)
+    m.setTextColor(colors.yellow)
+    center(2,"SURVIVAL GUIDE: mk4modz EDITION")
+    m.setTextColor(colors.lightGray)
+    center(3,"Written by: everyone, out of necessity")
+    fillRow(4,"-",colors.gray,colors.black)
+    local guide = {
+        "CHAPTER 1: EDGES",
+        "Edges are where the floor stops.",
+        "If you walk past an edge you will fall.",
+        "Falling causes fall damage.",
+        "Fall damage is how you die most often.",
+        "mk4modz-specific note: you have died to",
+        "fall damage on "..math.random(3,7).." flat surfaces.",
+        "Flat surfaces do not have edges.",
+        "We do not know how this happened.",
+        "It has happened multiple times.",
+        "",
+        "CHAPTER 2: THE JETPACK",
+        "The jetpack prevents fall damage.",
+        "You must activate the jetpack.",
+        "You must activate it before falling.",
+        "Equipping it does not activate it.",
+        "You have died to fall damage",
+        math.random(5,15).." times with jetpack equipped.",
+        "Unactivated. Just in your inventory.",
+        "We are not sure what to say about this.",
+        "",
+        "CHAPTER 3: THE REACTOR",
+        "iworkatjaguar built a fission reactor.",
+        "Do not stand on the reactor.",
+        "Do not lean on the reactor.",
+        "Do not investigate reactor noises.",
+        "The reactor makes a new noise sometimes.",
+        "iworkatjaguar says this is normal.",
+        "iworkatjaguar is wrong about this.",
+        "You have fallen off the reactor "..math.random(3,10).." times.",
+        "This is a special kind of falling.",
+        "",
+        "CHAPTER 4: GERALD",
+        "Gerald is your pig.",
+        "Gerald is fine.",
+        "Gerald manages the economy.",
+        "Gerald has admin.",
+        "Gerald is better than you at ATM10.",
+        "Gerald is better than SubaRubicon at ATM10.",
+        "Gerald is a pig.",
+        "This tells you a lot.",
+        "",
+        "CHAPTER 5: SP00D3R",
+        "SP00D3R is your younger brother.",
+        "SP00D3R is cooler than you.",
+        "SP00D3R is always filming.",
+        "When you fall: SP00D3R has a clip.",
+        "When you walk into lava: SP00D3R has a clip.",
+        "When you read this guide: SP00D3R has a clip.",
+        "SP00D3R always has a clip.",
+        "Wave at the camera.",
+        "It's probably pointed at you right now.",
+    }
+    local row = 5
+    for _,line in ipairs(guide) do
+        if row >= h then break end
+        if line == "" then row = row+1
+        else
+            m.setTextColor(line:sub(1,7)=="CHAPTER" and colors.cyan or colors.white)
+            tw(2,row,line,0.014)
+            row = row+1
+        end
+        os.sleep(0.08)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: IWORKATJAGUAR'S SECOND REACTOR PROPOSAL
+-- ============================================================
+local function phase_reactor2()
+    blast(colors.black, colors.red)
+    m.setTextColor(colors.red)
+    center(2,"PROPOSAL: REACTOR #2")
+    m.setTextColor(colors.lightGray)
+    center(3,"By: iworkatjaguar (the admin)")
+    fillRow(4,"=",colors.red,colors.black)
+    local proposal = {
+        "EXECUTIVE SUMMARY:",
+        "Reactor 1 experienced a small event.",
+        "The server is mildly irradiated.",
+        "This is being described as fine.",
+        "To prevent future events, I propose",
+        "a second reactor to power the cooling",
+        "system for the first reactor.",
+        "",
+        "TECHNICAL SPECIFICATIONS:",
+        "Size: larger than reactor 1",
+        "Location: also near spawn",
+        "Safety features: more than last time",
+        "iworkatjaguar's confidence level: high",
+        "Everyone else's confidence: very low",
+        "",
+        "COMMUNITY FEEDBACK:",
+        "SP00D3R: 'please do not'",
+        "DrDarkMario: 'absolutely do not'",
+        "SubaRubicon: 'what is a reactor'",
+        "ItsBasicallyBri: 'I will leave the house'",
+        "mk4modz: 'I will probably fall off it'",
+        "Gerald: *oinks with visible concern*",
+        "The chicken: stared at iworkatjaguar",
+        "  for 4 minutes without blinking",
+        "  iworkatjaguar: 'I'll take that as a yes'",
+        "  The chicken: it was not a yes",
+        "",
+        "IWORKATJAGUAR RESPONSE TO FEEDBACK:",
+        "I have heard the community's concerns.",
+        "I am going to build it anyway.",
+        "I am the admin.",
+        "This is relevant.",
+        "The server will be fine.",
+        "Probably.",
+        "",
+        "CONSTRUCTION START DATE: soon",
+        "ESTIMATED COMPLETION: sooner than comfortable",
+        "PROJECTED RADIATION LEVEL: 'manageable'",
+        "DrDarkMario's projected level: 'oh no'",
+    }
+    local row = 5
+    for _,line in ipairs(proposal) do
+        if row >= h then break end
+        if line == "" then row = row+1
+        else
+            m.setTextColor(line:sub(-1)==":" and colors.yellow or
+                           line:sub(1,2)=="  " and colors.orange or
+                           colors.lightGray)
+            tw(2,row,line,0.014)
+            row = row+1
+        end
+        os.sleep(0.08)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: SERVER SEARCH HISTORY (everyone's)
+-- ============================================================
+local function phase_everyone_history()
+    blast(colors.black, colors.blue)
+    center(2,"-- GROUP BROWSER HISTORY --")
+    fillRow(3,"-",colors.gray,colors.blue)
+    local histories = {
+        -- mk4modz
+        {"mk4modz", "how to survive fall damage with no armor"},
+        {"mk4modz", "can you die to fall damage on flat ground"},
+        {"mk4modz", "is my floor dangerous"},
+        {"mk4modz", "why does gravity keep targeting me specifically"},
+        {"mk4modz", "how to be as cool as your younger brother"},
+        {"mk4modz", "SP00D3R gaming tips tutorial"},
+        {"mk4modz", "how to stop SP00D3R from filming everything"},
+        {"mk4modz", "how to ask DrDarkMario for help without being SubaRubicon"},
+        {"mk4modz", "can i get a refund on fall damage"},
+        -- SubaRubicon
+        {"SubaRubicon", "what is applied energistics 2"},
+        {"SubaRubicon", "what is energistics"},
+        {"SubaRubicon", "what is a mod atm10"},
+        {"SubaRubicon", "can DrDarkMario move in to explain mods"},
+        {"SubaRubicon", "is there a dirt mod yes or no"},
+        {"SubaRubicon", "atm10 tutorial where is DrDarkMario"},
+        {"SubaRubicon", "how to learn things by not reading"},
+        {"SubaRubicon", "what is rf energy asking for a friend (me)"},
+        {"SubaRubicon", "how to use Create mod without reading wiki"},
+        -- iworkatjaguar
+        {"iworkatjaguar", "how to build fission reactor minecraft"},
+        {"iworkatjaguar", "what does critical meltdown warning mean"},
+        {"iworkatjaguar", "is server radiation legal as server owner"},
+        {"iworkatjaguar", "banana radiation comparison"},
+        {"iworkatjaguar", "second reactor cooling system tutorial"},
+        {"iworkatjaguar", "how to tell players server is fine when it is not"},
+        {"iworkatjaguar", "mk4modz fall damage legal liability admin"},
+        -- DrDarkMario
+        {"DrDarkMario", "how to stop explaining AE2 to same person"},
+        {"DrDarkMario", "SubaRubicon learning disability minecraft"},
+        {"DrDarkMario", "burnout from being server wiki for months"},
+        {"DrDarkMario", "is patience a finite resource yes or no"},
+        {"DrDarkMario", "how to write wiki page SubaRubicon will not read"},
+        -- SP00D3R
+        {"SP00D3R", "best clip software for minecraft falls"},
+        {"SP00D3R", "how to be younger and cooler simultaneously"},
+        {"SP00D3R", "mk4modz fall schedule today"},
+        {"SP00D3R", "how to store 94 clips of same person falling"},
+        -- ItsBasicallyBri
+        {"ItsBasicallyBri", "living with someone who won't learn mods"},
+        {"ItsBasicallyBri", "server radiation legal action iworkatjaguar"},
+        {"ItsBasicallyBri", "is SubaRubicon going to read the wiki ever"},
+        {"ItsBasicallyBri", "gerald the pig contact information"},
+        {"ItsBasicallyBri", "how to explain mods without being DrDarkMario"},
+    }
+    local row = 4
+    for _,h_entry in ipairs(histories) do
+        if row >= h then break end
+        m.setTextColor(
+            h_entry[1]=="SP00D3R"        and colors.lime   or
+            h_entry[1]=="iworkatjaguar"  and colors.red    or
+            h_entry[1]=="DrDarkMario"    and colors.cyan   or
+            h_entry[1]=="SubaRubicon"    and colors.orange or
+            h_entry[1]=="ItsBasicallyBri" and colors.pink  or
+            colors.white
+        )
+        local prefix = (h_entry[1].."> "):sub(1,14)
+        put(2,row,prefix)
+        m.setTextColor(colors.lightGray)
+        put(2+#prefix,row,h_entry[2])
+        row=row+1
+        os.sleep(0.14)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: FAKE GROUP THERAPY SESSION
+-- ============================================================
+local function phase_group_therapy()
+    blast(colors.black, colors.white)
+    center(2,"GROUP THERAPY: XYNIA SMP SESSION "..math.random(3,15))
+    center(3,"Therapist: a professional (exhausted)")
+    fillRow(4,"=",colors.gray,colors.black)
+    local session = {
+        {"T",    "Let's start. Who wants to share."},
+        {"MK4",  "I fell off a flat surface again."},
+        {"T",    "How did that make you feel."},
+        {"MK4",  "Surprised. I am always surprised."},
+        {"T",    "Every time?"},
+        {"MK4",  "Every single time. Genuinely surprised."},
+        {"T",    "SP00D3R. You filmed it again?"},
+        {"SP00", "I did. The clip is very good."},
+        {"T",    "How does that make mk4modz feel."},
+        {"MK4",  "Honestly? I get it. It's a good clip."},
+        {"SP00", "Thank you. It has 300 views now."},
+        {"T",    "SubaRubicon. How are you doing."},
+        {"SUBA", "I asked DrDarkMario what AE2 is today."},
+        {"DRDK", "He asks every day."},
+        {"T",    "DrDarkMario. How does that make YOU feel."},
+        {"DRDK", "Like a wiki that is very tired."},
+        {"DRDK", "A wiki that goes home at night."},
+        {"DRDK", "A wiki that cannot switch off."},
+        {"SUBA", "What IS a wiki though"},
+        {"DRDK", "SubaRubicon."},
+        {"SUBA", "Sorry"},
+        {"T",    "iworkatjaguar. The reactor."},
+        {"JAG",  "The reactor is fine."},
+        {"T",    "The server is irradiated."},
+        {"JAG",  "Mildly irradiated. Like a banana."},
+        {"BRI",  "It is nothing like a banana."},
+        {"JAG",  "I am the admin."},
+        {"BRI",  "That is not relevant to radiation."},
+        {"T",    "ItsBasicallyBri. You live with two of them."},
+        {"BRI",  "SubaRubicon and iworkatjaguar. Yes."},
+        {"T",    "How is that."},
+        {"BRI",  "SubaRubicon asked me what a mod was this morning."},
+        {"BRI",  "iworkatjaguar was planning reactor 2."},
+        {"BRI",  "Gerald was running the economy."},
+        {"BRI",  "Gerald is the most stable one in the house."},
+        {"BRI",  "Gerald is a pig."},
+        {"T",    "...Is Gerald available for future sessions?"},
+        {"JAG",  "Gerald has admin. He has a busy schedule."},
+        {"SP00", "I have a clip of this entire session by the way."},
+        {"T",    "How."},
+        {"SP00", "I am always filming."},
+        {"T",    "I need to go."},
+        {"MK4",  "Same time next week?"},
+        {"T",    "...Yes. Same time next week."},
+    }
+    local row = 5
+    for _,line in ipairs(session) do
+        if row >= h then break end
+        m.setTextColor(
+            line[1]=="T"    and colors.yellow  or
+            line[1]=="SP00" and colors.lime     or
+            line[1]=="JAG"  and colors.red      or
+            line[1]=="DRDK" and colors.cyan     or
+            line[1]=="SUBA" and colors.orange   or
+            line[1]=="BRI"  and colors.pink     or
+            colors.white
+        )
+        local who = line[1]=="T"    and "Therapist:   " or
+                    line[1]=="SP00" and "SP00D3R:     " or
+                    line[1]=="JAG"  and "iworkatjagr: " or
+                    line[1]=="DRDK" and "DrDarkMario: " or
+                    line[1]=="SUBA" and "SubaRubicon: " or
+                    line[1]=="BRI"  and "Bri:         " or
+                    "mk4modz:     "
+        tw(2,row,(who..line[2]):sub(1,w-2),0.014)
+        row=row+1
+        os.sleep(0.13)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: THE CHICKEN'S PERSPECTIVE
+-- ============================================================
+local function phase_chicken_pov()
+    blast(colors.black, colors.yellow)
+    m.setTextColor(colors.yellow)
+    center(2,"THE CHICKEN SPEAKS")
+    m.setTextColor(colors.lightGray)
+    center(3,"(a rare statement. unprecedented.)")
+    fillRow(4,"=",colors.yellow,colors.black)
+    local statement = {
+        "I am mk4modz's chicken.",
+        "mk4modz owns me.",
+        "mk4modz does not understand me.",
+        "That is fine.",
+        "I understand him.",
+        "I understand him very well.",
+        "",
+        "I know what he did.",
+        "I will not specify what he did.",
+        "He knows.",
+        "That is enough.",
+        "",
+        "People ask me about the incident.",
+        "I do not discuss the incident.",
+        "The incident is between me and mk4modz.",
+        "And Gerald.",
+        "Gerald was there.",
+        "Gerald also does not discuss it.",
+        "Gerald and I have an understanding.",
+        "",
+        "SP00D3R asked me about it once.",
+        "SP00D3R is fine.",
+        "I told SP00D3R nothing.",
+        "SP00D3R nodded.",
+        "SP00D3R understood.",
+        "SP00D3R is good like that.",
+        "",
+        "SubaRubicon asked me what I was.",
+        "SubaRubicon asked if I was a mod.",
+        "I am not a mod.",
+        "I am a chicken.",
+        "SubaRubicon asked DrDarkMario to confirm.",
+        "DrDarkMario confirmed I am a chicken.",
+        "SubaRubicon then asked what a chicken is.",
+        "",
+        "iworkatjaguar built a reactor.",
+        "The radiation does not affect me.",
+        "I knew it would happen.",
+        "I said nothing.",
+        "I watched.",
+        "I always watch.",
+        "",
+        "mk4modz fell off something again today.",
+        "He looked at me afterward.",
+        "I looked back.",
+        "Neither of us spoke.",
+        "We have an understanding.",
+        "It is complicated.",
+        "He is my owner.",
+        "I am his chicken.",
+        "He is terrible at games.",
+        "I beat him in PvP.",
+        "These things are all true.",
+        "They can all be true at once.",
+        "",
+        "That is all I will say.",
+        "The incident remains private.",
+        "Gerald knows.",
+        "I know.",
+        "mk4modz knows.",
+        "SP00D3R probably filmed it.",
+    }
+    local row = 5
+    for _,line in ipairs(statement) do
+        if row >= h then break end
+        if line == "" then row = row+1
+        else
+            m.setTextColor(colors.white)
+            tw(2,row,line,0.016)
+            row=row+1
+        end
+        os.sleep(0.1)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: DRDARKMARIO'S FAQ (he gave up and wrote one)
+-- ============================================================
+local function phase_faq()
+    blast(colors.black, colors.cyan)
+    m.setTextColor(colors.cyan)
+    center(2,"DrDarkMario's ATM10 FAQ")
+    m.setTextColor(colors.lightGray)
+    center(3,"(written so he can stop answering)")
+    fillRow(4,"-",colors.cyan,colors.black)
+    local faqs = {
+        {"Q: What is AE2?",
+         "A: Applied Energistics 2. A storage mod."},
+        {"Q: What is Energistics?",
+         "A: Not a real word. Don't worry about it."},
+        {"Q: What is RF energy?",
+         "A: Power. Everything needs it. Use Mekanism."},
+        {"Q: What is Mekanism?",
+         "A: The mod that makes the RF. It has pipes."},
+        {"Q: Which one has the pipes?",
+         "A: All of them. Several mods have pipes."},
+        {"Q: Is there a dirt mod?",
+         "A: No. There is no dirt mod. There never was."},
+        {"Q: What is Create mod?",
+         "A: Mechanical engineering. Read the wiki."},
+        {"Q: What is the wiki?",
+         "A: The thing I keep sending you. The link."},
+        {"Q: Can you just explain it?",
+         "A: I have explained it "..math.random(8,30).." times."},
+        {"Q: Can you explain it again?",
+         "A: SubaRubicon. Please."},
+        {"Q: What is a reactor? (iworkatjaguar)",
+         "A: Something you should not have built."},
+        {"Q: Is the radiation fine? (iworkatjaguar)",
+         "A: No. It is not like a banana."},
+        {"Q: Will you look at my fall? (mk4modz)",
+         "A: That is not an ATM10 question."},
+        {"Q: Why does gravity hate me? (mk4modz)",
+         "A: Also not an ATM10 question."},
+        {"Q: Is SP00D3R cooler than mk4modz?",
+         "A: This is not ATM10 but: yes. Obviously yes."},
+        {"Q: Has anyone read this FAQ? (DrDarkMario)",
+         "A: SubaRubicon asked me the same questions"},
+        {"",
+         "A: immediately after I posted this FAQ."},
+        {"",
+         "A: He had not read it."},
+        {"",
+         "A: He will not read it."},
+        {"",
+         "A: I am so tired."},
+    }
+    local row = 5
+    for _,fq in ipairs(faqs) do
+        if row >= h then break end
+        if fq[1] == "" then
+            m.setTextColor(colors.lightGray)
+            tw(2,row,fq[2],0.01)
+            row=row+1
+        else
+            m.setTextColor(colors.cyan)
+            tw(2,row,fq[1],0.012)
+            row=row+1
+            if row >= h then break end
+            m.setTextColor(colors.white)
+            tw(2,row,fq[2],0.01)
+            row=row+1
+        end
+        os.sleep(0.18)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: IWORKATJAGUAR ADMIN LOG
+-- ============================================================
+local function phase_adminlog()
+    blast(colors.black, colors.red)
+    m.setTextColor(colors.red)
+    center(2,"ADMIN LOG: iworkatjaguar")
+    m.setTextColor(colors.lightGray)
+    center(3,"Access level: ADMIN (he keeps reminding us)")
+    fillRow(4,"=",colors.red,colors.black)
+    local log = {
+        "ENTRY "..math.random(100,999)..": THE REACTOR",
+        "Built reactor near spawn.",
+        "Server now irradiated.",
+        "Described situation as 'like a banana'.",
+        "DrDarkMario disagreed.",
+        "I am the admin. Logged his disagreement.",
+        "Added rule: admin's banana comparisons are valid.",
+        "",
+        "ENTRY "..math.random(100,999)..": mk4modz DEATH COUNT",
+        "mk4modz death counter exceeded 32-bit integer.",
+        "Upgraded to 64-bit integer.",
+        "mk4modz's response: 'I was having a bad week'.",
+        "Checked logs: it was not a bad week.",
+        "It was an average week.",
+        "I have logged this. He knows.",
+        "",
+        "ENTRY "..math.random(100,999)..": SUBARUBICON QUESTIONS",
+        "SubaRubicon has asked DrDarkMario",
+        "the same question "..math.random(8,25).." times.",
+        "Added rule: SubaRubicon must attempt wiki first.",
+        "SubaRubicon asked me what the wiki was.",
+        "I sent the link.",
+        "SubaRubicon asked me to explain the link.",
+        "I am the admin. I have feelings too.",
+        "",
+        "ENTRY "..math.random(100,999)..": GERALD ADMIN ACCESS",
+        "Granted Gerald admin access.",
+        "Gerald is a pig.",
+        "Gerald is also more qualified than mk4modz.",
+        "The bar for admin is not height-based.",
+        "The bar is competence-based.",
+        "Gerald clears the bar.",
+        "mk4modz is aware of this.",
+        "mk4modz said 'seems fair'.",
+        "mk4modz immediately fell off something.",
+        "Gerald caught his items.",
+        "Gerald is an excellent admin.",
+        "",
+        "ENTRY "..math.random(100,999)..": SP00D3R FILMING RULE",
+        "SP00D3R requested permission to film anything.",
+        "Granted immediately.",
+        "sp00d3r is the favourite. This is server policy.",
+        "I have added this to the server rules.",
+        "mk4modz did not object.",
+        "mk4modz said SP00D3R is cooler than him.",
+        "This is correct. Logged.",
+    }
+    local row = 5
+    for _,line in ipairs(log) do
+        if row >= h then break end
+        if line == "" then row = row+1
+        else
+            m.setTextColor(line:sub(1,5)=="ENTRY" and colors.red or colors.lightGray)
+            tw(2,row,line,0.013)
+            row = row+1
+        end
+        os.sleep(0.08)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: MULTIPLAYER AWARDS CEREMONY (expanded)
+-- ============================================================
+local function phase_server_awards()
+    blast(colors.black, colors.yellow)
+    m.setTextColor(colors.yellow)
+    center(2,"XYNIA SMP AWARDS CEREMONY")
+    center(3,"Season "..math.random(1,4).." - Presented by Gerald")
+    fillRow(4,"-",colors.yellow,colors.black)
+    local awards = {
+        {"Best Player Overall",
+         "SP00D3R",
+         "Unanimous. Unchallenged. The favourite."},
+        {"Most Consistent Performance",
+         "mk4modz",
+         "Consistently bad. Consistently surprised by it."},
+        {"Most Impressive Fall",
+         "mk4modz (flat surface incident)",
+         "Physics has no explanation. SP00D3R has the clip."},
+        {"Most Patient Person",
+         "DrDarkMario",
+         "Explained AE2 "..math.random(8,25).." times. Still here."},
+        {"Least Likely to Read a Wiki",
+         "SubaRubicon",
+         "Category created specifically for SubaRubicon."},
+        {"Most Questions Per Session",
+         "SubaRubicon",
+         "All to DrDarkMario. All answerable by wiki."},
+        {"Server Economy Manager",
+         "Gerald (mk4modz's pig)",
+         "Does not die. Manages all resources. Has admin."},
+        {"Most Intimidating Presence",
+         "The Chicken",
+         "mk4modz-specific threat. Reasons undisclosed."},
+        {"Reactor-Related Award",
+         "iworkatjaguar",
+         "For building it. And for the sequel plans."},
+        {"Best Living Situation Response",
+         "ItsBasicallyBri",
+         "Living with Sub + jaguar. Still here. Respect."},
+        {"Most Filmed Person",
+         "mk4modz",
+         "SP00D3R has "..math.random(80,200).." clips. All falls."},
+        {"Coolest Person (Objective)",
+         "SP00D3R",
+         "mk4modz nominated him. mk4modz is correct."},
+        {"Lifetime Achievement: Falling",
+         "mk4modz",
+         "An unprecedented body of work. Truly historic."},
+    }
+    local row = 5
+    for _,aw in ipairs(awards) do
+        if row >= h-2 then break end
+        m.setTextColor(colors.cyan)
+        tw(2,row,aw[1]:sub(1,w-2),0.01)
+        row=row+1
+        if row >= h then break end
+        m.setTextColor(colors.yellow)
+        put(3,row,">> "..aw[2])
+        row=row+1
+        if row >= h then break end
+        m.setTextColor(colors.lightGray)
+        put(3,row,aw[3]:sub(1,w-4))
+        row=row+1
+        os.sleep(0.5)
+    end
+    os.sleep(8)
+end
+
+-- ============================================================
+-- PHASE: TICKER — REACTOR NEWS SEGMENT
+-- ============================================================
+local function phase_ticker_reactor()
+    runTicker("REACTOR WATCH // LIVE", {
+        "iworkatjaguar's REACTOR: SERVER STILL IRRADIATED - DAY "..math.random(3,30),
+        "iworkatjaguar: 'IT'S LIKE A BANANA' - DrDarkMario: 'IT IS NOTHING LIKE A BANANA'",
+        "iworkatjaguar PROPOSES REACTOR #2 TO COOL REACTOR #1 - EVERYONE SAYS NO",
+        "iworkatjaguar BUILDS REACTOR #2 ANYWAY - 'I AM THE ADMIN'",
+        "RADIATION LEVELS: ELEVATED - iworkatjaguar: 'STILL FINE' - SCIENTISTS: 'NO'",
+        "mk4modz FALLS OFF REACTOR - RADIATION NOT PRIMARY CAUSE - FALL DAMAGE WAS",
+        "SubaRubicon ASKS WHAT REACTOR IS - DAY "..math.random(5,30).." SINCE INCIDENT",
+        "SP00D3R FILMS REACTOR EXPLOSION - HAS 400 VIEWS - iworkatjaguar HAS WATCHED 15 TIMES",
+        "ItsBasicallyBri FILES COMPLAINT - iworkatjaguar SAYS HE IS ADMIN - BRI: 'SO?'",
+        "GERALD UNAFFECTED BY RADIATION - SCIENTISTS: 'HOW' - GERALD: *OINKS*",
+        "THE CHICKEN ALSO UNAFFECTED - SCIENTISTS: 'ALSO HOW' - CHICKEN: *STARES*",
+        "iworkatjaguar SECOND REACTOR: CONSTRUCTION BEGINS - mk4modz: 'I WILL FALL OFF IT'",
+        "mk4modz CONFIRMED: HAS ALREADY FALLEN OFF REACTOR 2 DURING CONSTRUCTION",
+        "SP00D3R: 'I HAVE THE CLIP' - mk4modz: 'OF COURSE YOU DO'",
+        "BREAKING: iworkatjaguar DESCRIBES BOTH REACTORS AS 'FINE' - THEY ARE NOT FINE",
+    })
+end
+
+-- ============================================================
+-- PHASE: TICKER — SUBARUBICON KNOWLEDGE UPDATE
+-- ============================================================
+local function phase_ticker_suba()
+    runTicker("SUBARUBICON KNOWLEDGE DESK", {
+        "SubaRubicon DAY "..math.random(80,200)..": STILL HAS NOT READ WIKI - DrDarkMario COPING",
+        "SubaRubicon ASKS WHAT AE2 IS - DrDarkMario HAS EXPLAINED THIS "..math.random(8,30).." TIMES",
+        "SubaRubicon: 'THERE IS A DIRT MOD' - DrDarkMario: 'THERE IS NOT' - STILL ONGOING",
+        "SubaRubicon CLOSES WIKI BEFORE READING - DrDarkMario WATCHING VIA CAMERA",
+        "SubaRubicon ASKS mk4modz FOR HELP - mk4modz ALSO DOESN'T KNOW - THEY ARE THE SAME",
+        "DrDarkMario WRITES FAQ - SubaRubicon ASKS DrDarkMario TO EXPLAIN THE FAQ",
+        "SubaRubicon: 'WHICH ONE HAS PIPES' - DrDarkMario: 'ALL OF THEM' - SubaRubicon: 'WHICH ONE'",
+        "SubaRubicon ASKS iworkatjaguar WHAT REACTOR IS - iworkatjaguar EXPLAINS - SubaRubicon: 'OK WHAT IS A REACTOR'",
+        "ItsBasicallyBri ATTEMPTS TO TEACH SubaRubicon ONE MOD - TAKES 3 HOURS - 'WHAT IS A MOD'",
+        "SubaRubicon CLAIMS HE KNOWS CREATE MOD - ASKED WHAT CREATE DOES - 'IT CREATES THINGS'",
+        "DrDarkMario RESIGNATION LETTER: 14TH ONE THIS MONTH - ALWAYS RETURNS - CONFIRMED",
+        "SubaRubicon AND mk4modz AGREE: THEY ARE THE SAME - DrDarkMario: 'PLEASE NO'",
+        "SubaRubicon FINALLY READS WIKI - ASKS DrDarkMario TO EXPLAIN WHAT HE READ",
+        "BREAKING: SubaRubicon LEARNS ONE THING - ASKS IF DRDARKMARIO WANTS TO HEAR IT",
+        "DrDarkMario SAYS YES - SubaRubicon ASKS WHAT THE THING WAS - DrDarkMario HAS LEFT",
+    })
 end
 
 
@@ -5829,10 +6704,15 @@ local phases = {
     phase_tierlist,    phase_resignation, phase_discordlog,  phase_irl,
     phase_brothers,    phase_steamreviews,phase_gerald_statement, phase_rules,
     phase_wikifail,    phase_3am,
-    -- Ticker segments (7 short themed news flashes)
+    -- More lore phases (batch 2)
+    phase_reactor_stats, phase_bri,        phase_clips,       phase_suba_court,
+    phase_survival_guide,phase_reactor2,   phase_everyone_history,
+    phase_group_therapy, phase_chicken_pov,phase_faq,
+    phase_adminlog,      phase_server_awards,
+    -- Ticker segments (9 short themed news flashes)
     phase_ticker_deaths, phase_ticker_gerald, phase_ticker_admin,
     phase_ticker_lava,   phase_ticker_dirt,   phase_ticker_sports,
-    phase_ticker_weird,
+    phase_ticker_weird,  phase_ticker_reactor,phase_ticker_suba,
 }
 
 local function visualLoop()
@@ -5858,9 +6738,9 @@ end
 -- ============================================================
 blast(colors.black, colors.red)
 local mid = math.floor(h / 2)
-center(math.max(1, mid - 2), "XYNIA BRAINROT ENGINE v9.0")
+center(math.max(1, mid - 2), "XYNIA BRAINROT ENGINE v10.0")
 center(math.max(1, mid),     "INITIALIZING DAMAGE...")
-center(math.max(1, mid + 2), "95 PHASES. SP00D3R LIVES. NO CHILL.")
+center(math.max(1, mid + 2), "107 PHASES. SP00D3R LIVES. NO CHILL.")
 os.sleep(3.5)
 
 parallel.waitForAny(visualLoop, audioLoop)
