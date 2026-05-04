@@ -757,9 +757,9 @@ local function genTriple()  return "CERTIFIED " .. rnd(adj) .. ", " .. rnd(adj) 
 local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
-    --- ── CONFIG ──────────────────────────────────────────────────────
+    -- ── CONFIG ──────────────────────────────────────────────────────
     local SERVER  = "https://residency-muster-bulge.ngrok-free.dev"
-    local VOLUME  = 3.0   -- Max this out so we know it works
+    local VOLUME  = 3.0   -- Max radius, zero distortion.
     local CHUNK   = 16 * 1024
 
     -- ── HELPERS ─────────────────────────────────────────────────────
