@@ -857,12 +857,18 @@ local function audioLoop()
 
     -- ── HELPERS ─────────────────────────────────────────────────────
     local function checkServer()
-        local ok, err = http.get(SERVER.."/status")
+        -- Changed to check /tracks in case your Python script doesn't have a /status route (which causes a 404)
+        local ok, err = http.get(SERVER.."/tracks")
         if ok then ok.close(); return true end
-        print("[music] Server unreachable: "..tostring(err))
-        print("[music] URL tried: "..SERVER.."/status")
-        print("[music] Fix: is the localhost.run tunnel active?")
-        print("[music] Fix: is music_server.py running?")
+        
+        -- Force the error to print on the actual computer screen, bypassing the monitor redirect
+        local n = term.native()
+        n.print(" ")
+        n.print("!!! AUDIO CONNECTION FAILED !!!")
+        n.print("ERROR: " .. tostring(err))
+        n.print("URL: " .. SERVER .. "/tracks")
+        n.print(" ")
+        
         return false
     end
 
