@@ -126,11 +126,18 @@ local function box(x1, y1, x2, y2, fg)
     end
 end
 
--- progress bar that actually fits
+-- progress bar that actually fits — label truncated at word boundary
 local function progressBar(y, label, speed)
     if y < 1 or y > h then return end
-    local maxLbl = math.max(1, math.floor(w * 0.42))
+    -- bar overhead: " [" + 8x"=" + "]FAIL" = 15 chars, plus col-2 start
+    local overhead = 17  -- 2(start) + 2(" [") + 8(bar) + 1("]") + 4("FAIL")
+    local maxLbl = math.max(1, w - overhead)
+    -- trim at word boundary so we never cut mid-word
     local lbl = label:sub(1, maxLbl)
+    if #label > maxLbl and lbl:sub(-1) ~= " " then
+        local sp = lbl:match(".*()%s")  -- last space position
+        if sp and sp > 1 then lbl = lbl:sub(1, sp - 1) end
+    end
     m.setTextColor(colors.white)
     tw(2, y, lbl .. " [", speed)
     local barStart = 2 + #lbl + 2
@@ -201,6 +208,31 @@ local function chatPush(text, fg)
             m.setCursorPos(2, row)
             m.write(e.t)
         end
+    end
+end
+
+-- Word-wrapping chatPush: splits text at word boundaries so
+-- nothing is ever cut off mid-word on the monitor
+local function wrapPush(text, fg)
+    local maxW = w - 3  -- col 2 start + 1 margin
+    if #text <= maxW then
+        chatPush(text, fg)
+        return
+    end
+    local remaining = text
+    while #remaining > 0 do
+        if #remaining <= maxW then
+            chatPush(remaining, fg)
+            break
+        end
+        -- find last space within maxW
+        local cut = maxW
+        while cut > 1 and remaining:sub(cut, cut) ~= " " do
+            cut = cut - 1
+        end
+        if cut <= 1 then cut = maxW end  -- no space found, hard cut
+        chatPush(remaining:sub(1, cut), fg)
+        remaining = remaining:sub(cut + 1)
     end
 end
 
@@ -3233,14 +3265,11 @@ function phase_linkedin()
         "",
         "REFERENCES: None. Nobody came.",
     }
-    local row=8
+    chatReset(8, h)
     for _,b in ipairs(bullets) do
-        if row>=h then break end
-        m.setTextColor(b:sub(1,1)=="*" and colors.lime or
-                       b=="" and colors.black or colors.white)
-        tw(2,row,b,0.013)
-        row=row+1
-        os.sleep(0.05)
+        if b=="" then chatPush("", colors.black)
+        else wrapPush(b, b:sub(1,1)=="*" and colors.lime or colors.white) end
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3270,16 +3299,12 @@ function phase_tripadvisor()
         {n="TheVoid",       s="5/5", r="Extremely convenient. See you."},
         {n="Notch_Real",    s="1/5", r="I made this game. I am sorry."},
     }
-    local row=5
+    chatReset(5, h)
     for _,rv in ipairs(reviews) do
-        if row>=h then break end
-        m.setTextColor(colors.cyan)
-        local nm=(rv.n..":"):sub(1,14)
-        put(2,row,nm)
-        local pos=rv.s=="5/5"
-        m.setTextColor(pos and colors.lime or colors.red)
-        put(2+#nm,row,rv.s.." - "..rv.r)
-        row=row+1
+        local positive = rv.s=="5/5"
+        local col = positive and colors.lime or colors.red
+        local nm  = rv.n:sub(1,12)..": "
+        wrapPush(nm..rv.s.." - "..rv.r, col)
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -3322,14 +3347,13 @@ function phase_glassdoor()
         " Yes: 0 votes",
         " Gerald abstained (pig, legally)",
     }
-    local row=5
+    chatReset(5, h)
     for _,item in ipairs(items) do
-        if row>=h then break end
-        m.setTextColor(item:sub(1,1)=="*" and colors.white or
-                       item=="" and colors.black or colors.yellow)
-        tw(2,row,item,0.013)
-        row=row+1
-        os.sleep(0.30)
+        local col = item:sub(1,1)=="*" and colors.white or
+                    item==""            and colors.black or colors.yellow
+        if item=="" then chatPush("", colors.black)
+        else wrapPush(item, col) end
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3374,15 +3398,10 @@ function phase_obituary()
         "The lava sends its warmest regards.",
         "The void is already waiting.",
     }
-    local row=5
+    chatReset(5, h)
     for _,line in ipairs(lines) do
-        if row>=h then break end
-        if line=="" then row=row+1
-        else
-            m.setTextColor(colors.white)
-            center(row,line)
-            row=row+1
-        end
+        if line=="" then chatPush("", colors.black)
+        else wrapPush(line, colors.white) end
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -3413,17 +3432,11 @@ function phase_amazon()
         {s="5*",n="TheVoid",         r="10/10 would consume again."},
         {s="1*",n="Notch_Real",      r="I am so, so sorry. 1 star."},
     }
-    local row=6
+    chatReset(6, h)
     for _,rv in ipairs(reviews) do
-        if row>=h then break end
-        local pos=rv.s=="5*"
-        m.setTextColor(pos and colors.lime or colors.red)
-        put(2,row,rv.s)
-        m.setTextColor(colors.cyan)
-        put(5,row,(rv.n..":"):sub(1,16))
-        m.setTextColor(colors.white)
-        put(5+math.min(16,#rv.n)+2,row,rv.r)
-        row=row+1
+        local col = rv.s=="5*" and colors.lime or colors.red
+        local nm  = rv.n:sub(1,12)..": "
+        chatPush(rv.s.." "..nm..rv.r, col)
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -3469,16 +3482,11 @@ function phase_craigslist()
         "CONTACT: [PLAYER] (if still alive)",
         "VIEWS: "..math.random(3,8).." (all admin)",
     }
-    local row=7
+    chatReset(7, h)
     for _,line in ipairs(desc) do
-        if row>=h then break end
-        if line=="" then row=row+1
-        else
-            m.setTextColor(line:sub(1,1)=="*" and colors.white or colors.lightGray)
-            tw(2,row,line,0.012)
-            row=row+1
-        end
-        os.sleep(0.30)
+        if line=="" then chatPush("", colors.black)
+        else wrapPush(line, line:sub(1,1)=="*" and colors.white or colors.lightGray) end
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3521,17 +3529,15 @@ function phase_helpdesk()
         "Escalated to: Gerald.",
         "Gerald declined. Cannot blame Gerald.",
     }
-    local row=4
+    chatReset(4, h)
     for _,line in ipairs(ticket) do
-        if row>=h then break end
-        if line=="" then row=row+1
+        if line=="" then chatPush("", colors.black)
         else
-            m.setTextColor(line:sub(1,4)=="Step" and colors.yellow or
-                           line:sub(1,4)=="User" and colors.red or colors.lightGray)
-            tw(2,row,line,0.014)
-            row=row+1
+            local col = line:sub(1,4)=="Step" and colors.yellow or
+                        line:sub(1,4)=="User" and colors.red or colors.lightGray
+            wrapPush(line, col)
         end
-        os.sleep(0.30)
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3597,15 +3603,10 @@ function phase_documentary()
         "94 views in 4 minutes.",
         "iworkatjaguar has watched it 12 times.",
     }
-    local row=5
+    chatReset(5, h)
     for _,line in ipairs(narration) do
-        if row>=h then break end
-        if line=="" then row=row+1
-        else
-            m.setTextColor(colors.white)
-            center(row,line)
-            row=row+1
-        end
+        if line=="" then chatPush("", colors.black)
+        else wrapPush(line, colors.white) end
         os.sleep(1.50)
     end
     os.sleep(16.0)
@@ -3638,20 +3639,15 @@ function phase_reportcard()
         {"SubaRubicon (wiki)",   "F",   "Has never read a page. Never."},
         {"Overall",              "F",   "No improvement detected ever."},
     }
-    local row=5
+    chatReset(5, h)
     for _,g in ipairs(grades) do
-        if row>=h then break end
-        m.setTextColor(g[2]=="A+" and colors.lime or
-                       g[2]=="A"  and colors.lime or
-                       g[2]=="C+" and colors.yellow or
-                       g[2]:sub(1,1)=="D" and colors.orange or colors.red)
-        local subj=g[1]:sub(1,18)
-        put(2,row,subj)
-        put(21,row,g[2])
-        m.setTextColor(colors.lightGray)
-        put(25,row,g[3])
-        row=row+1
-        os.sleep(1.50)
+        local col = (g[2]=="A+" or g[2]=="A") and colors.lime or
+                    g[2]=="C+" and colors.yellow or
+                    g[2]:sub(1,1)=="D" and colors.orange or colors.red
+        local c1w = math.floor(w * 0.60)
+        local line = string.format("%-"..c1w.."s %s", g[1]:sub(1,c1w), g[2]):sub(1,w-2)
+        chatPush(line, col)
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3687,15 +3683,17 @@ function phase_voicemail()
         {"Mom",           "Honey it is 3am please go to sleep."},
         {"Admin",         "Please. Just please. Stop. Please."},
     }
-    local row=4
+    chatReset(4, h)
     for _,vm in ipairs(vms) do
-        if row>=h then break end
-        m.setTextColor(colors.cyan)
-        local nm=(vm[1]..":"):sub(1,14)
-        put(2,row,nm)
-        m.setTextColor(colors.white)
-        put(2+#nm,row,vm[2])
-        row=row+1
+        local col = vm[1]:find("SP00D3R")        and colors.lime   or
+                    vm[1]:find("iworkatjaguar")  and colors.red    or
+                    vm[1]:find("DrDarkMario")    and colors.cyan   or
+                    vm[1]:find("SubaRubicon")    and colors.orange or
+                    vm[1]:find("ItsBasicallyBri") and colors.pink  or
+                    vm[1]:find("Gerald")         and colors.lime   or
+                    colors.lightGray
+        local nm = vm[1]:sub(1,12)..": "
+        wrapPush(nm..vm[2], col)
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -3793,16 +3791,14 @@ function phase_census()
         " And articulate.",
         " Gerald is just better.",
     }
-    local row=5
+    chatReset(5, h)
     for _,line in ipairs(data) do
-        if row>=h then break end
-        if line=="" then row=row+1
+        if line=="" then chatPush("", colors.black)
         else
-            m.setTextColor(line:sub(-1)==":" and colors.yellow or colors.lightGray)
-            tw(2,row,line,0.013)
-            row=row+1
+            local col = line:sub(-1)==":" and colors.yellow or colors.lightGray
+            wrapPush(line, col)
         end
-        os.sleep(0.30)
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -3848,24 +3844,17 @@ function phase_cookingshow()
         "Gerald has never made this dish.",
         "Aspire to be Gerald.",
     }
-    local row=5
+    chatReset(5, h)
     for _,rv in ipairs(recipes) do
-        if row>=h then break end
-        if rv=="" then row=row+1
+        if rv=="" then chatPush("", colors.black)
         else
-            m.setTextColor(rv:sub(1,1)=="*" and colors.white or
-                           rv:sub(1,6)=="RECIPE" and colors.yellow or
-                           rv:sub(1,3)=="ING" and colors.cyan or
-                           rv:sub(1,3)=="MET" and colors.cyan or
-                           rv:sub(1,4)=="SERV" and colors.cyan or
-                           rv:sub(1,4)=="PREP" and colors.cyan or
-                           rv:sub(1,4)=="COOK" and colors.cyan or
-                           rv:sub(1,4)=="NOTE" and colors.cyan or
-                           colors.lightGray)
-            tw(2,row,rv,0.012)
-            row=row+1
+            local col = rv:sub(1,1)=="*" and colors.white or
+                        rv:sub(1,6)=="RECIPE" and colors.yellow or
+                        rv:sub(1,3)=="ING" and colors.cyan or
+                        rv:sub(1,3)=="MET" and colors.cyan or colors.lightGray
+            wrapPush(rv, col)
         end
-        os.sleep(0.30)
+        os.sleep(1.50)
     end
     os.sleep(15.5)
 end
@@ -3931,10 +3920,7 @@ function phase_powerpoint()
         fillRow(4,"-",colors.gray,colors.black)
         local row=5
         for _,b in ipairs(slide.body) do
-            if row>=h then break end
-            m.setTextColor(colors.white)
-            tw(2,row,b,0.014)
-            row=row+1
+            wrapPush(b, colors.white)
             os.sleep(1.50)
         end
         os.sleep(14.5)
@@ -3978,18 +3964,13 @@ function phase_courtroom()
         {"JUDGE",   "This IS your appeal. Your 12th."},
         {"JUDGE",   "Get out of my courtroom."},
     }
-    local row=5
+    chatReset(5, h)
     for _,line in ipairs(transcript) do
-        if row>=h then break end
-        m.setTextColor(
-            line[1]=="JUDGE"   and colors.yellow or
-            line[1]=="PROS."   and colors.red or
-            line[1]=="GERALD"  and colors.lime or
-            line[1]=="CHICKEN" and colors.orange or
-            colors.white
-        )
-        tw(2,row,line[1]..": "..line[2],0.015)
-        row=row+1
+        local col = line[1]=="JUDGE"   and colors.yellow or
+                    line[1]=="PROS."   and colors.red    or
+                    line[1]=="GERALD"  and colors.lime   or
+                    line[1]=="CHICKEN" and colors.orange or colors.white
+        wrapPush(line[1]..": "..line[2], col)
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -4017,23 +3998,16 @@ function phase_declined()
         {"1x Improvement",       "0g",  "SYSTEM ERROR"},
         {"Being Less Shit",      "0g",  "NICE TRY (declined)"},
     }
-    local row=4
-    m.setTextColor(colors.lightGray)
-    tw(2,row,"ITEM              PRICE  STATUS",0.005)
-    row=row+1
-    fillRow(row,"-",colors.gray,colors.black)
-    row=row+1
+    chatReset(4, h)
+    chatPush("ITEM              PRICE  STATUS", colors.lightGray)
+    chatPush(string.rep("-", w-2), colors.gray)
     for _,t in ipairs(transactions) do
-        if row>=h then break end
-        m.setTextColor(t[3]:find("DECLINED") and colors.red or
-                       t[3]:find("REJECTED") and colors.red or
-                       t[3]:find("FUND") and colors.red or
-                       colors.orange)
-        local line=string.format("%-17s %-6s %s",
-            t[1]:sub(1,17),t[2],t[3]):sub(1,w-2)
-        tw(2,row,line,0.006)
-        row=row+1
-        os.sleep(1.50)
+        local col = (t[3]:find("DECLINED") or t[3]:find("REJECTED")) and colors.red or colors.lime
+        local c1w = math.floor(w * 0.40)
+        local line = string.format("%-"..c1w.."s %-8s%s",
+            t[1]:sub(1,c1w), t[2]:sub(1,7), t[3]):sub(1,w-2)
+        chatPush(line, col)
+        os.sleep(0.80)
     end
     os.sleep(15.5)
 end
@@ -4082,15 +4056,10 @@ function phase_manual()
         "You may not be okay.",
         "That is the end of the manual.",
     }
-    local row=5
+    chatReset(5, h)
     for _,p in ipairs(pages) do
-        if row>=h then break end
-        if p=="" then row=row+1
-        else
-            m.setTextColor(p:sub(1,7)=="CHAPTER" and colors.cyan or colors.white)
-            tw(2,row,p,0.014)
-            row=row+1
-        end
+        if p=="" then chatPush("", colors.black)
+        else wrapPush(p, p:sub(1,7)=="CHAPTER" and colors.cyan or colors.white) end
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -4140,15 +4109,10 @@ function phase_confessional()
         "This is the only thing I have on SubaRubicon.",
         "I will take it.",
     }
-    local row=5
+    chatReset(5, h)
     for _,c in ipairs(confessions) do
-        if row>=h then break end
-        if c=="" then row=row+1
-        else
-            m.setTextColor(rnd(colors_list))
-            tw(2,row,c,0.016)
-            row=row+1
-        end
+        if c=="" then chatPush("", colors.black)
+        else wrapPush(c, rnd(colors_list)) end
         os.sleep(1.50)
     end
     os.sleep(15.5)
@@ -4292,15 +4256,10 @@ function phase_finalboss()
         "Nothing has ever helped.",
         "But genuinely: good luck.",
     }
-    local row=4
+    chatReset(4, h)
     for _,line in ipairs(speech) do
-        if row>=h then break end
-        if line=="" then row=row+1
-        else
-            m.setTextColor(rnd(colors_list))
-            tw(2,row,line,0.018)
-            row=row+1
-        end
+        if line=="" then chatPush("", colors.black)
+        else wrapPush(line, rnd(colors_list)) end
         os.sleep(1.50)
     end
     os.sleep(16.0)
@@ -5284,7 +5243,7 @@ function phase_discordlog()
     }
     chatReset(5, h)
     for _,msg in ipairs(msgs) do
-        local prefix = (msg[1]..": "):sub(1,14)
+        local prefix = msg[1]:sub(1,12)..": "
         chatPush(prefix..msg[3], msg[2])
         os.sleep(1.50)
     end
@@ -10638,7 +10597,7 @@ function phase_java_gc_meltdown()
     chatReset(4, h)
     for _,line in ipairs(logs) do
         local col = line:sub(1,4)=="[GC]" and colors.yellow or colors.white
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.2)
     end
     os.sleep(2)
@@ -10714,7 +10673,7 @@ function phase_script_sentience()
     }
     chatReset(4, h)
     for _,line in ipairs(rant) do
-        chatPush(line, colors.red)
+        wrapPush(line, colors.red)
         os.sleep(1.2)
     end
     os.sleep(15.0)
@@ -10751,7 +10710,7 @@ function phase_reactor_fucking_explodes()
                     msg:sub(1,4)=="Suba" and colors.orange or
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.20)
     end
     os.sleep(1)
@@ -10843,7 +10802,7 @@ function phase_bri_artillery()
                     line:find("Suba") and colors.orange or
                     line:find("mk4m") and colors.white or
                     line:find("SP00") and colors.lime or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.0)
     end
     os.sleep(15.0)
@@ -10879,7 +10838,7 @@ function phase_irl_thermostat()
                     msg:sub(1,4)=="Suba" and colors.orange or
                     msg:sub(1,4)=="SP00" and colors.lime   or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.white
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -10912,7 +10871,7 @@ function phase_bri_gerald_alliance()
     for _,line in ipairs(dms) do
         local col = line:sub(1,4)=="ItsB" and colors.pink or
                     line:sub(1,4)=="Gera" and colors.lime or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -10948,7 +10907,7 @@ function phase_kubuntu_actual_fire()
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,4)=="SP00" and colors.lime   or
                     msg:sub(1,4)=="DrDa" and colors.cyan   or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.20)
     end
     
@@ -10994,7 +10953,7 @@ function phase_drdarkmario_manifesto()
     }
     chatReset(4, h)
     for _,line in ipairs(rant) do
-        chatPush(line, line:sub(1,2)=="IF" and colors.red or colors.white)
+        wrapPush(line, line:sub(1,2)=="IF" and colors.red or colors.white)
         os.sleep(1.5)
     end
     os.sleep(15.0)
@@ -11031,7 +10990,7 @@ function phase_divine_code_review()
         local col = line:sub(1,4)=="GOD:" and colors.yellow or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,6)=="SERVER" and colors.red or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11074,7 +11033,7 @@ function phase_suba_3am_discord()
                     msg:sub(1,4)=="DrDa" and colors.cyan   or
                     msg:sub(1,4)=="iwor" and colors.red    or
                     msg:sub(1,4)=="SP00" and colors.lime   or colors.white
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.20)
     end
     os.sleep(15.0)
@@ -11109,7 +11068,7 @@ function phase_discord_snitch()
     for _,line in ipairs(dms) do
         local col = line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="ItsB" and colors.pink   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11149,7 +11108,7 @@ function phase_irl_confrontation()
                     line:sub(1,3)=="Jag" and colors.red    or
                     line:sub(1,4)=="DrDa" and colors.cyan   or
                     line:sub(1,4)=="SP00" and colors.lime   or colors.white
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11186,7 +11145,7 @@ function phase_suba_apology()
                     msg:sub(1,4)=="ItsB" and colors.pink   or
                     msg:sub(1,3)=="The"  and colors.red    or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11230,7 +11189,7 @@ function phase_admin_mute_suba()
                         line:sub(1,4)=="Gera" and colors.lime   or
                         line:sub(1,4)=="ItsB" and colors.pink   or
                         line:sub(1,4)=="mk4m" and colors.white  or colors.lightGray
-            chatPush(line, col)
+            wrapPush(line, col)
         end
         os.sleep(1.50)
     end
@@ -11270,7 +11229,7 @@ function phase_kivicoin_scam()
                     msg:sub(1,4)=="Suba" and colors.orange or
                     msg:sub(1,4)=="Gera" and colors.lime   or
                     msg:sub(1,4)=="SP00" and colors.lime   or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11310,7 +11269,7 @@ function phase_youcube_radicalization()
                     line:sub(1,4)=="mk4m" and colors.white or
                     line:sub(1,4)=="DrDa" and colors.cyan  or
                     line:sub(1,4)=="Suba" and colors.orange or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.2)
     end
     os.sleep(15.0)
@@ -11354,7 +11313,7 @@ function phase_blackjack_kneecaps()
                     msg:sub(1,4)=="DrDa" and colors.cyan   or
                     msg:sub(1,6)=="SERVER" and colors.red  or
                     msg:sub(1,4)=="Gera" and colors.lime   or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11399,7 +11358,7 @@ function phase_kubuntu_singularity()
                     line:sub(1,4)=="DrDa" and colors.cyan   or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="SP00" and colors.lime   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     
@@ -11448,7 +11407,7 @@ function phase_bri_hostage_cord()
                     line:sub(1,4)=="DrDa" and colors.cyan   or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="SP00" and colors.lime   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11486,7 +11445,7 @@ function phase_suba_chatgpt()
         local col = msg:sub(1,4)=="Suba" and colors.orange or
                     msg:sub(1,4)=="GPT-" and colors.lime   or
                     msg:sub(1,4)=="SYST" and colors.red    or colors.white
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11523,7 +11482,7 @@ function phase_14tb_log_file()
                     line:sub(1,4)=="SP00" and colors.lime   or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="Gera" and colors.lime   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11565,7 +11524,7 @@ function phase_chicken_mafia()
         local col = msg:sub(1,3)=="The"  and colors.red   or
                     msg:sub(1,4)=="mk4m" and colors.white or
                     msg:sub(1,4)=="SP00" and colors.lime  or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11609,7 +11568,7 @@ function phase_federal_raid()
                     line:sub(1,4)=="SP00" and colors.lime   or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="DrDa" and colors.cyan   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11647,7 +11606,7 @@ function phase_suba_root_access()
                     line:sub(1,4)=="Suba" and colors.orange or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="ItsB" and colors.pink   or colors.white
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.20)
     end
     
@@ -11698,7 +11657,7 @@ function phase_mk4_brain_upload()
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,4)=="SYST" and colors.red    or
                     msg:sub(1,4)=="Gera" and colors.lime   or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11744,7 +11703,7 @@ function phase_chicken_physical_realm()
                     line:sub(1,3)=="The"  and colors.yellow or
                     line:sub(1,4)=="mk4m" and colors.white  or
                     line:sub(1,4)=="DrDa" and colors.cyan   or colors.lightGray
-        chatPush(line, col)
+        wrapPush(line, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11781,7 +11740,7 @@ function phase_ae2_nuke()
                     msg:sub(1,4)=="ItsB" and colors.pink   or
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,4)=="Gera" and colors.lime   or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11820,7 +11779,7 @@ function phase_rogue_turtle()
                     msg:sub(1,4)=="SP00" and colors.lime   or
                     msg:sub(1,4)=="Suba" and colors.orange or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11866,7 +11825,7 @@ function phase_wither_vtec()
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,4)=="SP00" and colors.lime   or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
@@ -11907,7 +11866,7 @@ function phase_mario_chunk_ban()
                     msg:sub(1,4)=="mk4m" and colors.white  or
                     msg:sub(1,4)=="SP00" and colors.lime   or
                     msg:sub(1,6)=="SERVER" and colors.yellow or colors.lightGray
-        chatPush(msg, col)
+        wrapPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
