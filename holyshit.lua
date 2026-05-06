@@ -916,7 +916,7 @@ local function audioLoop()
     if #speakers == 0 then while true do os.sleep(1) end end
 
     -- ── CONFIG ──────────────────────────────────────────────────────
-    local SERVER  = "https://2c375cefdf85d8.lhr.life"
+    local SERVER  = "https://b0723645384cb8.lhr.life"
     local VOLUME  = 3.0   -- Max radius, zero distortion.
     local CHUNK   = 16 * 1024
 
@@ -1978,10 +1978,6 @@ function phase_livechat()
     blast(colors.black, colors.white)
     center(1, "[ SERVER CHAT - UNCENSORED ]")
     fillRow(2, "-", colors.gray, colors.black)
-    local names = {
-        "SP00D3R","iworkatjaguar","DrDarkMario",
-        "SubaRubicon","ItsBasicallyBri","GeraldThePig",
-    }
     local msgs = {
         "mk4modz fell off the base again lmao",
         "how. there is a FENCE.",
@@ -2045,9 +2041,16 @@ function phase_livechat()
     chatReset(3, h)
     local count = math.random(10, 15)
     for i = 1, math.min(count, #shuf) do
-        local name = rnd(names)
-        local col  = rnd(colors_list)
-        chatPush("<"..name:sub(1,9).."> "..shuf[i], col)
+        local msg = shuf[i]
+        local col = msg:find("^SP00D3R")       and colors.lime   or
+                    msg:find("^iworkatjaguar") and colors.red    or
+                    msg:find("^DrDarkMario")   and colors.cyan   or
+                    msg:find("^SubaRubicon")   and colors.orange or
+                    msg:find("^ItsBasically")  and colors.pink   or
+                    msg:find("^mk4modz")       and colors.white  or
+                    msg:find("^GeraldThePig")  and colors.lime   or
+                    colors.lightGray
+        chatPush(msg, col)
         os.sleep(1.50)
     end
     os.sleep(15.0)
