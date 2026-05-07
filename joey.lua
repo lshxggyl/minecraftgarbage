@@ -80,3 +80,4 @@ local function audioLoop()
         res.close()
         speakers[1].stop()
     end
+end
